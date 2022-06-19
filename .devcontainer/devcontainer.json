@@ -1,0 +1,7 @@
+{
+  "name": "Rollenspieltage: Anmeldung",
+  "build": {
+    "dockerfile": "./Dockerfile"
+  },
+  "extensions": ["esbenp.prettier-vscode"]
+}

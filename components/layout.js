@@ -2,8 +2,13 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import Head from "next/head";
 import Script from 'next/script'
+import { useEffect } from 'react';
 
 export default function Layout({ children }) {
+    useEffect(() => {
+        document?.querySelector("body")?.classList.add("rst");
+    });
+
     return (
         <>
             <Head>

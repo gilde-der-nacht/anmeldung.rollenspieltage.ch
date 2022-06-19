@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Layout from "../components/layout";
 import IdentificationForm from "../components/identificationForm";
 import CompanionsForm from "../components/companionsForm";
+import TimetableForm from "../components/timetableForm";
 
 const PREFIX = "RST2020-";
 
@@ -12,31 +13,62 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState("");
   const [companion1, setCompanion1] = useState("");
   const [companion2, setCompanion2] = useState("");
+  const [timeSaturday, setTimeSaturday] = useState<number[]>([]);
+  const [timeSunday, setTimeSunday] = useState<number[]>([]);
 
   // UI helper
   const [registrationStarted, setRegistrationStarted] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState("");
 
   useEffect(() => {
-    (
-      [
-        ["name", setName],
-        ["email", setEmail],
-        ["registrationStarted", setRegistrationStarted],
-        ["companion1", setCompanion1],
-        ["companion2", setCompanion2],
-      ] as [string, Dispatch<SetStateAction<string | boolean>>][]
-    ).forEach(([key, setter]) => getFromLocalstorage(key, setter));
+    [
+      { key: "name", setter: setName },
+      { key: "email", setter: setEmail },
+      { key: "companion1", setter: setCompanion1 },
+      { key: "companion2", setter: setCompanion2 },
+    ].forEach(({ key, setter }) => {
+      const value = localStorage.getItem(PREFIX + key);
+      if (value) {
+        setter(value);
+      }
+    });
+
+    [
+      {
+        key: "registrationStarted",
+        setter: setRegistrationStarted,
+      },
+    ].forEach(({ key, setter }) => {
+      const value = localStorage.getItem(PREFIX + key);
+      if (value) {
+        setter(value === "true");
+      }
+    });
+
+    [
+      {
+        key: "timeSaturday",
+        setter: setTimeSaturday,
+      },
+      {
+        key: "timeSunday",
+        setter: setTimeSunday,
+      },
+    ].forEach(({ key, setter }) => {
+      const value = localStorage.getItem(PREFIX + key);
+      if (value) {
+        setter(JSON.parse(value));
+      }
+    });
   });
 
-  const getFromLocalstorage = (
-    key: string,
-    setter: Dispatch<SetStateAction<string | boolean>>
-  ) => {
-    const value = localStorage.getItem(PREFIX + key);
-    if (value) {
-      setter(value);
+  useEffect(() => {
+    if (!registrationStarted) {
+      setOpenDrawer("identification");
+    } else if (openDrawer === "identification") {
+      setOpenDrawer("");
     }
-  };
+  }, [registrationStarted]);
 
   const updateState =
     <T extends string | boolean>(
@@ -46,6 +78,13 @@ const Home: NextPage = () => {
     (value: T) => {
       setter(value);
       localStorage.setItem(PREFIX + key, String(value));
+    };
+
+  const updateTimeState =
+    (key: string, setter: Dispatch<SetStateAction<number[]>>) =>
+    (value: number[]) => {
+      setter(value);
+      localStorage.setItem(PREFIX + key, JSON.stringify(value));
     };
 
   const startRegistration = () => {
@@ -63,14 +102,31 @@ const Home: NextPage = () => {
         updateEmail={updateState("email", setEmail)}
         startRegistration={startRegistration}
         registrationStarted={registrationStarted}
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}
       />
-      {registrationStarted && (
-        <CompanionsForm
-          companion1={companion1}
-          companion2={companion2}
-          updateCompanion1={updateState("companion1", setCompanion1)}
-          updateCompanion2={updateState("companion2", setCompanion2)}
-        />
+      {registrationStarted && openDrawer !== "identification" && (
+        <>
+          <CompanionsForm
+            companion1={companion1}
+            companion2={companion2}
+            updateCompanion1={updateState("companion1", setCompanion1)}
+            updateCompanion2={updateState("companion2", setCompanion2)}
+            openDrawer={openDrawer}
+            setOpenDrawer={setOpenDrawer}
+          />
+          <TimetableForm
+            timeSaturday={timeSaturday}
+            updateTimeSaturday={updateTimeState(
+              "timeSaturday",
+              setTimeSaturday
+            )}
+            timeSunday={timeSunday}
+            updateTimeSunday={updateTimeState("timeSunday", setTimeSunday)}
+            openDrawer={openDrawer}
+            setOpenDrawer={setOpenDrawer}
+          />
+        </>
       )}
     </Layout>
   );

@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowSymbol from "./arrowSymbol";
 import Drawer from "./drawer";
 
 export default function CompanionsForm({
-    companion1, companion2, updateCompanion1, updateCompanion2
+    companion1, companion2, updateCompanion1, updateCompanion2, openDrawer, setOpenDrawer
 }) {
+    useEffect(() => {
+        if (openDrawer !== ID) {
+            setCollapsed(true);
+        }
+    }, [openDrawer])
+
     const [collapsed, setCollapsed] = useState(true);
     const TITLE = "Begleitung";
+    const ID = "companion";
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // TODO: Validation
         setCollapsed(true);
+        setOpenDrawer("");
     };
 
     const openForm = () => {
         setCollapsed(false);
+        setOpenDrawer(ID);
     }
 
     if (collapsed) {
         const companions = [companion1, companion2].filter((c) => c.length > 0);
         return (
             <Drawer title={TITLE} buttonEvent={openForm}>
-                <strong>{companions.length === 0 ? "Ohne Begleitung" : companions.join(", ")} ({companions.length})</strong>
+                <strong>{companions.length === 0 ? "Ohne Begleitung" : companions.join(", ")}</strong> ({companions.length})
             </Drawer>
         );
     }

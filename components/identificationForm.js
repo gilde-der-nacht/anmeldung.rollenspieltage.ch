@@ -1,27 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Drawer from "../components/drawer";
 import ArrowSymbol from "./arrowSymbol";
 
 export default function IdentificationForm({
-    name, email, updateName, updateEmail, startRegistration, registrationStarted
+    name, email, updateName, updateEmail, startRegistration, registrationStarted, openDrawer, setOpenDrawer
 }) {
+    useEffect(() => {
+        if (openDrawer !== ID) {
+            setCollapsed(true);
+        }
+    }, [openDrawer])
+
     const [collapsed, setCollapsed] = useState(true);
     const TITLE = "Identifikation";
+    const ID = "identification";
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // TODO: Validation
         setCollapsed(true);
         startRegistration();
+        setOpenDrawer("");
     };
 
     const openForm = () => {
         setCollapsed(false);
+        setOpenDrawer(ID);
     }
 
     if (collapsed && registrationStarted) {
         return (
-            <Drawer title={TITLE} buttonEvent={openForm}>
+            <Drawer title={TITLE} buttonEvent={openForm} type="success">
                 Name: <strong>{name}</strong><br /> E-Mail: <strong>{email}</strong>
             </Drawer>
         );

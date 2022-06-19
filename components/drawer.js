@@ -1,11 +1,11 @@
 import ArrowSymbol from "../components/arrowSymbol";
 
 export default function Drawer({
-    title, children, buttonEvent
+    title, children, buttonEvent, type = "danger"
 }) {
     return (
         <>
-            <div className="box-success">
+            <div className={"box-" + type}>
                 <div>
                     <h3>{title}</h3>
                     <span>{children}</span>

@@ -12,7 +12,7 @@ export default function Layout({ children }) {
     return (
         <>
             <Head>
-                <title>Luzerner Rollenspieltage</title>
+                <title>Anmeldung | Luzerner Rollenspieltage</title>
                 <Script src="https://test.rollenspieltage.ch/icons/duotone.min.js"></Script>
                 <Script src="https://test.rollenspieltage.ch/icons/fontawesome.min.js"></Script>
                 <link

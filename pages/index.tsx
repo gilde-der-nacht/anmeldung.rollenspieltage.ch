@@ -126,6 +126,24 @@ const Home: NextPage = () => {
             openDrawer={openDrawer}
             setOpenDrawer={setOpenDrawer}
           />
+          <hr />
+          <h3>Spieler</h3>
+          <h4>Bestätigung, gerne als Spieler anmelden</h4>
+          <h4>Genre-Wünsche</h4>
+
+          <hr />
+          <h3>Spielleiter</h3>
+          <h4>Bestätigung, gerne als Spielerleiter anmelden</h4>
+          <h4>
+            Spiele eintragen (System, Spieleranzahl (min/max), Dauer (15 Min bis
+            3 Stunden), Kinderfreundlich)
+          </h4>
+          <hr />
+          <h3>Verpflegung</h3>
+          <h4>Ja/Nein/Vielleicht</h4>
+          <h4>Allergien</h4>
+          <hr />
+          <h3>Helfen?</h3>
         </>
       )}
     </Layout>

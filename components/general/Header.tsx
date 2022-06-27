@@ -1,4 +1,4 @@
-import RollenspieltageLogo from "./logo/RollenspieltageLogo";
+import RollenspieltageLogo from "../logo/RollenspieltageLogo";
 import Link from 'next/link'
 
 export default function Header() {

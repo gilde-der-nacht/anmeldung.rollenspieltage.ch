@@ -1,6 +1,6 @@
-import GildenLogo from "./logo/GildenLogo";
-import SpieltageLogo from "./logo/SpieltageLogo";
-import RollenspieltageLogo from "./logo/RollenspieltageLogo";
+import GildenLogo from "../logo/GildenLogo";
+import SpieltageLogo from "../logo/SpieltageLogo";
+import RollenspieltageLogo from "../logo/RollenspieltageLogo";
 
 export default function Footer() {
     return <>

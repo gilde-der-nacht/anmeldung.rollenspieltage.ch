@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import ArrowSymbol from "../arrowSymbol";
+import ArrowIcon from "./ArrowIcon";
 import { checkEmail, checkIdentification, checkName } from "./store";
 
 type FormProps = {
@@ -7,6 +8,7 @@ type FormProps = {
   email: string;
   setName: (name: string) => void;
   setEmail: (email: string) => void;
+  initial: boolean;
 };
 
 export const IdentificationForm = ({
@@ -14,11 +16,13 @@ export const IdentificationForm = ({
   email,
   setName,
   setEmail,
+  initial,
 }: FormProps) => {
   const [localName, setLocalName] = useState("");
   const [localEmail, setLocalEmail] = useState("");
   const [localNameHasErrors, setLocalNameHasErrors] = useState(false);
   const [localEmailHasErrors, setLocalEmailHasErrors] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
 
   useEffect(() => {
     setLocalName(name);
@@ -34,20 +38,19 @@ export const IdentificationForm = ({
     }
     setName(localName.trim());
     setEmail(localEmail);
+
+    if (!initial) {
+      setShowSaved(true);
+      setTimeout(() => {
+        setShowSaved(false);
+      }, 1000);
+    }
+
+    // TODO: Send to backend
   }
 
   return (
     <>
-      <h1>Anmeldung Luzerner Rollenspieltage 2022</h1>
-      <p>
-        Melde dich hier für die Rollenspieltage an, damit wir dir ein
-        personalisiertes Programm zusenden können.
-      </p>
-      <p>
-        Hast du Fragen oder tretten Probleme auf, dann nimm bitte mit uns{" "}
-        <a href="https://rollenspieltage.ch/kontakt/">Kontakt</a> auf.
-      </p>
-      <h2>Kontaktdaten</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name
@@ -83,14 +86,24 @@ export const IdentificationForm = ({
             </small>
           )}
         </label>
-        <button className="button-accent" type="submit">
-          <ArrowSymbol />
-          {checkIdentification(name, email) ? (
-            <span> Speichern </span>
-          ) : (
-            <span> Anmeldung starten </span>
+        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          {!initial && (
+            <Link href="/">
+              <a className="button button-danger">
+                <span> Zurück</span>
+              </a>
+            </Link>
           )}
-        </button>
+          <button className="button button-success" type="submit">
+            <ArrowIcon />
+            {initial ? (
+              <span> Anmeldung starten </span>
+            ) : (
+              <span> Speichern </span>
+            )}
+          </button>
+          {showSaved && <small>Gespeichert!</small>}
+        </div>
       </form>
     </>
   );

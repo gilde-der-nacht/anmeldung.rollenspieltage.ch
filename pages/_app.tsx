@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { IdentificationForm } from "../components/general/IdentificationForm";
-import Layout from "../components/general/layout";
+import Layout from "../components/general/Layout";
 import {
   checkIdentification,
   useLocalStorage,
@@ -9,7 +9,7 @@ import {
 import "../styles/global.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isIdentified, setIsIdentified] = useState(false);
+  const [isIdentified, setIsIdentified] = useState(true);
   const [name, setName] = useLocalStorage("name", "");
   const [email, setEmail] = useLocalStorage("email", "");
 
@@ -20,12 +20,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (!isIdentified) {
     return (
       <Layout>
-        <IdentificationForm
-          name={name}
-          email={email}
-          setName={(name: string) => setName(name)}
-          setEmail={(email: string) => setEmail(email)}
-        />
+        <>
+          <h1>Anmeldung Luzerner Rollenspieltage 2022</h1>
+          <p>
+            Melde dich hier für die Rollenspieltage an, damit wir dir ein
+            personalisiertes Programm zusenden können.
+          </p>
+          <p>
+            Hast du Fragen oder tretten Probleme auf, dann nimm bitte mit uns{" "}
+            <a href="https://rollenspieltage.ch/kontakt/">Kontakt</a> auf.
+          </p>
+          <h2>Kontaktdaten</h2>
+          <IdentificationForm
+            name={name}
+            email={email}
+            setName={(name: string) => setName(name)}
+            setEmail={(email: string) => setEmail(email)}
+            initial={true}
+          />
+        </>
       </Layout>
     );
   }

@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isIdentified, setIsIdentified] = useState(false);
   const [name, setName] = useLocalStorage("name", "");
   const [email, setEmail] = useLocalStorage("email", "");
+
   useEffect(() => {
     setIsIdentified(checkIdentification(name, email));
   }, [name, email]);

@@ -4,15 +4,16 @@ export const useLocalStorage = <T>(
   storageKey: string,
   fallbackState: T
 ): [T, Dispatch<SetStateAction<T>>] => {
-  if (typeof window === "undefined") {
-    return useState(fallbackState);
+  let initValue = fallbackState;
+
+  if (typeof window !== "undefined") {
+    const item = localStorage.getItem(storageKey);
+    if (item !== null && item.trim().length > 0) {
+      initValue = JSON.parse(item);
+    }
   }
-  const item = localStorage.getItem(storageKey);
-  const initValue: T =
-    (item !== null && item.trim().length !== 0) ? JSON.parse(item) ?? fallbackState : fallbackState;
 
   const [value, setValue] = useState(initValue);
-
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(value));
   }, [value, storageKey]);

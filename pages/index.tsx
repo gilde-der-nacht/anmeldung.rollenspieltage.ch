@@ -59,7 +59,7 @@ const Home: NextPage = () => {
         setter(JSON.parse(value));
       }
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (!registrationStarted) {

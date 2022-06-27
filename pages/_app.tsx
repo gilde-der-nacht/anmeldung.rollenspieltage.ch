@@ -1,7 +1,11 @@
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import Layout from "../components/layout";
-import { checkIdentification, useLocalStorage } from "../components/store";
+import { IdentificationForm } from "../components/general/IdentificationForm";
+import Layout from "../components/general/layout";
+import {
+  checkIdentification,
+  useLocalStorage,
+} from "../components/general/store";
 import "../styles/global.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,7 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (!isIdentified) {
     return (
       <Layout>
-        <h1>Is not identified</h1>
+        <IdentificationForm
+          name={name}
+          email={email}
+          setName={(name: string) => setName(name)}
+          setEmail={(email: string) => setEmail(email)}
+        />
       </Layout>
     );
   }

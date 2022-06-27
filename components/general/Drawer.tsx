@@ -12,7 +12,7 @@ type DrawerProps = {
 export const Drawer: FunctionComponent<DrawerProps> = ({
   title,
   link,
-  type = "danger",
+  type = "gray",
   children,
 }) => {
   return (
@@ -23,7 +23,7 @@ export const Drawer: FunctionComponent<DrawerProps> = ({
           <span>{children}</span>
         </div>
         <Link href={link}>
-          <a className="button button-small button-success">
+          <a className={("button button-small button-" + type)}>
             <ArrowIcon />
             <span> Anpassen</span>
           </a>

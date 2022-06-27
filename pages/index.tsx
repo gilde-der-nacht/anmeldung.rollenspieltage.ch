@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Layout from "../components/layout";
 import IdentificationForm from "../components/identificationForm";
 import CompanionsForm from "../components/companionsForm";
 import TimetableForm from "../components/timetableForm";
@@ -93,7 +92,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <h1>Anmeldung</h1>
       <IdentificationForm
         name={name}
@@ -146,7 +145,7 @@ const Home: NextPage = () => {
           <h3>Helfen?</h3>
         </>
       )}
-    </Layout>
+    </>
   );
 };
 

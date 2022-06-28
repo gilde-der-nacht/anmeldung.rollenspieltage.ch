@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AlertBox } from "../components/general/AlertBox";
 import { Drawer } from "../components/general/Drawer";
@@ -38,35 +39,30 @@ const Home: NextPage = () => {
     "timeSlotSunday3",
     false
   );
-  const timeSlots = () => {
-    const slots = [
-      { state: timeSlotSaturday1, label: "Sa, 10-13" },
-      { state: timeSlotSaturday2, label: "Sa, 13-16" },
-      { state: timeSlotSaturday3, label: "Sa, 16-19" },
-      { state: timeSlotSaturday4, label: "Sa, 20-22" },
-      { state: timeSlotSunday1, label: "So, 10-13" },
-      { state: timeSlotSunday2, label: "So, 13-16" },
-      { state: timeSlotSunday3, label: "So, 16-18" },
-    ];
-    const hasNoSlots = slots.filter((slot) => slot.state).length === 0;
 
-    if (hasNoSlots) {
-      return (
-        <AlertBox>
-          <p>Bitte wähle mindestens einen Slot aus.</p>
-        </AlertBox>
-      );
-    }
-
-    return (
-      <div>
-        {slots
-          .filter((slot) => slot.state)
-          .map((slot) => slot.label)
-          .join(" / ")}
-      </div>
-    );
+  type Slot = {
+    state: boolean;
+    label: string;
   };
+  const timeSlots: Slot[] = [
+    { state: timeSlotSaturday1, label: "Sa, 10-13" },
+    { state: timeSlotSaturday2, label: "Sa, 13-16" },
+    { state: timeSlotSaturday3, label: "Sa, 16-19" },
+    { state: timeSlotSaturday4, label: "Sa, 20-22" },
+    { state: timeSlotSunday1, label: "So, 10-13" },
+    { state: timeSlotSunday2, label: "So, 13-16" },
+    { state: timeSlotSunday3, label: "So, 16-18" },
+  ];
+  const hasNoSlots = timeSlots.filter((slot) => slot.state).length === 0;
+  const timeProps = hasNoSlots
+    ? {
+        error: (
+          <AlertBox link="/zeit">
+            <p>Bitte wähle mindestens einen Slot aus.</p>
+          </AlertBox>
+        ),
+      }
+    : {};
 
   return (
     <>
@@ -87,8 +83,13 @@ const Home: NextPage = () => {
           <span> ({companions.length})</span>
         </>
       </Drawer>
-      <Drawer title="Zeit" link="/zeit">
-        {timeSlots()}
+      <Drawer title="Zeit" link="/zeit" {...timeProps}>
+        <div>
+          {timeSlots
+            .filter((slot) => slot.state)
+            .map((slot) => slot.label)
+            .join(" / ")}
+        </div>
       </Drawer>
     </>
   );

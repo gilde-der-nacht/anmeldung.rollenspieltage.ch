@@ -4,6 +4,15 @@ body > div {
   grid-template-rows: max-content 1fr max-content;
 }
 
+.disabled,
+.disabled:hover,
+.disabled:active {
+  cursor: not-allowed;
+  border-color: var(--clr-gray-6);
+  color: var(--clr-gray-6);
+  background-color: var(--clr-1);
+}
+
 :host,
 :root {
   --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";

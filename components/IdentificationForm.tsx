@@ -44,7 +44,7 @@ export const IdentificationForm = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="content">
         <label>
           Name
           <input

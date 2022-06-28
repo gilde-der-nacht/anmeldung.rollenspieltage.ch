@@ -23,7 +23,7 @@ export const AlertBox: FunctionComponent<AlertBoxProps> = ({
   if (link.length > 0) {
     return (
       <Link href={link}>
-        <a style={{padding: 0}}>{Box}</a>
+        <a style={{ padding: 0 }}>{Box}</a>
       </Link>
     );
   }

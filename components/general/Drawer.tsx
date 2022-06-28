@@ -8,6 +8,7 @@ type DrawerProps = {
   optional?: boolean;
   type?: string;
   error?: JSX.Element;
+  disabled?: boolean;
   children: JSX.Element;
 };
 
@@ -17,12 +18,17 @@ export const Drawer: FunctionComponent<DrawerProps> = ({
   optional = false,
   type = "gray",
   error,
+  disabled = false,
   children,
 }) => {
   return (
     <>
       <div
-        className={"box-" + (typeof error === "undefined" ? type : "danger")}
+        className={
+          "box-" +
+          (typeof error === "undefined" ? type : "danger") +
+          (disabled ? " disabled" : "")
+        }
       >
         <div>
           <h3>
@@ -30,18 +36,30 @@ export const Drawer: FunctionComponent<DrawerProps> = ({
           </h3>
           <span>{children}</span>
         </div>
-        <Link href={link}>
+        {disabled ? (
           <a
             className={
-              "button button-small button-" +
+              "button button-small disabled button-" +
               (typeof error === "undefined" ? type : "danger")
             }
           >
             <ArrowIcon />
             <span> Anpassen</span>
           </a>
-        </Link>
-        <div style={{ flexBasis: "100%" }}>{error}</div>
+        ) : (
+          <Link href={link}>
+            <a
+              className={
+                "button button-small button-" +
+                (typeof error === "undefined" ? type : "danger")
+              }
+            >
+              <ArrowIcon />
+              <span> Anpassen</span>
+            </a>
+          </Link>
+        )}
+        {error && <div style={{ flexBasis: "100%" }}>{error}</div>}
       </div>
     </>
   );

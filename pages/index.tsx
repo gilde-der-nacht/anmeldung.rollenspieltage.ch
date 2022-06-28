@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Checkbox } from "../components/form/Checkbox";
 import { AlertBox } from "../components/general/AlertBox";
 import { Drawer } from "../components/general/Drawer";
 import { useLocalStorage } from "../components/general/store";
@@ -48,7 +49,7 @@ const Home: NextPage = () => {
     { state: timeSlotSaturday1, label: "Sa, 10-13" },
     { state: timeSlotSaturday2, label: "Sa, 13-16" },
     { state: timeSlotSaturday3, label: "Sa, 16-19" },
-    { state: timeSlotSaturday4, label: "Sa, 20-22" },
+    { state: timeSlotSaturday4, label: "Sa, 19-22" },
     { state: timeSlotSunday1, label: "So, 10-13" },
     { state: timeSlotSunday2, label: "So, 13-16" },
     { state: timeSlotSunday3, label: "So, 16-18" },
@@ -59,6 +60,30 @@ const Home: NextPage = () => {
         error: (
           <AlertBox link="/zeit">
             <p>Bitte wähle mindestens einen Slot aus.</p>
+          </AlertBox>
+        ),
+      }
+    : {};
+
+  const [likeToPlay, setLikeToPlay] = useLocalStorage("likeToPlay", true);
+  const vorliebenProps = likeToPlay
+    ? {
+        error: (
+          <AlertBox link="/mitspielen">
+            <p>Bitte wähle deine Vorlieben aus.</p>
+          </AlertBox>
+        ),
+      }
+    : {};
+  const [likeToMaster, setLikeToMaster] = useLocalStorage(
+    "likeToMaster",
+    false
+  );
+  const gameMasterProps = likeToMaster
+    ? {
+        error: (
+          <AlertBox link="/spielleiten">
+            <p>Bitte wähle deine XYZ aus.</p>
           </AlertBox>
         ),
       }
@@ -90,6 +115,62 @@ const Home: NextPage = () => {
             .map((slot) => slot.label)
             .join(" / ")}
         </div>
+      </Drawer>
+      <h2>Spieler:innen</h2>
+      <p>
+        Möchtest du gerne Mitspielen, dann fülle die folgenden Informationen
+        aus.
+      </p>
+      <div>
+        <Checkbox state={likeToPlay} setter={setLikeToPlay}>
+          <span>
+            Ja, ich möchte gerne in einer oder mehreren Rollenspielrunden
+            mitspielen.
+          </span>
+        </Checkbox>
+      </div>
+      <Drawer
+        title="Vorlieben"
+        link="/mitspielen"
+        {...vorliebenProps}
+        disabled={!likeToPlay}
+      >
+        <>
+          <strong>
+            {companions.length === 0
+              ? "Ohne Begleitung"
+              : companions.join(", ")}
+          </strong>
+          <span> ({companions.length})</span>
+        </>
+      </Drawer>
+      <h2>Spielleiter:innen</h2>
+      <p>
+        Möchtest du ein oder mehrere Spielrunden leiten, dann erfasse diese in
+        diesem Bereich.
+      </p>
+      <div>
+        <Checkbox state={likeToMaster} setter={setLikeToMaster}>
+          <span>
+            Ja, ich möchte gerne eine oder mehrere Rollenspielrunden
+            leiten.
+          </span>
+        </Checkbox>
+      </div>
+      <Drawer
+        title="Spielrunden"
+        link="/spielleiten"
+        {...gameMasterProps}
+        disabled={!likeToMaster}
+      >
+        <>
+          <strong>
+            {companions.length === 0
+              ? "Ohne Begleitung"
+              : companions.join(", ")}
+          </strong>
+          <span> ({companions.length})</span>
+        </>
       </Drawer>
     </>
   );

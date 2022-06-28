@@ -3,14 +3,14 @@ import Link from "next/link";
 import ArrowIcon from "../components/general/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
-const Begleitung: NextPage = () => {
+const Mitspielen: NextPage = () => {
   const [companion1, setCompanion1] = useLocalStorage("companion1", "");
   const [companion2, setCompanion2] = useLocalStorage("companion2", "");
 
   return (
     <>
       <h1>
-        Begleitung{" "}
+        Spieler:innen{" "}
         <small style={{ color: "var(--clr-gray-8)" }}>(Optional)</small>
       </h1>
       <p>
@@ -65,4 +65,4 @@ const Begleitung: NextPage = () => {
   );
 };
 
-export default Begleitung;
+export default Mitspielen;

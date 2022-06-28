@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Checkbox } from "../components/form/Checkbox";
 import { AlertBox } from "../components/general/AlertBox";
-import AlertIcon from "../components/general/AlertIcon";
 import ArrowIcon from "../components/general/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
@@ -35,6 +35,72 @@ const Begleitung: NextPage = () => {
     "timeSlotSunday3",
     false
   );
+  type Slot = {
+    state: boolean;
+    setter: Dispatch<SetStateAction<boolean>>;
+    label: JSX.Element;
+  };
+  const timeSlotsSa: Slot[] = [
+    {
+      state: timeSlotSaturday1,
+      setter: setTimeSlotSaturday1,
+      label: (
+        <span>
+          10 bis 13 Uhr
+          <small style={{ fontWeight: "normal", paddingLeft: "1rem" }}>
+            (Mittagessen um 12 Uhr)
+          </small>
+        </span>
+      ),
+    },
+    {
+      state: timeSlotSaturday2,
+      setter: setTimeSlotSaturday2,
+      label: <span>13 bis 16 Uhr</span>,
+    },
+    {
+      state: timeSlotSaturday3,
+      setter: setTimeSlotSaturday3,
+      label: (
+        <span>
+          16 bis 19 Uhr
+          <small style={{ fontWeight: "normal", paddingLeft: "1rem" }}>
+            (Nachtessen um 18 Uhr)
+          </small>
+        </span>
+      ),
+    },
+    {
+      state: timeSlotSaturday4,
+      setter: setTimeSlotSaturday4,
+      label: <span>19 bis 22 Uhr</span>,
+    },
+  ];
+
+  const timeSlotsSo: Slot[] = [
+    {
+      state: timeSlotSunday1,
+      setter: setTimeSlotSunday1,
+      label: (
+        <span>
+          10 bis 13 Uhr
+          <small style={{ fontWeight: "normal", paddingLeft: "1rem" }}>
+            (Mittagessen um 12 Uhr)
+          </small>
+        </span>
+      ),
+    },
+    {
+      state: timeSlotSunday2,
+      setter: setTimeSlotSunday2,
+      label: <span>13 bis 16 Uhr</span>,
+    },
+    {
+      state: timeSlotSunday3,
+      setter: setTimeSlotSunday3,
+      label: <span>16 bis 18 Uhr</span>,
+    },
+  ];
 
   const [noSlotsSelected, setNoSlotSelected] = useState(true);
 
@@ -76,82 +142,27 @@ const Begleitung: NextPage = () => {
         onSubmit={(e: React.SyntheticEvent) => {
           e.preventDefault();
         }}
+        className="content"
       >
         <h2>Samstag, 27. August</h2>
         <ul role="list" className="checkbox-list">
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSaturday1(e.target.checked)}
-                checked={timeSlotSaturday1}
-              />
-              10 bis 13 Uhr
-            </label>
-          </li>
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSaturday2(e.target.checked)}
-                checked={timeSlotSaturday2}
-              />
-              13 bis 16 Uhr
-            </label>
-          </li>
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSaturday3(e.target.checked)}
-                checked={timeSlotSaturday3}
-              />
-              16 bis 19 Uhr
-            </label>
-          </li>
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSaturday4(e.target.checked)}
-                checked={timeSlotSaturday4}
-              />
-              20 bis 22 Uhr
-            </label>
-          </li>
+          {timeSlotsSa.map((slot, i) => (
+            <li key={i}>
+              <Checkbox state={slot.state} setter={slot.setter}>
+                {slot.label}
+              </Checkbox>
+            </li>
+          ))}
         </ul>
-        <h2>Sonntag, 87. August</h2>
+        <h2>Sonntag, 28. August</h2>
         <ul role="list" className="checkbox-list">
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSunday1(e.target.checked)}
-                checked={timeSlotSunday1}
-              />
-              10 bis 13 Uhr
-            </label>
-          </li>
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSunday2(e.target.checked)}
-                checked={timeSlotSunday2}
-              />
-              13 bis 16 Uhr
-            </label>
-          </li>
-          <li>
-            <label className="input-checkbox">
-              <input
-                type="checkbox"
-                onChange={(e) => setTimeSlotSunday3(e.target.checked)}
-                checked={timeSlotSunday3}
-              />
-              16 bis 18 Uhr
-            </label>
-          </li>
+          {timeSlotsSo.map((slot, i) => (
+            <li key={i}>
+              <Checkbox state={slot.state} setter={slot.setter}>
+                {slot.label}
+              </Checkbox>
+            </li>
+          ))}
         </ul>
         {noSlotsSelected && (
           <AlertBox>

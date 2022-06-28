@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ArrowIcon from "./ArrowIcon";
-import { checkEmail, checkIdentification, checkName } from "./store";
+import { checkEmail, checkName } from "./store";
+import Router from "next/router";
 
 type FormProps = {
   name: string;
@@ -22,7 +23,6 @@ export const IdentificationForm = ({
   const [localEmail, setLocalEmail] = useState("");
   const [localNameHasErrors, setLocalNameHasErrors] = useState(false);
   const [localEmailHasErrors, setLocalEmailHasErrors] = useState(false);
-  const [showSaved, setShowSaved] = useState(false);
 
   useEffect(() => {
     setLocalName(name);
@@ -38,14 +38,7 @@ export const IdentificationForm = ({
     }
     setName(localName.trim());
     setEmail(localEmail);
-
-    if (!initial) {
-      setShowSaved(true);
-      setTimeout(() => {
-        setShowSaved(false);
-      }, 1000);
-    }
-
+    Router.push("/");
     // TODO: Send to backend
   }
 
@@ -90,7 +83,7 @@ export const IdentificationForm = ({
           {!initial && (
             <Link href="/">
               <a className="button button-danger">
-                <span> Zurück</span>
+                <span> Abbrechen</span>
               </a>
             </Link>
           )}
@@ -99,10 +92,9 @@ export const IdentificationForm = ({
             {initial ? (
               <span> Anmeldung starten </span>
             ) : (
-              <span> Speichern </span>
+              <span> Speichern & Zurück </span>
             )}
           </button>
-          {showSaved && <small>Gespeichert!</small>}
         </div>
       </form>
     </>

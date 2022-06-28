@@ -65,16 +65,45 @@ const Home: NextPage = () => {
       }
     : {};
 
+  const [fantasy, setFantasy] = useLocalStorage("fantasy", false);
+  const [scifi, setScifi] = useLocalStorage("scifi", false);
+  const [horror, setHorror] = useLocalStorage("horror", false);
+  const [crime, setCrime] = useLocalStorage("crime", false);
+  const [modern, setModern] = useLocalStorage("modern", false);
+  const [cyberpunk, setCyberpunk] = useLocalStorage("cyberpunk", false);
+  const [steampunk, setSteampunk] = useLocalStorage("steampunk", false);
+  const [western, setWestern] = useLocalStorage("western", false);
+  const [history, setHistory] = useLocalStorage("history", false);
+  const GENRE_LIST = [
+    { state: fantasy, label: "Fantasy" },
+    { state: scifi, label: "Science Fiction" },
+    { state: horror, label: "Horror" },
+    { state: crime, label: "Krimi" },
+    { state: modern, label: "Modern" },
+    {
+      state: cyberpunk,
+      label: "Cyberpunk",
+    },
+    {
+      state: steampunk,
+      label: "Steampunk",
+    },
+    { state: western, label: "Western" },
+    { state: history, label: "Geschichte" },
+  ];
+
+  const hasNoGenre = GENRE_LIST.filter((genre) => genre.state).length === 0;
   const [likeToPlay, setLikeToPlay] = useLocalStorage("likeToPlay", true);
-  const vorliebenProps = likeToPlay
-    ? {
-        error: (
-          <AlertBox link="/mitspielen">
-            <p>Bitte wähle deine Vorlieben aus.</p>
-          </AlertBox>
-        ),
-      }
-    : {};
+  const vorliebenProps =
+    likeToPlay && hasNoGenre
+      ? {
+          error: (
+            <AlertBox link="/mitspielen">
+              <p>Bitte wähle mindestens ein Genre aus.</p>
+            </AlertBox>
+          ),
+        }
+      : {};
   const [likeToMaster, setLikeToMaster] = useLocalStorage(
     "likeToMaster",
     false
@@ -137,11 +166,13 @@ const Home: NextPage = () => {
       >
         <>
           <strong>
-            {companions.length === 0
-              ? "Ohne Begleitung"
-              : companions.join(", ")}
+            {hasNoGenre
+              ? "Kein Genre ausgewählt"
+              : GENRE_LIST.filter((genre) => genre.state)
+                  .map((genre) => genre.label)
+                  .join(", ")}
           </strong>
-          <span> ({companions.length})</span>
+          <span> ({GENRE_LIST.filter((genre) => genre.state).length})</span>
         </>
       </Drawer>
       <h2>Spielleiter:innen</h2>
@@ -152,8 +183,7 @@ const Home: NextPage = () => {
       <div>
         <Checkbox state={likeToMaster} setter={setLikeToMaster}>
           <span>
-            Ja, ich möchte gerne eine oder mehrere Rollenspielrunden
-            leiten.
+            Ja, ich möchte gerne eine oder mehrere Rollenspielrunden leiten.
           </span>
         </Checkbox>
       </div>
@@ -165,9 +195,7 @@ const Home: NextPage = () => {
       >
         <>
           <strong>
-            {companions.length === 0
-              ? "Ohne Begleitung"
-              : companions.join(", ")}
+            {hasNoGenre ? "Kein Genre ausgewählt" : companions.join(", ")}
           </strong>
           <span> ({companions.length})</span>
         </>

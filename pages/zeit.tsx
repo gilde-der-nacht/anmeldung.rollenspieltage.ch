@@ -102,7 +102,7 @@ const Begleitung: NextPage = () => {
     },
   ];
 
-  const [noSlotsSelected, setNoSlotSelected] = useState(true);
+  const [noSlotsSelected, setNoSlotsSelected] = useState(true);
 
   useEffect(() => {
     const hasNoSlots =
@@ -115,7 +115,7 @@ const Begleitung: NextPage = () => {
         timeSlotSunday2,
         timeSlotSunday3,
       ].filter((slot) => slot).length === 0;
-    setNoSlotSelected(hasNoSlots);
+    setNoSlotsSelected(hasNoSlots);
   }, [
     timeSlotSaturday1,
     timeSlotSaturday2,
@@ -133,17 +133,17 @@ const Begleitung: NextPage = () => {
         Bitte wähle aus, zu welchen Tageszeiten du an den Rollenspieltagen
         teilnehmen wirst.
       </p>
-      {noSlotsSelected && (
-        <AlertBox>
-          <p>Bitte wähle mindestens einen Slot aus.</p>
-        </AlertBox>
-      )}
       <form
         onSubmit={(e: React.SyntheticEvent) => {
           e.preventDefault();
         }}
         className="content"
       >
+        {noSlotsSelected && (
+          <AlertBox>
+            <p>Bitte wähle mindestens einen Slot aus.</p>
+          </AlertBox>
+        )}
         <h2>Samstag, 27. August</h2>
         <ul role="list" className="checkbox-list">
           {timeSlotsSa.map((slot, i) => (

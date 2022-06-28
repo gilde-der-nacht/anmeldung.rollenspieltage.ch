@@ -1,30 +1,76 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Checkbox } from "../components/form/Checkbox";
+import { AlertBox } from "../components/general/AlertBox";
 import ArrowIcon from "../components/general/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
 const Mitspielen: NextPage = () => {
-  const [companion1, setCompanion1] = useLocalStorage("companion1", "");
-  const [companion2, setCompanion2] = useLocalStorage("companion2", "");
+  const [fantasy, setFantasy] = useLocalStorage("fantasy", false);
+  const [scifi, setScifi] = useLocalStorage("scifi", false);
+  const [horror, setHorror] = useLocalStorage("horror", false);
+  const [crime, setCrime] = useLocalStorage("crime", false);
+  const [modern, setModern] = useLocalStorage("modern", false);
+  const [cyberpunk, setCyberpunk] = useLocalStorage("cyberpunk", false);
+  const [steampunk, setSteampunk] = useLocalStorage("steampunk", false);
+  const [western, setWestern] = useLocalStorage("western", false);
+  const [history, setHistory] = useLocalStorage("history", false);
+
+  const GENRE_LIST = [
+    { state: fantasy, setter: setFantasy, label: "Fantasy" },
+    { state: scifi, setter: setScifi, label: "Science Fiction" },
+    { state: horror, setter: setHorror, label: "Horror" },
+    { state: crime, setter: setCrime, label: "Krimi" },
+    { state: modern, setter: setModern, label: "Modern" },
+    {
+      state: cyberpunk,
+      setter: setCyberpunk,
+      label: "Cyberpunk",
+    },
+    {
+      state: steampunk,
+      setter: setSteampunk,
+      label: "Steampunk",
+    },
+    { state: western, setter: setWestern, label: "Western" },
+    { state: history, setter: setHistory, label: "Geschichte" },
+  ];
+
+  const [noGenreSelected, setNoGenreSelected] = useState(true);
+
+  useEffect(() => {
+    const hasNoGenre =
+      [
+        fantasy,
+        scifi,
+        horror,
+        crime,
+        modern,
+        cyberpunk,
+        steampunk,
+        western,
+        history,
+      ].filter((genre) => genre).length === 0;
+    setNoGenreSelected(hasNoGenre);
+  }, [
+    fantasy,
+    scifi,
+    horror,
+    crime,
+    modern,
+    cyberpunk,
+    steampunk,
+    western,
+    history,
+  ]);
 
   return (
     <>
-      <h1>
-        Spieler:innen{" "}
-        <small style={{ color: "var(--clr-gray-8)" }}>(Optional)</small>
-      </h1>
+      <h1>Spieler:innen: Vorlieben</h1>
       <p>
-        Du kannst deine Anmeldung für bis zu zwei weitere Personen durchführen.
-      </p>
-      <p>
-        <strong>
-          Beachte, dass deine Begleitung das exakt selbe Programm enthält, wie
-          du.
-        </strong>
-      </p>
-      <p>
-        Seid ihr mehr als drei Personen, teilt euch bitte in mehrere Gruppen
-        (und somit mehrere Anmeldungen) auf.
+        Welche der folgenden Genres findest du ansprechend? Wähle eines oder
+        mehrere, damit wir dich in entsprechende Spielrunden einplanen können.
       </p>
       <form
         onSubmit={(e: React.SyntheticEvent) => {
@@ -32,28 +78,25 @@ const Mitspielen: NextPage = () => {
         }}
         className="content"
       >
-        <label>
-          Begleitung #1
-          <input
-            id="name1"
-            type="text"
-            name="name1"
-            placeholder="Begleitung 1"
-            value={companion1}
-            onChange={(e) => setCompanion1(e.target.value)}
-          />
-        </label>
-        <label>
-          Begleitung #2
-          <input
-            id="name2"
-            type="text"
-            name="name2"
-            placeholder="Begleitung 2"
-            value={companion2}
-            onChange={(e) => setCompanion2(e.target.value)}
-          />
-        </label>
+        {noGenreSelected && (
+          <AlertBox>
+            <p>Bitte wähle mindestens ein Genre aus.</p>
+          </AlertBox>
+        )}
+        <ul role="list" className="checkbox-list">
+          {GENRE_LIST.map((genre, i) => (
+            <li key={i}>
+              <Checkbox state={genre.state} setter={genre.setter}>
+                <span>{genre.label}</span>
+              </Checkbox>
+            </li>
+          ))}
+        </ul>
+        {noGenreSelected && (
+          <AlertBox>
+            <p>Bitte wähle mindestens ein Genre aus.</p>
+          </AlertBox>
+        )}
         <Link href="/">
           <a className="button button-success">
             <ArrowIcon />

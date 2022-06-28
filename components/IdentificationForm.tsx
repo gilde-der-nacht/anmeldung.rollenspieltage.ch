@@ -79,23 +79,14 @@ export const IdentificationForm = ({
             </small>
           )}
         </label>
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          {!initial && (
-            <Link href="/">
-              <a className="button button-danger">
-                <span> Abbrechen</span>
-              </a>
-            </Link>
+        <button className="button button-success" type="submit">
+          <ArrowIcon />
+          {initial ? (
+            <span> Anmeldung starten </span>
+          ) : (
+            <span> Speichern & Zurück </span>
           )}
-          <button className="button button-success" type="submit">
-            <ArrowIcon />
-            {initial ? (
-              <span> Anmeldung starten </span>
-            ) : (
-              <span> Speichern & Zurück </span>
-            )}
-          </button>
-        </div>
+        </button>
       </form>
     </>
   );

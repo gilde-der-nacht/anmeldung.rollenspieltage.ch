@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { TextInput } from "../components/form/TextInput";
 import ArrowIcon from "../components/general/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
@@ -32,28 +33,18 @@ const Begleitung: NextPage = () => {
         }}
         className="content"
       >
-        <label>
-          Begleitung #1
-          <input
-            id="name1"
-            type="text"
-            name="name1"
-            placeholder="Begleitung 1"
-            value={companion1}
-            onChange={(e) => setCompanion1(e.target.value)}
-          />
-        </label>
-        <label>
-          Begleitung #2
-          <input
-            id="name2"
-            type="text"
-            name="name2"
-            placeholder="Begleitung 2"
-            value={companion2}
-            onChange={(e) => setCompanion2(e.target.value)}
-          />
-        </label>
+        <TextInput
+          state={companion1}
+          setter={setCompanion1}
+          label="Begleitung #1"
+          placeholder="Begleitung #1"
+        />
+        <TextInput
+          state={companion2}
+          setter={setCompanion2}
+          label="Begleitung #2"
+          placeholder="Begleitung #2"
+        />
         <Link href="/">
           <a className="button button-success">
             <ArrowIcon />

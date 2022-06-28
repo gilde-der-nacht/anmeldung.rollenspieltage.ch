@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ArrowIcon from "./general/ArrowIcon";
 import { checkEmail, checkName } from "./general/store";
 import Router from "next/router";
+import { TextInput } from "./form/TextInput";
 
 type FormProps = {
   name: string;
@@ -45,40 +46,23 @@ export const IdentificationForm = ({
   return (
     <>
       <form onSubmit={handleSubmit} className="content">
-        <label>
-          Name
-          <input
-            id="name"
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={localName}
-            onChange={(e) => setLocalName(e.target.value)}
-            required
-          />
-          {localNameHasErrors && (
-            <small style={{ color: "var(--clr-danger-10)" }}>
-              Bitte einen gültigen Namen eingeben.
-            </small>
-          )}
-        </label>
-        <label>
-          E-Mail
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="E-Mail"
-            value={localEmail}
-            onChange={(e) => setLocalEmail(e.target.value)}
-            required
-          />
-          {localEmailHasErrors && (
-            <small style={{ color: "var(--clr-danger-10)" }}>
-              Bitte eine gültige E-Mail-Adresse eingeben.
-            </small>
-          )}
-        </label>
+        <TextInput
+          state={localName}
+          setter={setLocalName}
+          label="Name"
+          placeholder="Name"
+          hasErrors={localNameHasErrors}
+          errorText="Bitte einen gültigen Namen eingeben."
+        />
+        <TextInput
+          state={localEmail}
+          setter={setLocalEmail}
+          type="email"
+          label="E-Mail"
+          placeholder="E-Mail"
+          hasErrors={localEmailHasErrors}
+          errorText="Bitte eine gültige E-Mail-Adresse eingeben."
+        />
         <button className="button button-success" type="submit">
           <ArrowIcon />
           {initial ? (

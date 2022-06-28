@@ -84,7 +84,7 @@ const Home: NextPage = () => {
               ? "Ohne Begleitung"
               : companions.join(", ")}
           </strong>
-          ({companions.length})
+          <span> ({companions.length})</span>
         </>
       </Drawer>
       <Drawer title="Zeit" link="/zeit">

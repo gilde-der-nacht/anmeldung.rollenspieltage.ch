@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ArrowIcon from "./ArrowIcon";
-import { checkEmail, checkName } from "./store";
+import ArrowIcon from "./general/ArrowIcon";
+import { checkEmail, checkName } from "./general/store";
 import Router from "next/router";
 
 type FormProps = {

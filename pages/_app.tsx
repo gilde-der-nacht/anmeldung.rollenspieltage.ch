@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import { IdentificationForm } from "../components/general/IdentificationForm";
+import { IdentificationForm } from "../components/IdentificationForm";
 import Layout from "../components/general/Layout";
 import {
   checkIdentification,
@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             personalisiertes Programm zusenden können.
           </p>
           <p>
-            Hast du Fragen oder tretten Probleme auf, dann nimm bitte mit uns{" "}
+            Hast du Fragen oder tretten Probleme auf, dann nimm bitte mit uns
             <a href="https://rollenspieltage.ch/kontakt/">Kontakt</a> auf.
           </p>
           <h2>Kontaktdaten</h2>

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { IdentificationForm } from "../components/general/IdentificationForm";
+import { IdentificationForm } from "../components/IdentificationForm";
 import { useLocalStorage } from "../components/general/store";
 
 const Kontaktdaten: NextPage = () => {

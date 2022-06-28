@@ -9,9 +9,9 @@ const Begleitung: NextPage = () => {
 
   return (
     <>
-      <h1>Begleitung</h1>
+      <h1>Begleitung <small style={{color: 'var(--clr-gray-8)'}}>(Optional)</small></h1>
       <p>
-        Du kannst deine Anmeldung für bis zu zwei weitere Personen durchführen.{" "}
+        Du kannst deine Anmeldung für bis zu zwei weitere Personen durchführen.
       </p>
       <p>
         <strong>

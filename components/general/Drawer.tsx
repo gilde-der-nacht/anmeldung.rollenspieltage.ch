@@ -5,6 +5,7 @@ import ArrowIcon from "./ArrowIcon";
 type DrawerProps = {
   title: string;
   link: string;
+  optional?: boolean;
   type?: string;
   children: JSX.Element;
 };
@@ -12,6 +13,7 @@ type DrawerProps = {
 export const Drawer: FunctionComponent<DrawerProps> = ({
   title,
   link,
+  optional = false,
   type = "gray",
   children,
 }) => {
@@ -19,11 +21,11 @@ export const Drawer: FunctionComponent<DrawerProps> = ({
     <>
       <div className={"box-" + type}>
         <div>
-          <h3>{title}</h3>
+          <h3>{title} <small>{optional && '(Optional)'}</small></h3>
           <span>{children}</span>
         </div>
         <Link href={link}>
-          <a className={("button button-small button-" + type)}>
+          <a className={"button button-small button-" + type}>
             <ArrowIcon />
             <span> Anpassen</span>
           </a>

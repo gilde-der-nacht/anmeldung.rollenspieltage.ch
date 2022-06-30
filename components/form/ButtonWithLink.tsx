@@ -5,6 +5,7 @@ import ArrowIcon from "../icons/ArrowIcon";
 type ButtonProps = {
   link: string;
   type: string;
+  icon?: JSX.Element;
   isDisabled?: boolean;
   isSmall?: boolean;
   children: JSX.Element;
@@ -13,6 +14,7 @@ type ButtonProps = {
 export const ButtonWithLink: FunctionComponent<ButtonProps> = ({
   link,
   type,
+  icon = <ArrowIcon />,
   isDisabled = false,
   isSmall = false,
   children,
@@ -24,20 +26,14 @@ export const ButtonWithLink: FunctionComponent<ButtonProps> = ({
           "button disabled button-" + type + (isSmall ? " button-small" : "")
         }
       >
-        <ArrowIcon />
-        {children}
+        {icon} {children}
       </a>
     );
   }
   return (
     <Link href={link}>
-      <a
-        className={
-          "button button-" + type + (isSmall ? " button-small" : "")
-        }
-      >
-        <ArrowIcon />
-        {children}
+      <a className={"button button-" + type + (isSmall ? " button-small" : "")}>
+        {icon} {children}
       </a>
     </Link>
   );

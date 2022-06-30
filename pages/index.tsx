@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { Checkbox } from "../components/form/Checkbox";
+import { GameRoundForm } from "../components/GameRoundForm";
 import { AlertBox } from "../components/general/AlertBox";
 import { Drawer } from "../components/general/Drawer";
 import { useLocalStorage } from "../components/general/store";
@@ -184,6 +185,9 @@ const Home: NextPage = () => {
             Ja, ich möchte gerne eine oder mehrere Rollenspielrunden leiten.
           </span>
         </Checkbox>
+      </div>
+      <div>
+        <GameRoundForm isActive={likeToMaster} />
       </div>
       <Drawer
         title="Spielrunden"

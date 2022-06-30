@@ -4,6 +4,10 @@ body > div {
   grid-template-rows: max-content 1fr max-content;
 }
 
+.button {
+  display: inline-block;
+}
+
 .disabled,
 .disabled:hover,
 .disabled:active {

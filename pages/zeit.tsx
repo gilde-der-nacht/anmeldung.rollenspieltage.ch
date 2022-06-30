@@ -1,9 +1,8 @@
 import { NextPage } from "next";
-import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ButtonWithLink } from "../components/form/ButtonWithLink";
 import { Checkbox } from "../components/form/Checkbox";
 import { AlertBox } from "../components/general/AlertBox";
-import ArrowIcon from "../components/icons/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
 const Begleitung: NextPage = () => {
@@ -169,12 +168,9 @@ const Begleitung: NextPage = () => {
             <p>Bitte wähle mindestens einen Slot aus.</p>
           </AlertBox>
         )}
-        <Link href="/">
-          <a className="button button-success">
-            <ArrowIcon />
-            <span> Speichern & Zurück </span>
-          </a>
-        </Link>
+        <ButtonWithLink link="/" type="success">
+          <span> Speichern & Zurück </span>
+        </ButtonWithLink>
       </form>
     </>
   );

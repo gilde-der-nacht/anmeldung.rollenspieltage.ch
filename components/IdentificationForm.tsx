@@ -1,9 +1,8 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import ArrowIcon from "./icons/ArrowIcon";
-import { checkEmail, checkName } from "./general/store";
 import Router from "next/router";
+import { useEffect, useState } from "react";
+import { ButtonWithEvent } from "./form/ButtonWithEvent";
 import { TextInput } from "./form/TextInput";
+import { checkEmail, checkName } from "./general/store";
 
 type FormProps = {
   name: string;
@@ -63,14 +62,13 @@ export const IdentificationForm = ({
           hasErrors={localEmailHasErrors}
           errorText="Bitte eine gültige E-Mail-Adresse eingeben."
         />
-        <button className="button button-success" type="submit">
-          <ArrowIcon />
+        <ButtonWithEvent isSubmit={true}>
           {initial ? (
             <span> Anmeldung starten </span>
           ) : (
             <span> Speichern & Zurück </span>
           )}
-        </button>
+        </ButtonWithEvent>
       </form>
     </>
   );

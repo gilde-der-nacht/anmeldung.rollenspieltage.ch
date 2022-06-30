@@ -1,9 +1,5 @@
 import { NextPage } from "next";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Checkbox } from "../components/form/Checkbox";
-import { AlertBox } from "../components/general/AlertBox";
-import ArrowIcon from "../components/icons/ArrowIcon";
+import { ButtonWithLink } from "../components/form/ButtonWithLink";
 import { useLocalStorage } from "../components/general/store";
 
 const Spielleiten: NextPage = () => {
@@ -24,12 +20,9 @@ const Spielleiten: NextPage = () => {
         wir.
       </p>
       <div>
-        <Link href="/neue-spielrunde">
-          <a className="button button-success">
-            <ArrowIcon />
-            <span> Neue Spielrunde </span>
-          </a>
-        </Link>
+        <ButtonWithLink link="/neue-spielrunde" type="success">
+          <span> Neue Spielrunde </span>
+        </ButtonWithLink>
       </div>
       <form
         onSubmit={(e: React.SyntheticEvent) => {
@@ -38,12 +31,9 @@ const Spielleiten: NextPage = () => {
         className="content"
       >
         <div>
-          <Link href="/">
-            <a className="button button-success">
-              <ArrowIcon />
-              <span> Speichern & Zurück </span>
-            </a>
-          </Link>
+          <ButtonWithLink link="/" type="success">
+            <span> Speichern & Zurück </span>
+          </ButtonWithLink>
         </div>
       </form>
     </>

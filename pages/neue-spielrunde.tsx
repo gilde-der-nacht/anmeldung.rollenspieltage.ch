@@ -1,11 +1,7 @@
 import { NextPage } from "next";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Checkbox } from "../components/form/Checkbox";
+import { useState } from "react";
+import { ButtonWithEvent } from "../components/form/ButtonWithEvent";
 import { TextInput } from "../components/form/TextInput";
-import { AlertBox } from "../components/general/AlertBox";
-import ArrowIcon from "../components/icons/ArrowIcon";
-import { useLocalStorage } from "../components/general/store";
 
 const Spielleiten: NextPage = () => {
   const [name, setName] = useState("");
@@ -53,12 +49,9 @@ const Spielleiten: NextPage = () => {
           label="Maximale Spieleranzahl"
           placeholder="Maximale Spieleranzahl"
         />
-        <div>
-          <button className="button button-success">
-            <ArrowIcon />
-            <span> Neue Spielrunde erstellen </span>
-          </button>
-        </div>
+        <ButtonWithEvent isSubmit={true}>
+          <span> Neue Spielrunde erstellen </span>
+        </ButtonWithEvent>
       </form>
     </>
   );

@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { FunctionComponent } from "react";
-import ArrowIcon from "../icons/ArrowIcon";
+import { ButtonWithLink } from "../form/ButtonWithLink";
 
 type DrawerProps = {
   title: string;
@@ -36,29 +35,13 @@ export const Drawer: FunctionComponent<DrawerProps> = ({
           </h3>
           <span>{children}</span>
         </div>
-        {disabled ? (
-          <a
-            className={
-              "button button-small disabled button-" +
-              (typeof error === "undefined" ? type : "danger")
-            }
-          >
-            <ArrowIcon />
-            <span> Anpassen</span>
-          </a>
-        ) : (
-          <Link href={link}>
-            <a
-              className={
-                "button button-small button-" +
-                (typeof error === "undefined" ? type : "danger")
-              }
-            >
-              <ArrowIcon />
-              <span> Anpassen</span>
-            </a>
-          </Link>
-        )}
+        <ButtonWithLink
+          link={link}
+          type={typeof error === "undefined" ? type : "danger"}
+          isDisabled={disabled}
+        >
+          <span> Anpassen</span>
+        </ButtonWithLink>
         {error && <div style={{ flexBasis: "100%" }}>{error}</div>}
       </div>
     </>

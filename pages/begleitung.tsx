@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { TextInput } from "../components/form/TextInput";
-import ArrowIcon from "../components/general/ArrowIcon";
+import ArrowIcon from "../components/icons/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
 const Begleitung: NextPage = () => {

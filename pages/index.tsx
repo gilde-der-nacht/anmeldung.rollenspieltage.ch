@@ -5,6 +5,9 @@ import { Checkbox } from "../components/form/Checkbox";
 import { AlertBox } from "../components/general/AlertBox";
 import { Drawer } from "../components/general/Drawer";
 import { useLocalStorage } from "../components/general/store";
+import DeleteIcon from "../components/icons/DeleteIcon";
+import EditIcon from "../components/icons/EditIcon";
+import PlusIcon from "../components/icons/PlusIcon";
 
 const Home: NextPage = () => {
   const [name, setName] = useLocalStorage("name", "");

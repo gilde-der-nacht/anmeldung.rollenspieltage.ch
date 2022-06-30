@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Checkbox } from "../components/form/Checkbox";
 import { TextInput } from "../components/form/TextInput";
 import { AlertBox } from "../components/general/AlertBox";
-import ArrowIcon from "../components/general/ArrowIcon";
+import ArrowIcon from "../components/icons/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
 const Spielleiten: NextPage = () => {

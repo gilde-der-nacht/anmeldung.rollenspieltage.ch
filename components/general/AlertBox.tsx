@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FunctionComponent } from "react";
-import AlertIcon from "./AlertIcon";
+import AlertIcon from "../icons/AlertIcon";
 
 type AlertBoxProps = {
   link?: string;

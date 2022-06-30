@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ArrowIcon from "./general/ArrowIcon";
+import ArrowIcon from "./icons/ArrowIcon";
 import { checkEmail, checkName } from "./general/store";
 import Router from "next/router";
 import { TextInput } from "./form/TextInput";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FunctionComponent } from "react";
-import ArrowIcon from "./ArrowIcon";
+import ArrowIcon from "../icons/ArrowIcon";
 
 type DrawerProps = {
   title: string;

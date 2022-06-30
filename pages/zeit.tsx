@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Checkbox } from "../components/form/Checkbox";
 import { AlertBox } from "../components/general/AlertBox";
-import ArrowIcon from "../components/general/ArrowIcon";
+import ArrowIcon from "../components/icons/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 
 const Begleitung: NextPage = () => {

@@ -186,10 +186,12 @@ const Home: NextPage = () => {
       </DrawerWithLink>
       <DrawerWithLink title="Zeit" link="/zeit" {...timeProps}>
         <div>
-          {timeSlots
-            .filter((slot) => slot.state)
-            .map((slot) => slot.label)
-            .join(" / ")}
+          {timeSlots.filter((slot) => slot.state).length === 0
+            ? "Keinen Zeitslot ausgewählt"
+            : timeSlots
+                .filter((slot) => slot.state)
+                .map((slot) => slot.label)
+                .join(" / ")}
         </div>
       </DrawerWithLink>
       <h2>Spieler:innen</h2>

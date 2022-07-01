@@ -34,8 +34,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <IdentificationForm
             name={name}
             email={email}
-            setName={(name: string) => setName(name)}
-            setEmail={(email: string) => setEmail(email)}
+            setName={setName}
+            setEmail={setEmail}
             initial={true}
           />
         </>

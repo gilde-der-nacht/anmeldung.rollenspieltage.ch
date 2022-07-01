@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ButtonWithEvent } from "./form/ButtonWithEvent";
 import { TextInput } from "./form/TextInput";
 import { checkEmail, checkName } from "./general/store";
@@ -7,8 +7,8 @@ import { checkEmail, checkName } from "./general/store";
 type FormProps = {
   name: string;
   email: string;
-  setName: (name: string) => void;
-  setEmail: (email: string) => void;
+  setName: Dispatch<SetStateAction<string>>;
+  setEmail: Dispatch<SetStateAction<string>>;
   initial: boolean;
 };
 
@@ -27,7 +27,7 @@ export const IdentificationForm = ({
   useEffect(() => {
     setLocalName(name);
     setLocalEmail(email);
-  });
+  }, []);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();

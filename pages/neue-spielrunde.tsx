@@ -93,7 +93,7 @@ const Spielleiten: NextPage = () => {
     addGameRound(
       {
         id: getRandomId(),
-        name,
+        name: name.trim(),
         duration,
         minPlayerCount,
         maxPlayerCount,

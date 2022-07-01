@@ -31,3 +31,7 @@ export const updateGameRound = (existingGameRound: GameRound, setter: Dispatch<S
         }))];
     })
 }
+
+export const getGameRoundById = (id: string, state: GameRound[]) => {
+    return state.filter(game => game.active).find(game => game.id === id);
+}

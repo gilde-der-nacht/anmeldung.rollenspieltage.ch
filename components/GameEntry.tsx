@@ -12,7 +12,7 @@ type GameEntryProps = {
 
 export const GameEntry = ({ game, isActive }: GameEntryProps) => {
   return (
-    <li className={"event-entry gray" + (isActive ? "" : " inactive")}>
+    <div className={"event-entry gray" + (isActive ? "" : " inactive")}>
       <h1 className="event-title">{game.name}</h1>
       <div className="event-details">
         <div className="event-date">
@@ -54,6 +54,6 @@ export const GameEntry = ({ game, isActive }: GameEntryProps) => {
           )}
         </li>
       </ul>
-    </li>
+    </div>
   );
 };

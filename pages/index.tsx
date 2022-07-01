@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { Checkbox } from "../components/form/Checkbox";
 import { GameRoundForm } from "../components/GameRoundForm";
+import { GameRound } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
 import { Drawer } from "../components/general/Drawer";
 import { useLocalStorage } from "../components/general/store";
@@ -107,15 +108,10 @@ const Home: NextPage = () => {
     "likeToMaster",
     false
   );
-  const gameMasterProps = likeToMaster
-    ? {
-        error: (
-          <AlertBox link="/spielleiten">
-            <p>Bitte wähle deine XYZ aus.</p>
-          </AlertBox>
-        ),
-      }
-    : {};
+  const [gameRounds, setGameRounds] = useLocalStorage<GameRound[]>(
+    "gameRounds",
+    []
+  );
 
   return (
     <>
@@ -187,7 +183,7 @@ const Home: NextPage = () => {
         </Checkbox>
       </div>
       <div>
-        <GameRoundForm isActive={likeToMaster} />
+        <GameRoundForm gameRounds={gameRounds} isActive={likeToMaster} />
       </div>
     </>
   );

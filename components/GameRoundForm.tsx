@@ -1,18 +1,15 @@
 import { ButtonWithLink } from "./form/ButtonWithLink";
 import { GameRoundOverview } from "./GameRoundOverview";
 import { GameRound } from "./GameRoundStore";
-import { useLocalStorage } from "./general/store";
+import { AlertBox } from "./general/AlertBox";
 import PlusIcon from "./icons/PlusIcon";
 
 type FormProps = {
+  gameRounds: GameRound[];
   isActive: boolean;
 };
 
-export const GameRoundForm = ({ isActive }: FormProps) => {
-  const [gameRounds, setGameRounds] = useLocalStorage<GameRound[]>(
-    "gameRounds",
-    []
-  );
+export const GameRoundForm = ({ isActive, gameRounds }: FormProps) => {
   return (
     <div className="content">
       <div>
@@ -26,6 +23,11 @@ export const GameRoundForm = ({ isActive }: FormProps) => {
         </ButtonWithLink>
       </div>
       <GameRoundOverview games={gameRounds} isActive={isActive} />
+      {gameRounds.filter((round) => round.active).length === 0 && isActive && (
+        <AlertBox link="/neue-spielrunde">
+          <p>Bitte füge mindestens eine Spielrunde hinzu.</p>
+        </AlertBox>
+      )}
     </div>
   );
 };

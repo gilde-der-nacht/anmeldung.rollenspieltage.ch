@@ -8,6 +8,19 @@ body > div {
   display: inline-block;
 }
 
+.event-entry {
+	grid-template-rows: max-content max-content max-content;
+}
+
+.event-entry.inactive {
+  cursor: not-allowed;
+  border-color: var(--clr-gray-6);
+  color: var(--clr-gray-6);
+  background-color: var(--clr-1);
+
+
+}
+
 .disabled,
 .disabled:hover,
 .disabled:active {

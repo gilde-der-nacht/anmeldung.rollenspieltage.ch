@@ -1,5 +1,7 @@
-import { ButtonWithEvent } from "./form/ButtonWithEvent";
 import { ButtonWithLink } from "./form/ButtonWithLink";
+import { GameRoundOverview } from "./GameRoundOverview";
+import { GameRound } from "./GameRoundStore";
+import { useLocalStorage } from "./general/store";
 import PlusIcon from "./icons/PlusIcon";
 
 type FormProps = {
@@ -7,16 +9,23 @@ type FormProps = {
 };
 
 export const GameRoundForm = ({ isActive }: FormProps) => {
+  const [gameRounds, setGameRounds] = useLocalStorage<GameRound[]>(
+    "gameRounds",
+    []
+  );
   return (
-    <>
-      <ButtonWithLink
-        link="/neue-spielrunde"
-        type="success"
-        isDisabled={!isActive}
-        icon={<PlusIcon />}
-      >
-        <span>neue Spielrunde</span>
-      </ButtonWithLink>
-    </>
+    <div className="content">
+      <div>
+        <ButtonWithLink
+          link="/neue-spielrunde"
+          type="success"
+          isDisabled={!isActive}
+          icon={<PlusIcon />}
+        >
+          <span>neue Spielrunde</span>
+        </ButtonWithLink>
+      </div>
+      <GameRoundOverview games={gameRounds} isActive={isActive} />
+    </div>
   );
 };

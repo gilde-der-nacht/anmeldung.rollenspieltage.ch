@@ -189,19 +189,6 @@ const Home: NextPage = () => {
       <div>
         <GameRoundForm isActive={likeToMaster} />
       </div>
-      <Drawer
-        title="Spielrunden"
-        link="/spielleiten"
-        {...gameMasterProps}
-        disabled={!likeToMaster}
-      >
-        <>
-          <strong>
-            {hasNoGenre ? "Kein Genre ausgewählt" : companions.join(", ")}
-          </strong>
-          <span> ({companions.length})</span>
-        </>
-      </Drawer>
     </>
   );
 };

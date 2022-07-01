@@ -11,7 +11,7 @@ type DrawerProps = {
   children: JSX.Element;
 };
 
-export const Drawer: FunctionComponent<DrawerProps> = ({
+export const DrawerWithLink: FunctionComponent<DrawerProps> = ({
   title,
   link,
   optional = false,

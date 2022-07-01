@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "../components/form/Checkbox";
 import { RadioButtons } from "../components/form/RadioButtons";
 import { TextInput } from "../components/form/TextInput";
 import { GameRoundForm } from "../components/GameRoundForm";
 import { GameRound } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
-import { Drawer } from "../components/general/Drawer";
+import { DrawerWithEvent } from "../components/general/DrawerWithEvent";
+import { DrawerWithLink } from "../components/general/DrawerWithLink";
 import { useLocalStorage } from "../components/general/store";
 
 const Home: NextPage = () => {
@@ -138,16 +139,42 @@ const Home: NextPage = () => {
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
   const [cocAccepted, setCocAccepted] = useLocalStorage("cocAccepted", false);
 
+  const [hasActivatedAtLeastOne, setHasActivatedAtLeastOne] = useState(false);
+  useEffect(() => {
+    setHasActivatedAtLeastOne(likeToPlay || likeToMaster || kioskDuration > 0);
+  }, [likeToPlay, likeToMaster, kioskDuration]);
+
+  const [hasErrors, setHasErrors] = useState(false);
+
+  useEffect(() => {
+    setHasErrors(
+      !hasActivatedAtLeastOne ||
+        !cocAccepted ||
+        hasNoSlots ||
+        (likeToPlay && hasNoGenre) ||
+        (likeToMaster &&
+          gameRounds.filter((round) => round.active).length === 0)
+    );
+  }, [
+    hasActivatedAtLeastOne,
+    cocAccepted,
+    hasNoSlots,
+    likeToPlay,
+    hasNoGenre,
+    likeToMaster,
+    gameRounds,
+  ]);
+
   return (
     <>
       <h1>Übersicht</h1>
-      <Drawer title="Kontaktdaten" link="/kontaktdaten" type="success">
+      <DrawerWithLink title="Kontaktdaten" link="/kontaktdaten" type="success">
         <>
           Name: <strong>{name}</strong>
           <br /> E-Mail: <strong>{email}</strong>
         </>
-      </Drawer>
-      <Drawer title="Begleitung" link="/begleitung" optional={true}>
+      </DrawerWithLink>
+      <DrawerWithLink title="Begleitung" link="/begleitung" optional={true}>
         <>
           <strong>
             {companions.length === 0
@@ -156,15 +183,15 @@ const Home: NextPage = () => {
           </strong>
           <span> ({companions.length})</span>
         </>
-      </Drawer>
-      <Drawer title="Zeit" link="/zeit" {...timeProps}>
+      </DrawerWithLink>
+      <DrawerWithLink title="Zeit" link="/zeit" {...timeProps}>
         <div>
           {timeSlots
             .filter((slot) => slot.state)
             .map((slot) => slot.label)
             .join(" / ")}
         </div>
-      </Drawer>
+      </DrawerWithLink>
       <h2>Spieler:innen</h2>
       <p>
         Möchtest du gerne Mitspielen, dann fülle die folgenden Informationen
@@ -178,7 +205,7 @@ const Home: NextPage = () => {
           </span>
         </Checkbox>
       </div>
-      <Drawer
+      <DrawerWithLink
         title="Vorlieben"
         link="/mitspielen"
         {...vorliebenProps}
@@ -194,7 +221,7 @@ const Home: NextPage = () => {
           </strong>
           <span> ({GENRE_LIST.filter((genre) => genre.state).length})</span>
         </>
-      </Drawer>
+      </DrawerWithLink>
       <h2>Spielleiter:innen</h2>
       <p>
         Möchtest du ein oder mehrere Spielrunden leiten, dann erfasse diese in
@@ -253,6 +280,45 @@ const Home: NextPage = () => {
           </span>
         </Checkbox>
       </div>
+      {hasErrors ? (
+        <AlertBox>
+          <div className="content">
+            <p>Deine Anmeldung ist aktuell noch nicht gültig:</p>
+            <ul style={{ margin: 0 }}>
+              {hasNoSlots && (
+                <li>Bitte wähle mindestens einen Zeitslot aus.</li>
+              )}
+              {!hasActivatedAtLeastOne && (
+                <li>
+                  Bitte wähle mindestens eine Option aus: <br /> Als Spieler:in
+                  mitspielen, eine Spielrunde leiten oder am Kiosk aushelfen.
+                </li>
+              )}
+              {likeToPlay && hasNoGenre && (
+                <li>(Spieler:innen) Bitte wähle mindestens ein Genre aus.</li>
+              )}
+              {likeToMaster &&
+                gameRounds.filter((round) => round.active).length === 0 && (
+                  <li>
+                    (Spielleiter:innen) Bitte füge mindestens eine Spielrunde
+                    hinzu.
+                  </li>
+                )}
+              {!cocAccepted && (
+                <li>Bitte akzeptiere unseren Verhaltenskodex.</li>
+              )}
+            </ul>
+          </div>
+        </AlertBox>
+      ) : (
+        <DrawerWithEvent
+          type="success"
+          title="Deine Anmeldung ist gültig"
+          event={() => console.log("clicked")}
+        >
+          <p>Bitte speichere deine Anmeldung.</p>
+        </DrawerWithEvent>
+      )}
     </>
   );
 };

@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import { Checkbox } from "../components/form/Checkbox";
 import { RadioButtons } from "../components/form/RadioButtons";
+import { TextInput } from "../components/form/TextInput";
 import { GameRoundForm } from "../components/GameRoundForm";
 import { GameRound } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
@@ -134,6 +135,7 @@ const Home: NextPage = () => {
     });
   };
 
+  const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
   return (
     <>
       <h1>Übersicht</h1>
@@ -216,6 +218,24 @@ const Home: NextPage = () => {
         abzuschätzen, wie gross das Interesse an Verpflegung ist.
       </p>
       <RadioButtons state={food} setter={updateFoodValue} />
+      <h2>Helfen</h2>
+      <p>
+        Um während beiden Tagen den Kiosk betreiben zu können, benötigen wir
+        freiwillige Helfer an der Kasse.
+      </p>
+      <p>
+        Falls du dir es dir vorstellen kannst, uns zwischen den Spielrunden
+        auszuhelfen, trage bitte im folgendem Feld ein, wie lange du bereit
+        wärst, am Kiosk mitzuhelfen.
+      </p>
+      <TextInput
+        label="Wie lange wärst du bereit an der Kiosk-Kasse zu helfen?"
+        state={kioskDuration}
+        setter={(val) => setKioskDuration(Number(val))}
+        placeholder="Zeit"
+        type="number"
+        clue="Dauer in Stunden"
+      />
     </>
   );
 };

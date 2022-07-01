@@ -136,6 +136,8 @@ const Home: NextPage = () => {
   };
 
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
+  const [cocAccepted, setCocAccepted] = useLocalStorage("cocAccepted", false);
+
   return (
     <>
       <h1>Übersicht</h1>
@@ -236,6 +238,21 @@ const Home: NextPage = () => {
         type="number"
         clue="Dauer in Stunden"
       />
+      <h2>Anmeldung abschliessen</h2>
+      <div>
+        <Checkbox state={cocAccepted} setter={setCocAccepted}>
+          <span>
+            Ja, ich habe den
+            <a
+              href="https://rollenspieltage.ch/verhaltenskodex/"
+              target="_blank"
+            >
+              Verhaltenskodex
+            </a>
+            gelesen und werde mich daran halten.
+          </span>
+        </Checkbox>
+      </div>
     </>
   );
 };

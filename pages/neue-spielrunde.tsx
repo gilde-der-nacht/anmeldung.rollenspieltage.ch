@@ -64,7 +64,6 @@ const Spielleiten: NextPage = () => {
   }, [name, duration, minPlayerCount, maxPlayerCount]);
 
   const updateRepetitionValue = (num: number) => {
-    console.log(num, "update");
     setRepetition((currVal) => {
       return { ...currVal, currentValue: num };
     });

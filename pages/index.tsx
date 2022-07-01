@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
+import { useState } from "react";
 import { Checkbox } from "../components/form/Checkbox";
+import { RadioButtons } from "../components/form/RadioButtons";
 import { GameRoundForm } from "../components/GameRoundForm";
 import { GameRound } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
@@ -112,6 +114,25 @@ const Home: NextPage = () => {
     "gameRounds",
     []
   );
+  const [food, setFood] = useState({
+    name: "food",
+    currentValue: 1,
+    options: [
+      {
+        label: "Ja, ich verpflege mich gerne vor Ort.",
+        value: 0,
+      },
+      {
+        label: "Nein, ich werde für meine Verpflegung selbst sorgen.",
+        value: 1,
+      },
+    ],
+  });
+  const updateFoodValue = (num: number) => {
+    setFood((currVal) => {
+      return { ...currVal, currentValue: num };
+    });
+  };
 
   return (
     <>
@@ -185,6 +206,16 @@ const Home: NextPage = () => {
       <div>
         <GameRoundForm gameRounds={gameRounds} isActive={likeToMaster} />
       </div>
+      <h2>Verpflegung</h2>
+      <p>
+        Ein Kiosk steht während den Öffnungszeiten zur Verfügung und am Mittag
+        und am Abend kochen wir etwas Leckeres für euch.
+      </p>
+      <p>
+        Folgende Umfrage ist nicht verbindlich, sondern hilft uns ungefähr
+        abzuschätzen, wie gross das Interesse an Verpflegung ist.
+      </p>
+      <RadioButtons state={food} setter={updateFoodValue} />
     </>
   );
 };

@@ -1,11 +1,22 @@
 import { NextPage } from "next";
+import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { ButtonWithEvent } from "../components/form/ButtonWithEvent";
 import { RadioButtons } from "../components/form/RadioButtons";
 import { TextInput } from "../components/form/TextInput";
+import {
+  addGameRound,
+  GameRound,
+  getRandomId,
+} from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
+import { useLocalStorage } from "../components/general/store";
 
 const Spielleiten: NextPage = () => {
+  const [gameRounds, setGameRounds] = useLocalStorage<GameRound[]>(
+    "gameRounds",
+    []
+  );
   const [name, setName] = useState("");
   const [duration, setDuration] = useState(120);
   const [minPlayerCount, setMinPlayerCount] = useState(3);
@@ -79,6 +90,20 @@ const Spielleiten: NextPage = () => {
     if (generalError) {
       return;
     }
+    addGameRound(
+      {
+        id: getRandomId(),
+        name,
+        duration,
+        minPlayerCount,
+        maxPlayerCount,
+        repetition: repetition.currentValue,
+        active: true,
+      },
+      setGameRounds
+    );
+
+    Router.push("/");
   };
 
   return (

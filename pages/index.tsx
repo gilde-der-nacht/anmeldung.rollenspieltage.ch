@@ -273,6 +273,7 @@ const Home: NextPage = () => {
             <a
               href="https://rollenspieltage.ch/verhaltenskodex/"
               target="_blank"
+              rel="noreferrer"
             >
               Verhaltenskodex
             </a>

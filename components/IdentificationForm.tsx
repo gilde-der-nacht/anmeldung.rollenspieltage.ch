@@ -27,7 +27,7 @@ export const IdentificationForm = ({
   useEffect(() => {
     setLocalName(name);
     setLocalEmail(email);
-  }, []);
+  });
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();

@@ -74,22 +74,25 @@ const Spielleiten: NextPage = () => {
     e.preventDefault();
     if (name.trim().length < 1) {
       setGeneralError(true);
+      return;
     }
     if (duration < 15) {
       setGeneralError(true);
+      return;
     }
     if (duration > 180) {
       setGeneralError(true);
+      return;
     }
     if (minPlayerCount < 0) {
       setGeneralError(true);
+      return;
     }
     if (minPlayerCount > maxPlayerCount) {
       setGeneralError(true);
-    }
-    if (generalError) {
       return;
     }
+
     addGameRound(
       {
         id: getRandomId(),

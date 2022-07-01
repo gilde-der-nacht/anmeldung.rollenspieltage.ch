@@ -5,10 +5,8 @@ import { ButtonWithEvent } from "../components/form/ButtonWithEvent";
 import { RadioButtons } from "../components/form/RadioButtons";
 import { TextInput } from "../components/form/TextInput";
 import {
-  addGameRound,
   GameRound,
   getGameRoundById,
-  getRandomId,
   updateGameRound,
 } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
@@ -98,22 +96,25 @@ const SpielrundeAnpassen: NextPage = () => {
     e.preventDefault();
     if (name.trim().length < 1) {
       setGeneralError(true);
+      return;
     }
     if (duration < 15) {
       setGeneralError(true);
+      return;
     }
     if (duration > 180) {
       setGeneralError(true);
+      return;
     }
     if (minPlayerCount < 0) {
       setGeneralError(true);
+      return;
     }
     if (minPlayerCount > maxPlayerCount) {
       setGeneralError(true);
-    }
-    if (generalError) {
       return;
     }
+
     updateGameRound(
       {
         id,

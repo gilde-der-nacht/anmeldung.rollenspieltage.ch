@@ -121,11 +121,13 @@ const Home: NextPage = () => {
     currentValue: 1,
     options: [
       {
-        label: "Ja, ich verpflege mich gerne vor Ort.",
+        label: <span>Ja, ich verpflege mich gerne vor Ort.</span>,
         value: 0,
       },
       {
-        label: "Nein, ich werde für meine Verpflegung selbst sorgen.",
+        label: (
+          <span>Nein, ich werde für meine Verpflegung selbst sorgen.</span>
+        ),
         value: 1,
       },
     ],

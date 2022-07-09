@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 
 type RadioOption = {
-  label: string;
+  label: JSX.Element;
   value: number;
 };
 

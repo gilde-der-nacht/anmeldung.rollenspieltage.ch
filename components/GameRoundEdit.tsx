@@ -24,15 +24,29 @@ export const GameRoundEdit = ({ gameRound, onSubmit, onDelete }: FormProps) => {
     currentValue: 0,
     options: [
       {
-        label: "einmalig",
+        label: (
+          <span>
+            einmalig
+            <small style={{ fontWeight: "normal", paddingLeft: "1rem" }}>
+              (Samstag ODER Sonntag)
+            </small>
+          </span>
+        ),
         value: 0,
       },
       {
-        label: "einmal pro Tag",
+        label: (
+          <span>
+            einmal pro Tag
+            <small style={{ fontWeight: "normal", paddingLeft: "1rem" }}>
+              (Samstag UND Sonntag)
+            </small>
+          </span>
+        ),
         value: 1,
       },
       {
-        label: "gerne auch mehrmals",
+        label: <span>gerne auch mehrmals</span>,
         value: 2,
       },
     ],

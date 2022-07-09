@@ -12,10 +12,6 @@ const Mitspielen: NextPage = () => {
   const [horror, setHorror] = useLocalStorage("horror", false);
   const [crime, setCrime] = useLocalStorage("crime", false);
   const [modern, setModern] = useLocalStorage("modern", false);
-  const [cyberpunk, setCyberpunk] = useLocalStorage("cyberpunk", false);
-  const [steampunk, setSteampunk] = useLocalStorage("steampunk", false);
-  const [western, setWestern] = useLocalStorage("western", false);
-  const [history, setHistory] = useLocalStorage("history", false);
 
   const GENRE_LIST = [
     { state: fantasy, setter: setFantasy, label: "Fantasy" },
@@ -23,47 +19,16 @@ const Mitspielen: NextPage = () => {
     { state: horror, setter: setHorror, label: "Horror" },
     { state: crime, setter: setCrime, label: "Krimi" },
     { state: modern, setter: setModern, label: "Modern" },
-    {
-      state: cyberpunk,
-      setter: setCyberpunk,
-      label: "Cyberpunk",
-    },
-    {
-      state: steampunk,
-      setter: setSteampunk,
-      label: "Steampunk",
-    },
-    { state: western, setter: setWestern, label: "Western" },
-    { state: history, setter: setHistory, label: "Geschichte" },
   ];
 
   const [noGenreSelected, setNoGenreSelected] = useState(true);
 
   useEffect(() => {
     const hasNoGenre =
-      [
-        fantasy,
-        scifi,
-        horror,
-        crime,
-        modern,
-        cyberpunk,
-        steampunk,
-        western,
-        history,
-      ].filter((genre) => genre).length === 0;
+      [fantasy, scifi, horror, crime, modern].filter((genre) => genre)
+        .length === 0;
     setNoGenreSelected(hasNoGenre);
-  }, [
-    fantasy,
-    scifi,
-    horror,
-    crime,
-    modern,
-    cyberpunk,
-    steampunk,
-    western,
-    history,
-  ]);
+  }, [fantasy, scifi, horror, crime, modern]);
 
   return (
     <>

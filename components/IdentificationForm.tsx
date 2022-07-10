@@ -2,6 +2,8 @@ import Router from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ButtonWithEvent } from "./form/ButtonWithEvent";
 import { TextInput } from "./form/TextInput";
+import { AlertBox } from "./general/AlertBox";
+import { register } from "./general/server";
 import { checkEmail, checkName } from "./general/store";
 
 type FormProps = {
@@ -23,6 +25,8 @@ export const IdentificationForm = ({
   const [localEmail, setLocalEmail] = useState("");
   const [localNameHasErrors, setLocalNameHasErrors] = useState(false);
   const [localEmailHasErrors, setLocalEmailHasErrors] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasNetworkError, setHasNetworkError] = useState(false);
 
   useEffect(() => {
     setLocalName(name);
@@ -30,20 +34,63 @@ export const IdentificationForm = ({
   }, []);
 
   function handleSubmit(e: React.SyntheticEvent) {
+    setIsLoading(true);
     e.preventDefault();
     setLocalNameHasErrors(!checkName(localName));
     setLocalEmailHasErrors(!checkEmail(localEmail));
     if (localNameHasErrors || localEmailHasErrors) {
+      setIsLoading(false);
       return;
     }
-    setName(localName.trim());
-    setEmail(localEmail);
-    Router.push("/");
-    // TODO: Send to backend
+
+    if (!initial) {
+      setIsLoading(false);
+      setName(localName.trim());
+      setEmail(localEmail);
+      Router.push("/");
+      return;
+    }
+
+    register(localName, localEmail)
+      .then((res) => {
+        console.log({ res });
+        setIsLoading(false);
+        if (res.ok) {
+          setName(localName.trim());
+          setEmail(localEmail);
+          Router.push("/");
+        } else {
+          setHasNetworkError(true);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.error({ err });
+        setHasNetworkError(true);
+      });
+  }
+
+  if (isLoading) {
+    return (
+      <AlertBox>
+        <span>Bitte warten...</span>
+      </AlertBox>
+    );
   }
 
   return (
     <>
+      {hasNetworkError && (
+        <AlertBox>
+          <span>
+            Leider ist ein Fehler aufgetreten. Versuche es erneut. Sollte das
+            Problem weiterhin bestehen,
+            <a href="https://rollenspieltage.ch/kontakt/" target="_blank">
+              bitten wir dich uns umgehend zu kontaktieren!
+            </a>
+          </span>
+        </AlertBox>
+      )}
       <form onSubmit={handleSubmit} className="content">
         <TextInput
           state={localName}

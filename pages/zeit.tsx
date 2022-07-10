@@ -12,7 +12,7 @@ const Begleitung: NextPage = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const sec = queryParams.get("secret") || secret;
     setSecret(sec);
-  }, [secret]);
+  }, [secret, setSecret]);
   const [timeSlotSaturday1, setTimeSlotSaturday1] = useLocalStorage(
     "timeSlotSaturday1",
     false

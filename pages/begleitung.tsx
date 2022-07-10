@@ -13,7 +13,7 @@ const Begleitung: NextPage = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const sec = queryParams.get("secret") || secret;
     setSecret(sec);
-  }, [secret]);
+  }, [secret, setSecret]);
 
   return (
     <>

@@ -19,7 +19,7 @@ const Mitspielen: NextPage = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const sec = queryParams.get("secret") || secret;
     setSecret(sec);
-  }, [secret]);
+  }, [secret, setSecret]);
 
   const GENRE_LIST = [
     { state: fantasy, setter: setFantasy, label: "Fantasy" },

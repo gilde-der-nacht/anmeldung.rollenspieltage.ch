@@ -20,7 +20,7 @@ const Home: NextPage = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const sec = queryParams.get("secret") || secret;
     setSecret(sec);
-  }, [secret]);
+  }, [secret, setSecret]);
   const [companion1, setCompanion1] = useLocalStorage("companion1", "");
   const [companion2, setCompanion2] = useLocalStorage("companion2", "");
   const companions = [companion1, companion2].filter((c) => c.length > 0);
@@ -129,7 +129,7 @@ const Home: NextPage = () => {
   });
   useEffect(() => {
     setCatering(food.currentValue);
-  }, [food]);
+  }, [food, setCatering]);
   const updateFoodValue = (num: number) => {
     setFood((currVal) => {
       return { ...currVal, currentValue: num };

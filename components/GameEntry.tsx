@@ -19,7 +19,7 @@ export const GameEntry = ({ game, isActive }: GameEntryProps) => {
     const queryParams = new URLSearchParams(window.location.search);
     const sec = queryParams.get("secret") || secret;
     setSecret(sec);
-  }, [secret]);
+  }, [secret, setSecret]);
 
   return (
     <div className={"event-entry gray" + (isActive ? "" : " inactive")}>

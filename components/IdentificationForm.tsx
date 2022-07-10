@@ -26,7 +26,7 @@ export const IdentificationForm = ({
     const queryParams = new URLSearchParams(window.location.search);
     const sec = queryParams.get("secret") || secret;
     setSecret(sec);
-  }, [secret]);
+  }, [secret, setSecret]);
   const [localName, setLocalName] = useState("");
   const [localEmail, setLocalEmail] = useState("");
   const [localNameHasErrors, setLocalNameHasErrors] = useState(false);

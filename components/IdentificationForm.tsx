@@ -65,15 +65,20 @@ export const IdentificationForm = ({
 
     register(localName, localEmail)
       .then((res) => {
-        console.log({ res });
         setIsLoading(false);
         if (res.ok) {
-          setName(localName.trim());
-          setEmail(localEmail);
-          Router.push("/" + getSecretQuery(secret));
+          return res.json();
         } else {
           setHasNetworkError(true);
+          throw new Error(`${res.status}: ${res.statusText}`);
         }
+      })
+      .then((data) => {
+        const sec: string = data["secret"];
+        setSecret(data["secret"]);
+        setName(localName.trim());
+        setEmail(localEmail);
+        Router.push("/" + getSecretQuery(sec));
       })
       .catch((err) => {
         setIsLoading(false);
@@ -97,7 +102,11 @@ export const IdentificationForm = ({
           <span>
             Leider ist ein Fehler aufgetreten. Versuche es erneut. Sollte das
             Problem weiterhin bestehen,
-            <a href="https://rollenspieltage.ch/kontakt/" target="_blank" rel="noreferrer">
+            <a
+              href="https://rollenspieltage.ch/kontakt/"
+              target="_blank"
+              rel="noreferrer"
+            >
               bitten wir dich uns umgehend zu kontaktieren!
             </a>
           </span>

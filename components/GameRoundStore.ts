@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { saveToServer } from "./general/server";
 
 export type GameRound = {
     id: string;
@@ -17,7 +18,7 @@ export const getRandomId = () => {
 export const addGameRound = (newGameRound: GameRound, setter: Dispatch<SetStateAction<GameRound[]>>) => {
     setter((prevState) => {
         return [...prevState, newGameRound];
-    })
+    });
 }
 
 export const updateGameRound = (existingGameRound: GameRound, setter: Dispatch<SetStateAction<GameRound[]>>) => {
@@ -29,7 +30,7 @@ export const updateGameRound = (existingGameRound: GameRound, setter: Dispatch<S
                 return round;
             }
         }))];
-    })
+    });
 }
 
 export const getGameRoundById = (id: string, state: GameRound[]) => {

@@ -1,10 +1,12 @@
 import { NextPage } from "next";
+import { useEffect } from "react";
 import { GameRoundEdit } from "../components/GameRoundEdit";
 import {
   addGameRound,
   GameRound,
-  getRandomId
+  getRandomId,
 } from "../components/GameRoundStore";
+import { saveToServer } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
 
 const Spielleiten: NextPage = () => {
@@ -12,6 +14,12 @@ const Spielleiten: NextPage = () => {
     "gameRounds",
     []
   );
+  const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   return (
     <>
@@ -37,7 +45,10 @@ const Spielleiten: NextPage = () => {
           repetition: 0,
           active: true,
         }}
-        onSubmit={(gameRound) => addGameRound(gameRound, setGameRounds)}
+        onSubmit={(gameRound) => {
+          addGameRound(gameRound, setGameRounds);
+          saveToServer(secret);
+        }}
       />
     </>
   );

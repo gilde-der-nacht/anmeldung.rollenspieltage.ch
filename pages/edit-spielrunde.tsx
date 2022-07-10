@@ -7,6 +7,7 @@ import {
   updateGameRound,
 } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
+import { saveToServer } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
 
 const SpielrundeAnpassen: NextPage = () => {
@@ -14,6 +15,12 @@ const SpielrundeAnpassen: NextPage = () => {
     "gameRounds",
     []
   );
+  const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   const [gameRound, setGameRound] = useState<GameRound>({
     id: "",
@@ -57,10 +64,14 @@ const SpielrundeAnpassen: NextPage = () => {
       ) : (
         <GameRoundEdit
           gameRound={gameRound}
-          onSubmit={(gameRound) => updateGameRound(gameRound, setGameRounds)}
-          onDelete={(gameRound) =>
-            updateGameRound({ ...gameRound, active: false }, setGameRounds)
-          }
+          onSubmit={(gameRound) => {
+            updateGameRound(gameRound, setGameRounds);
+            saveToServer(secret);
+          }}
+          onDelete={(gameRound) => {
+            updateGameRound({ ...gameRound, active: false }, setGameRounds);
+            saveToServer(secret);
+          }}
         />
       )}
     </>

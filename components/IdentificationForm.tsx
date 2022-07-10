@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ButtonWithEvent } from "./form/ButtonWithEvent";
 import { TextInput } from "./form/TextInput";
 import { AlertBox } from "./general/AlertBox";
-import { getSecretQuery, register } from "./general/server";
+import { getSecretQuery, register, saveToServer } from "./general/server";
 import { checkEmail, checkName, useLocalStorage } from "./general/store";
 
 type FormProps = {
@@ -22,6 +22,11 @@ export const IdentificationForm = ({
   initial,
 }: FormProps) => {
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
   const [localName, setLocalName] = useState("");
   const [localEmail, setLocalEmail] = useState("");
   const [localNameHasErrors, setLocalNameHasErrors] = useState(false);
@@ -48,6 +53,7 @@ export const IdentificationForm = ({
       setIsLoading(false);
       setName(localName.trim());
       setEmail(localEmail);
+      saveToServer(secret);
       Router.push("/" + getSecretQuery(secret));
       return;
     }

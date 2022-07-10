@@ -8,6 +8,11 @@ import { useLocalStorage } from "../components/general/store";
 
 const Begleitung: NextPage = () => {
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
   const [timeSlotSaturday1, setTimeSlotSaturday1] = useLocalStorage(
     "timeSlotSaturday1",
     false
@@ -170,7 +175,7 @@ const Begleitung: NextPage = () => {
             <p>Bitte wähle mindestens einen Slot aus.</p>
           </AlertBox>
         )}
-        <ButtonWithLink link={"/" + getSecretQuery(secret)} type="success">
+        <ButtonWithLink link={"/" + getSecretQuery(secret)} type="success" saveOnClick={true}>
           <span> Speichern & Zurück </span>
         </ButtonWithLink>
       </form>

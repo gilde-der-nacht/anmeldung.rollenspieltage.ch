@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import { GameRound } from "./GameRoundStore";
 import { getSecretQuery } from "./general/server";
 import { useLocalStorage } from "./general/store";
@@ -14,6 +15,11 @@ type GameEntryProps = {
 
 export const GameEntry = ({ game, isActive }: GameEntryProps) => {
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   return (
     <div className={"event-entry gray" + (isActive ? "" : " inactive")}>

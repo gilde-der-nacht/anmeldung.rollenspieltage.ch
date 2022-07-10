@@ -8,13 +8,18 @@ import { GameRound } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
 import { DrawerWithEvent } from "../components/general/DrawerWithEvent";
 import { DrawerWithLink } from "../components/general/DrawerWithLink";
-import { getSecretQuery } from "../components/general/server";
+import { getSecretQuery, saveToServer } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
 
 const Home: NextPage = () => {
   const [name, setName] = useLocalStorage("name", "");
   const [email, setEmail] = useLocalStorage("email", "");
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
   const [companion1, setCompanion1] = useLocalStorage("companion1", "");
   const [companion2, setCompanion2] = useLocalStorage("companion2", "");
   const companions = [companion1, companion2].filter((c) => c.length > 0);
@@ -104,6 +109,7 @@ const Home: NextPage = () => {
     "gameRounds",
     []
   );
+  const [catering, setCatering] = useLocalStorage("catering", 1);
   const [food, setFood] = useState({
     name: "food",
     currentValue: 1,
@@ -120,10 +126,14 @@ const Home: NextPage = () => {
       },
     ],
   });
+  useEffect(() => {
+    setCatering(food.currentValue);
+  }, [food]);
   const updateFoodValue = (num: number) => {
     setFood((currVal) => {
       return { ...currVal, currentValue: num };
     });
+    saveToServer(secret);
   };
 
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
@@ -202,7 +212,13 @@ const Home: NextPage = () => {
         aus.
       </p>
       <div>
-        <Checkbox state={likeToPlay} setter={setLikeToPlay}>
+        <Checkbox
+          state={likeToPlay}
+          setter={(newState) => {
+            setLikeToPlay(newState);
+            saveToServer(secret);
+          }}
+        >
           <span>
             Ja, ich möchte gerne in einer oder mehreren Rollenspielrunden
             mitspielen.
@@ -232,7 +248,13 @@ const Home: NextPage = () => {
         diesem Bereich.
       </p>
       <div>
-        <Checkbox state={likeToMaster} setter={setLikeToMaster}>
+        <Checkbox
+          state={likeToMaster}
+          setter={(newState) => {
+            setLikeToMaster(newState);
+            saveToServer(secret);
+          }}
+        >
           <span>
             Ja, ich möchte gerne eine oder mehrere Rollenspielrunden leiten.
           </span>
@@ -264,14 +286,23 @@ const Home: NextPage = () => {
       <TextInput
         label="Wie lange wärst du bereit an der Kiosk-Kasse zu helfen?"
         state={kioskDuration}
-        setter={(val) => setKioskDuration(Number(val))}
+        setter={(val) => {
+          setKioskDuration(Number(val));
+          saveToServer(secret);
+        }}
         placeholder="Zeit"
         type="number"
         clue="Dauer in Stunden"
       />
       <h2>Anmeldung abschliessen</h2>
       <div>
-        <Checkbox state={cocAccepted} setter={setCocAccepted}>
+        <Checkbox
+          state={cocAccepted}
+          setter={(newState) => {
+            setCocAccepted(newState);
+            saveToServer(secret);
+          }}
+        >
           <span>
             Ja, ich habe den
             <a

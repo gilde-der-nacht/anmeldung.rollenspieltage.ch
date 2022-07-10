@@ -54,6 +54,11 @@ export const GameRoundEdit = ({ gameRound, onSubmit, onDelete }: FormProps) => {
     ],
   });
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   useEffect(() => {
     setId(gameRound.id);
@@ -125,7 +130,7 @@ export const GameRoundEdit = ({ gameRound, onSubmit, onDelete }: FormProps) => {
       active: true,
     });
 
-    Router.push("/");
+    Router.push("/" + getSecretQuery(secret));
   };
 
   const handleDelete = (e: React.SyntheticEvent) => {

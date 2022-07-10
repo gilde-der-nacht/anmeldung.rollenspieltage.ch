@@ -6,6 +6,7 @@ import { AlertBox } from "../components/general/AlertBox";
 import ArrowIcon from "../components/icons/ArrowIcon";
 import { useLocalStorage } from "../components/general/store";
 import { getSecretQuery } from "../components/general/server";
+import { ButtonWithLink } from "../components/form/ButtonWithLink";
 
 const Mitspielen: NextPage = () => {
   const [fantasy, setFantasy] = useLocalStorage("fantasy", false);
@@ -14,6 +15,11 @@ const Mitspielen: NextPage = () => {
   const [crime, setCrime] = useLocalStorage("crime", false);
   const [modern, setModern] = useLocalStorage("modern", false);
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   const GENRE_LIST = [
     { state: fantasy, setter: setFantasy, label: "Fantasy" },
@@ -64,12 +70,9 @@ const Mitspielen: NextPage = () => {
             <p>Bitte wähle mindestens ein Genre aus.</p>
           </AlertBox>
         )}
-        <Link href={"/" + getSecretQuery(secret)}>
-          <a className="button button-success">
-            <ArrowIcon />
-            <span> Speichern & Zurück </span>
-          </a>
-        </Link>
+        <ButtonWithLink link={"/" + getSecretQuery(secret)} type="success" saveOnClick={true}>
+          <span> Speichern & Zurück </span>
+        </ButtonWithLink>
       </form>
     </>
   );

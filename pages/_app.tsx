@@ -8,8 +8,10 @@ import {
   useLocalStorage,
 } from "../components/general/store";
 import "../styles/global.css";
-import { loadServerData } from "../components/general/server";
+import { getSecretQuery, loadServerData } from "../components/general/server";
 import { AlertBox } from "../components/general/AlertBox";
+import { GameRound } from "../components/GameRoundStore";
+import Router from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +20,53 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [name, setName] = useLocalStorage("name", "");
   const [email, setEmail] = useLocalStorage("email", "");
   const [secret, setSecret] = useLocalStorage("secret", "");
+  const [companion1, setCompanion1] = useLocalStorage("companion1", "");
+  const [companion2, setCompanion2] = useLocalStorage("companion2", "");
+  const [timeSlotSaturday1, setTimeSlotSaturday1] = useLocalStorage(
+    "timeSlotSaturday1",
+    false
+  );
+  const [timeSlotSaturday2, setTimeSlotSaturday2] = useLocalStorage(
+    "timeSlotSaturday2",
+    false
+  );
+  const [timeSlotSaturday3, setTimeSlotSaturday3] = useLocalStorage(
+    "timeSlotSaturday3",
+    false
+  );
+  const [timeSlotSaturday4, setTimeSlotSaturday4] = useLocalStorage(
+    "timeSlotSaturday4",
+    false
+  );
+  const [timeSlotSunday1, setTimeSlotSunday1] = useLocalStorage(
+    "timeSlotSunday1",
+    false
+  );
+  const [timeSlotSunday2, setTimeSlotSunday2] = useLocalStorage(
+    "timeSlotSunday2",
+    false
+  );
+  const [timeSlotSunday3, setTimeSlotSunday3] = useLocalStorage(
+    "timeSlotSunday3",
+    false
+  );
+  const [fantasy, setFantasy] = useLocalStorage("fantasy", false);
+  const [scifi, setScifi] = useLocalStorage("scifi", false);
+  const [horror, setHorror] = useLocalStorage("horror", false);
+  const [crime, setCrime] = useLocalStorage("crime", false);
+  const [modern, setModern] = useLocalStorage("modern", false);
+  const [likeToPlay, setLikeToPlay] = useLocalStorage("likeToPlay", true);
+  const [likeToMaster, setLikeToMaster] = useLocalStorage(
+    "likeToMaster",
+    false
+  );
+  const [gameRounds, setGameRounds] = useLocalStorage<GameRound[]>(
+    "gameRounds",
+    []
+  );
+  const [catering, setCatering] = useLocalStorage("catering", 1);
+  const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
+  const [cocAccepted, setCocAccepted] = useLocalStorage("cocAccepted", false);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -30,6 +79,27 @@ function MyApp({ Component, pageProps }: AppProps) {
           const privateBody: StoreData = data["privateBody"];
           setName(privateBody.name);
           setEmail(privateBody.email);
+          setCompanion1(privateBody.companion1);
+          setCompanion2(privateBody.companion2);
+          setTimeSlotSaturday1(privateBody.timeSlotSaturday1);
+          setTimeSlotSaturday2(privateBody.timeSlotSaturday2);
+          setTimeSlotSaturday3(privateBody.timeSlotSaturday3);
+          setTimeSlotSaturday4(privateBody.timeSlotSaturday4);
+          setTimeSlotSunday1(privateBody.timeSlotSunday1);
+          setTimeSlotSunday2(privateBody.timeSlotSunday2);
+          setTimeSlotSunday3(privateBody.timeSlotSunday3);
+          setLikeToPlay(privateBody.likeToPlay);
+          setFantasy(privateBody.fantasy);
+          setScifi(privateBody.scifi);
+          setHorror(privateBody.horror);
+          setCrime(privateBody.crime);
+          setModern(privateBody.modern);
+          setLikeToMaster(privateBody.likeToMaster);
+          setGameRounds(privateBody.gameRounds);
+          setCatering(privateBody.catering);
+          setKioskDuration(privateBody.kioskDuration);
+          setCocAccepted(privateBody.cocAccepted);
+          setSecret(privateBody.secret);
           setIsLoading(false);
         })
         .catch((err) => {

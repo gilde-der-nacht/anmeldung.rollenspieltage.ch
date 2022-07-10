@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { FunctionComponent } from "react";
+import Router from "next/router";
+import { FunctionComponent, useEffect } from "react";
+import { saveToServer } from "../general/server";
+import { useLocalStorage } from "../general/store";
 import ArrowIcon from "../icons/ArrowIcon";
 
 type ButtonProps = {
@@ -8,6 +11,7 @@ type ButtonProps = {
   icon?: JSX.Element;
   isDisabled?: boolean;
   isSmall?: boolean;
+  saveOnClick?: boolean;
   children: JSX.Element;
 };
 
@@ -17,8 +21,16 @@ export const ButtonWithLink: FunctionComponent<ButtonProps> = ({
   icon = <ArrowIcon />,
   isDisabled = false,
   isSmall = false,
+  saveOnClick = false,
   children,
 }) => {
+  const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
+
   if (isDisabled) {
     return (
       <a
@@ -30,11 +42,20 @@ export const ButtonWithLink: FunctionComponent<ButtonProps> = ({
       </a>
     );
   }
+
+  function onClick() {
+    if (saveOnClick) {
+      saveToServer(secret);
+    }
+    Router.push(link);
+  }
+
   return (
-    <Link href={link}>
-      <a className={"button button-" + type + (isSmall ? " button-small" : "")}>
-        {icon} {children}
-      </a>
-    </Link>
+    <a
+      className={"button button-" + type + (isSmall ? " button-small" : "")}
+      onClick={onClick}
+    >
+      {icon} {children}
+    </a>
   );
 };

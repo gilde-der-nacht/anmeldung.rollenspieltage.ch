@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ButtonWithLink } from "./form/ButtonWithLink";
 import { GameRoundOverview } from "./GameRoundOverview";
 import { GameRound } from "./GameRoundStore";
@@ -13,6 +14,11 @@ type FormProps = {
 
 export const GameRoundForm = ({ isActive, gameRounds }: FormProps) => {
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   return (
     <div className="content">

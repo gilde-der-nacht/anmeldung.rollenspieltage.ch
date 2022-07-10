@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useEffect } from "react";
 import { ButtonWithLink } from "../components/form/ButtonWithLink";
 import { TextInput } from "../components/form/TextInput";
 import { getSecretQuery } from "../components/general/server";
@@ -8,6 +9,11 @@ const Begleitung: NextPage = () => {
   const [companion1, setCompanion1] = useLocalStorage("companion1", "");
   const [companion2, setCompanion2] = useLocalStorage("companion2", "");
   const [secret, setSecret] = useLocalStorage("secret", "");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sec = queryParams.get("secret") || secret;
+    setSecret(sec);
+  }, [secret]);
 
   return (
     <>
@@ -46,7 +52,11 @@ const Begleitung: NextPage = () => {
           label="Begleitung #2"
           placeholder="Begleitung #2"
         />
-        <ButtonWithLink link={"/" + getSecretQuery(secret)} type="success">
+        <ButtonWithLink
+          link={"/" + getSecretQuery(secret)}
+          type="success"
+          saveOnClick={true}
+        >
           <span> Speichern & Zurück </span>
         </ButtonWithLink>
       </form>

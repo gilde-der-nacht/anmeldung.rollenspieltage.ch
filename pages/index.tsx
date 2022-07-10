@@ -8,11 +8,13 @@ import { GameRound } from "../components/GameRoundStore";
 import { AlertBox } from "../components/general/AlertBox";
 import { DrawerWithEvent } from "../components/general/DrawerWithEvent";
 import { DrawerWithLink } from "../components/general/DrawerWithLink";
+import { getSecretQuery } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
 
 const Home: NextPage = () => {
   const [name, setName] = useLocalStorage("name", "");
   const [email, setEmail] = useLocalStorage("email", "");
+  const [secret, setSecret] = useLocalStorage("secret", "");
   const [companion1, setCompanion1] = useLocalStorage("companion1", "");
   const [companion2, setCompanion2] = useLocalStorage("companion2", "");
   const companions = [companion1, companion2].filter((c) => c.length > 0);
@@ -62,7 +64,7 @@ const Home: NextPage = () => {
   const timeProps = hasNoSlots
     ? {
         error: (
-          <AlertBox link="/zeit">
+          <AlertBox link={"/zeit" + getSecretQuery(secret)}>
             <p>Bitte wähle mindestens einen Slot aus.</p>
           </AlertBox>
         ),
@@ -102,7 +104,7 @@ const Home: NextPage = () => {
     likeToPlay && hasNoGenre
       ? {
           error: (
-            <AlertBox link="/mitspielen">
+            <AlertBox link={"/mitspielen" + getSecretQuery(secret)}>
               <p>Bitte wähle mindestens ein Genre aus.</p>
             </AlertBox>
           ),
@@ -170,13 +172,21 @@ const Home: NextPage = () => {
   return (
     <>
       <h1>Übersicht</h1>
-      <DrawerWithLink title="Kontaktdaten" link="/kontaktdaten" type="success">
+      <DrawerWithLink
+        title="Kontaktdaten"
+        link={"/kontaktdaten" + getSecretQuery(secret)}
+        type="success"
+      >
         <>
           Name: <strong>{name}</strong>
           <br /> E-Mail: <strong>{email}</strong>
         </>
       </DrawerWithLink>
-      <DrawerWithLink title="Begleitung" link="/begleitung" optional={true}>
+      <DrawerWithLink
+        title="Begleitung"
+        link={"/begleitung" + getSecretQuery(secret)}
+        optional={true}
+      >
         <>
           <strong>
             {companions.length === 0
@@ -186,7 +196,11 @@ const Home: NextPage = () => {
           <span> ({companions.length})</span>
         </>
       </DrawerWithLink>
-      <DrawerWithLink title="Zeit" link="/zeit" {...timeProps}>
+      <DrawerWithLink
+        title="Zeit"
+        link={"/zeit" + getSecretQuery(secret)}
+        {...timeProps}
+      >
         <div>
           {timeSlots.filter((slot) => slot.state).length === 0
             ? "Keinen Zeitslot ausgewählt"
@@ -211,7 +225,7 @@ const Home: NextPage = () => {
       </div>
       <DrawerWithLink
         title="Vorlieben"
-        link="/mitspielen"
+        link={"/mitspielen" + getSecretQuery(secret)}
         {...vorliebenProps}
         disabled={!likeToPlay}
       >

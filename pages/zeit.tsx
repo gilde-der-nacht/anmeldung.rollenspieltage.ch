@@ -3,9 +3,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ButtonWithLink } from "../components/form/ButtonWithLink";
 import { Checkbox } from "../components/form/Checkbox";
 import { AlertBox } from "../components/general/AlertBox";
+import { getSecretQuery } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
 
 const Begleitung: NextPage = () => {
+  const [secret, setSecret] = useLocalStorage("secret", "");
   const [timeSlotSaturday1, setTimeSlotSaturday1] = useLocalStorage(
     "timeSlotSaturday1",
     false
@@ -168,7 +170,7 @@ const Begleitung: NextPage = () => {
             <p>Bitte wähle mindestens einen Slot aus.</p>
           </AlertBox>
         )}
-        <ButtonWithLink link="/" type="success">
+        <ButtonWithLink link={"/" + getSecretQuery(secret)} type="success">
           <span> Speichern & Zurück </span>
         </ButtonWithLink>
       </form>

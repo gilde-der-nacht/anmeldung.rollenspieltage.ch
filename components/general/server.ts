@@ -16,3 +16,14 @@ export function register(name: string, email: string): Promise<Response> {
         }
     )
 }
+
+export function loadServerData(secret: string): Promise<Response> {
+    return fetch(API_BASE_URL + "/resources/" + PROJECT_ID + "/registration/" + secret);
+}
+
+export function getSecretQuery(secret: string, isFirstQuery = true): string {
+    if (secret.trim().length > 0) {
+        return (isFirstQuery ? "?" : "&") + "secret=" + secret.trim();
+    }
+    return "";
+}

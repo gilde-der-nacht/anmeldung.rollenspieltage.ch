@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ButtonWithEvent } from "./form/ButtonWithEvent";
 import { TextInput } from "./form/TextInput";
 import { AlertBox } from "./general/AlertBox";
-import { register } from "./general/server";
-import { checkEmail, checkName } from "./general/store";
+import { getSecretQuery, register } from "./general/server";
+import { checkEmail, checkName, useLocalStorage } from "./general/store";
 
 type FormProps = {
   name: string;
@@ -21,6 +21,7 @@ export const IdentificationForm = ({
   setEmail,
   initial,
 }: FormProps) => {
+  const [secret, setSecret] = useLocalStorage("secret", "");
   const [localName, setLocalName] = useState("");
   const [localEmail, setLocalEmail] = useState("");
   const [localNameHasErrors, setLocalNameHasErrors] = useState(false);
@@ -47,7 +48,7 @@ export const IdentificationForm = ({
       setIsLoading(false);
       setName(localName.trim());
       setEmail(localEmail);
-      Router.push("/");
+      Router.push("/" + getSecretQuery(secret));
       return;
     }
 
@@ -58,7 +59,7 @@ export const IdentificationForm = ({
         if (res.ok) {
           setName(localName.trim());
           setEmail(localEmail);
-          Router.push("/");
+          Router.push("/" + getSecretQuery(secret));
         } else {
           setHasNetworkError(true);
         }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { GameRound } from "./GameRoundStore";
+import { getSecretQuery } from "./general/server";
+import { useLocalStorage } from "./general/store";
 import ArrowIcon from "./icons/ArrowIcon";
 import CalendardIcon from "./icons/CalendarIcon";
 import ClockIcon from "./icons/ClockIcon";
@@ -11,6 +13,8 @@ type GameEntryProps = {
 };
 
 export const GameEntry = ({ game, isActive }: GameEntryProps) => {
+  const [secret, setSecret] = useLocalStorage("secret", "");
+
   return (
     <div className={"event-entry gray" + (isActive ? "" : " inactive")}>
       <h1 className="event-title">{game.name}</h1>
@@ -45,7 +49,11 @@ export const GameEntry = ({ game, isActive }: GameEntryProps) => {
       <ul role="list" className="event-links">
         <li>
           {isActive && (
-            <Link href={"/edit-spielrunde?id=" + game.id}>
+            <Link
+              href={
+                "/edit-spielrunde?id=" + game.id + getSecretQuery(secret, false)
+              }
+            >
               <a className="event-link">
                 <ArrowIcon />
                 <span> Anpassen</span>

@@ -5,6 +5,8 @@ import { RadioButtons } from "./form/RadioButtons";
 import { TextInput } from "./form/TextInput";
 import { GameRound } from "./GameRoundStore";
 import { AlertBox } from "./general/AlertBox";
+import { getSecretQuery } from "./general/server";
+import { useLocalStorage } from "./general/store";
 import DeleteIcon from "./icons/DeleteIcon";
 
 type FormProps = {
@@ -51,6 +53,7 @@ export const GameRoundEdit = ({ gameRound, onSubmit, onDelete }: FormProps) => {
       },
     ],
   });
+  const [secret, setSecret] = useLocalStorage("secret", "");
 
   useEffect(() => {
     setId(gameRound.id);
@@ -139,7 +142,7 @@ export const GameRoundEdit = ({ gameRound, onSubmit, onDelete }: FormProps) => {
       repetition: repetition.currentValue,
       active: false,
     });
-    Router.push("/");
+    Router.push("/" + getSecretQuery(secret));
   };
 
   return (

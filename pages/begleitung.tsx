@@ -1,16 +1,18 @@
 import { NextPage } from "next";
 import { ButtonWithLink } from "../components/form/ButtonWithLink";
 import { TextInput } from "../components/form/TextInput";
+import { getSecretQuery } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
 
 const Begleitung: NextPage = () => {
   const [companion1, setCompanion1] = useLocalStorage("companion1", "");
   const [companion2, setCompanion2] = useLocalStorage("companion2", "");
+  const [secret, setSecret] = useLocalStorage("secret", "");
 
   return (
     <>
       <h1>
-        Begleitung{" "}
+        <span>Begleitung</span>{" "}
         <small style={{ color: "var(--clr-gray-8)" }}>(Optional)</small>
       </h1>
       <p>
@@ -44,7 +46,7 @@ const Begleitung: NextPage = () => {
           label="Begleitung #2"
           placeholder="Begleitung #2"
         />
-        <ButtonWithLink link="/" type="success">
+        <ButtonWithLink link={"/" + getSecretQuery(secret)} type="success">
           <span> Speichern & Zurück </span>
         </ButtonWithLink>
       </form>

@@ -21,6 +21,11 @@ const Spielleiten: NextPage = () => {
     setSecret(sec);
   }, [secret]);
 
+  const [recentlySaved, setRecentlySaved] = useLocalStorage(
+    "setRecentlySaved",
+    false
+  );
+
   return (
     <>
       <h1>Spielleiter:innen: Neue Spielrunde</h1>
@@ -48,6 +53,7 @@ const Spielleiten: NextPage = () => {
         onSubmit={(gameRound) => {
           addGameRound(gameRound, setGameRounds);
           saveToServer(secret);
+          setRecentlySaved(false);
         }}
       />
     </>

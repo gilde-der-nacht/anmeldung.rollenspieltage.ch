@@ -4,17 +4,19 @@ import AlertIcon from "../icons/AlertIcon";
 
 type AlertBoxProps = {
   link?: string;
+  type?: string;
   children: JSX.Element;
 };
 
 export const AlertBox: FunctionComponent<AlertBoxProps> = ({
   link = "",
+  type = "danger",
   children,
 }) => {
   const Box = (
-    <div className="box-danger">
+    <div className={"box-" + type}>
       <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-        <AlertIcon />
+        {type === "danger" && <AlertIcon />}
         {children}
       </div>
     </div>

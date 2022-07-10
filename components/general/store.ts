@@ -64,6 +64,7 @@ export type StoreData = {
   kioskDuration: number,
   cocAccepted: boolean,
   secret: string,
+  recentlySaved: boolean,
 }
 
 export function getStateFromLocalStorage() {
@@ -89,9 +90,10 @@ export function getStateFromLocalStorage() {
     "gameRounds",
     "catering",
     "kioskDuration",
-    "cocAccepted"
+    "cocAccepted",
+    "recentlySaved",
   ].map((key) => {
-    const value: string = localStorage.getItem(key) ?? "-missing-";
+    const value: string = localStorage.getItem(key) ?? JSON.stringify("-missing-");
     return { [key]: JSON.parse(value) };
   })
   return data.reduce((obj, item) => ({ ...obj, ...item }), {});

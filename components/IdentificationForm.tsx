@@ -33,6 +33,10 @@ export const IdentificationForm = ({
   const [localEmailHasErrors, setLocalEmailHasErrors] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasNetworkError, setHasNetworkError] = useState(false);
+  const [recentlySaved, setRecentlySaved] = useLocalStorage(
+    "setRecentlySaved",
+    false
+  );
 
   useEffect(() => {
     setLocalName(name);
@@ -54,6 +58,7 @@ export const IdentificationForm = ({
       setName(localName.trim());
       setEmail(localEmail);
       saveToServer(secret);
+      setRecentlySaved(false);
       Router.push("/" + getSecretQuery(secret));
       return;
     }

@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { saveToServer } from "./general/server";
 
 export type GameRound = {
     id: string;

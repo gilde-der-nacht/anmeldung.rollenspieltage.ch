@@ -134,6 +134,7 @@ const Home: NextPage = () => {
       return { ...currVal, currentValue: num };
     });
     saveToServer(secret);
+    setRecentlySaved(false);
   };
 
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
@@ -164,6 +165,10 @@ const Home: NextPage = () => {
     likeToMaster,
     gameRounds,
   ]);
+  const [recentlySaved, setRecentlySaved] = useLocalStorage(
+    "setRecentlySaved",
+    false
+  );
 
   return (
     <>
@@ -217,6 +222,7 @@ const Home: NextPage = () => {
           setter={(newState) => {
             setLikeToPlay(newState);
             saveToServer(secret);
+            setRecentlySaved(false);
           }}
         >
           <span>
@@ -253,6 +259,7 @@ const Home: NextPage = () => {
           setter={(newState) => {
             setLikeToMaster(newState);
             saveToServer(secret);
+            setRecentlySaved(false);
           }}
         >
           <span>
@@ -289,6 +296,7 @@ const Home: NextPage = () => {
         setter={(val) => {
           setKioskDuration(Number(val));
           saveToServer(secret);
+          setRecentlySaved(false);
         }}
         placeholder="Zeit"
         type="number"
@@ -301,6 +309,7 @@ const Home: NextPage = () => {
           setter={(newState) => {
             setCocAccepted(newState);
             saveToServer(secret);
+            setRecentlySaved(false);
           }}
         >
           <span>
@@ -346,13 +355,23 @@ const Home: NextPage = () => {
             </ul>
           </div>
         </AlertBox>
+      ) : recentlySaved ? (
+        <AlertBox type="success">
+          <div>
+            <h3>Deine Anmeldung ist gültig und gespeichert.</h3>
+            <p>Du solltest eine E-Mail von uns erhalten haben. Sollte dies nicht der Fall sein, <a href="https://rollenspieltage.ch/kontakt/">dann melde dich bitte umgehend bei uns.</a></p>
+          </div>
+        </AlertBox>
       ) : (
         <DrawerWithEvent
-          type="success"
-          title="Deine Anmeldung ist gültig"
-          event={() => console.log("clicked")}
+          type="danger"
+          title="Deine Anmeldung ist noch nicht gespeichert!"
+          event={() => {
+            saveToServer(secret, true);
+            setRecentlySaved(true);
+          }}
         >
-          <p>Bitte speichere deine Anmeldung.</p>
+          <p>Deine Anmeldung ist gültig.</p>
         </DrawerWithEvent>
       )}
     </>

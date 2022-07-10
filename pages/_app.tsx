@@ -1,17 +1,16 @@
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import { IdentificationForm } from "../components/IdentificationForm";
+import { GameRound } from "../components/GameRoundStore";
+import { AlertBox } from "../components/general/AlertBox";
 import Layout from "../components/general/Layout";
+import { loadServerData } from "../components/general/server";
 import {
   checkIdentification,
   StoreData,
-  useLocalStorage,
+  useLocalStorage
 } from "../components/general/store";
+import { IdentificationForm } from "../components/IdentificationForm";
 import "../styles/global.css";
-import { getSecretQuery, loadServerData } from "../components/general/server";
-import { AlertBox } from "../components/general/AlertBox";
-import { GameRound } from "../components/GameRoundStore";
-import Router from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,6 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [catering, setCatering] = useLocalStorage("catering", 1);
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
   const [cocAccepted, setCocAccepted] = useLocalStorage("cocAccepted", false);
+  const [recentlySaved, setRecentlySaved] = useLocalStorage("setRecentlySaved", false);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -100,6 +100,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           setKioskDuration(privateBody.kioskDuration);
           setCocAccepted(privateBody.cocAccepted);
           setSecret(privateBody.secret);
+          setRecentlySaved(privateBody.recentlySaved);
           setIsLoading(false);
         })
         .catch((err) => {

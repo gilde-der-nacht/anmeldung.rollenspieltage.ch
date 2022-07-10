@@ -10,6 +10,7 @@ import { DrawerWithEvent } from "../components/general/DrawerWithEvent";
 import { DrawerWithLink } from "../components/general/DrawerWithLink";
 import { getSecretQuery, saveToServer } from "../components/general/server";
 import { useLocalStorage } from "../components/general/store";
+import { SaveAndFeedbackBox } from "../components/SaveAndFeedbackBox";
 
 const Home: NextPage = () => {
   const [name, setName] = useLocalStorage("name", "");
@@ -172,6 +173,21 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <SaveAndFeedbackBox
+        hasErrors={hasErrors}
+        hasNoSlots={hasNoSlots}
+        hasActivatedAtLeastOne={hasActivatedAtLeastOne}
+        likeToPlay={likeToPlay}
+        hasNoGenre={hasNoGenre}
+        likeToMaster={likeToMaster}
+        noGameRounds={gameRounds.filter((round) => round.active).length === 0}
+        cocAccepted={cocAccepted}
+        recentlySaved={recentlySaved}
+        secret={secret}
+        setRecentlySaved={(bool) => {
+          setRecentlySaved(bool);
+        }}
+      />
       <h1>Übersicht</h1>
       <DrawerWithLink
         title="Kontaktdaten"
@@ -325,55 +341,21 @@ const Home: NextPage = () => {
           </span>
         </Checkbox>
       </div>
-      {hasErrors ? (
-        <AlertBox>
-          <div className="content">
-            <p>Deine Anmeldung ist aktuell noch nicht gültig:</p>
-            <ul style={{ margin: 0 }}>
-              {hasNoSlots && (
-                <li>Bitte wähle mindestens einen Zeitslot aus.</li>
-              )}
-              {!hasActivatedAtLeastOne && (
-                <li>
-                  Bitte wähle mindestens eine Option aus: <br /> Als Spieler:in
-                  mitspielen, eine Spielrunde leiten oder am Kiosk aushelfen.
-                </li>
-              )}
-              {likeToPlay && hasNoGenre && (
-                <li>(Spieler:innen) Bitte wähle mindestens ein Genre aus.</li>
-              )}
-              {likeToMaster &&
-                gameRounds.filter((round) => round.active).length === 0 && (
-                  <li>
-                    (Spielleiter:innen) Bitte füge mindestens eine Spielrunde
-                    hinzu.
-                  </li>
-                )}
-              {!cocAccepted && (
-                <li>Bitte akzeptiere unseren Verhaltenskodex.</li>
-              )}
-            </ul>
-          </div>
-        </AlertBox>
-      ) : recentlySaved ? (
-        <AlertBox type="success">
-          <div>
-            <h3>Deine Anmeldung ist gültig und gespeichert.</h3>
-            <p>Du solltest eine E-Mail von uns erhalten haben. Sollte dies nicht der Fall sein, <a href="https://rollenspieltage.ch/kontakt/">dann melde dich bitte umgehend bei uns.</a></p>
-          </div>
-        </AlertBox>
-      ) : (
-        <DrawerWithEvent
-          type="danger"
-          title="Deine Anmeldung ist noch nicht gespeichert!"
-          event={() => {
-            saveToServer(secret, true);
-            setRecentlySaved(true);
-          }}
-        >
-          <p>Deine Anmeldung ist gültig.</p>
-        </DrawerWithEvent>
-      )}
+      <SaveAndFeedbackBox
+        hasErrors={hasErrors}
+        hasNoSlots={hasNoSlots}
+        hasActivatedAtLeastOne={hasActivatedAtLeastOne}
+        likeToPlay={likeToPlay}
+        hasNoGenre={hasNoGenre}
+        likeToMaster={likeToMaster}
+        noGameRounds={gameRounds.filter((round) => round.active).length === 0}
+        cocAccepted={cocAccepted}
+        recentlySaved={recentlySaved}
+        secret={secret}
+        setRecentlySaved={(bool) => {
+          setRecentlySaved(bool);
+        }}
+      />
     </>
   );
 };

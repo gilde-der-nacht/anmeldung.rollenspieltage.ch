@@ -65,7 +65,7 @@ export const SaveAndFeedbackBox = ({
           <p>
             Du solltest eine E-Mail von uns erhalten haben. Sollte dies nicht
             der Fall sein,{" "}
-            <a href="https://rollenspieltage.ch/kontakt/">
+            <a href="https://rollenspieltage.ch/kontakt/" target="_blank" rel="noreferrer">
               dann melde dich bitte umgehend bei uns.
             </a>
           </p>

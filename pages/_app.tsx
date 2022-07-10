@@ -124,7 +124,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <span>
             Leider ist ein Fehler aufgetreten. Lade die Seite neu. Sollte das
             Problem weiterhin bestehen,
-            <a href="https://rollenspieltage.ch/kontakt/" target="_blank">
+            <a href="https://rollenspieltage.ch/kontakt/" target="_blank" rel="noreferrer">
               bitten wir dich uns umgehend zu kontaktieren!
             </a>
           </span>

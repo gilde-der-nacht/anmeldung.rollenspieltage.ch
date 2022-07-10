@@ -76,26 +76,12 @@ const Home: NextPage = () => {
   const [horror, setHorror] = useLocalStorage("horror", false);
   const [crime, setCrime] = useLocalStorage("crime", false);
   const [modern, setModern] = useLocalStorage("modern", false);
-  const [cyberpunk, setCyberpunk] = useLocalStorage("cyberpunk", false);
-  const [steampunk, setSteampunk] = useLocalStorage("steampunk", false);
-  const [western, setWestern] = useLocalStorage("western", false);
-  const [history, setHistory] = useLocalStorage("history", false);
   const GENRE_LIST = [
     { state: fantasy, label: "Fantasy" },
     { state: scifi, label: "Science Fiction" },
     { state: horror, label: "Horror" },
     { state: crime, label: "Krimi" },
     { state: modern, label: "Modern" },
-    {
-      state: cyberpunk,
-      label: "Cyberpunk",
-    },
-    {
-      state: steampunk,
-      label: "Steampunk",
-    },
-    { state: western, label: "Western" },
-    { state: history, label: "Geschichte" },
   ];
 
   const hasNoGenre = GENRE_LIST.filter((genre) => genre.state).length === 0;

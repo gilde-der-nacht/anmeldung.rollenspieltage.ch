@@ -38,3 +38,16 @@ export function checkEmail(email: string) {
 export function checkIdentification(name: string, email: string): boolean {
   return checkName(name) && checkEmail(email);
 }
+
+export type StoreData = {
+  name: string,
+  email: string
+}
+
+export function getStateFromLocalStorage() {
+  const data = ["name", "email", "companion1", "companion2", "timeSlotSaturday1", "timeSlotSaturday2", "timeSlotSaturday3", "timeSlotSaturday4", "timeSlotSunday1", "timeSlotSunday2", "timeSlotSunday3",].map(key => {
+    const value = localStorage.getItem(key) ?? "-missing-";
+    return { [key]: value };
+  })
+  return data.reduce((obj, item) => (obj[item.key] = item.value, obj), {});
+}

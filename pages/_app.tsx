@@ -7,7 +7,7 @@ import { loadServerData } from "../components/general/server";
 import {
   checkIdentification,
   StoreData,
-  useLocalStorage
+  useLocalStorage,
 } from "../components/general/store";
 import { IdentificationForm } from "../components/IdentificationForm";
 import "../styles/global.css";
@@ -66,7 +66,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [catering, setCatering] = useLocalStorage("catering", 1);
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
   const [cocAccepted, setCocAccepted] = useLocalStorage("cocAccepted", false);
-  const [recentlySaved, setRecentlySaved] = useLocalStorage("setRecentlySaved", false);
+  const [recentlySaved, setRecentlySaved] = useLocalStorage(
+    "recentlySaved",
+    false
+  );
+  const [atLeastOnceSaved, setAtLeastOnceSaved] = useLocalStorage(
+    "atLeastOnceSaved",
+    false
+  );
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -101,6 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           setCocAccepted(privateBody.cocAccepted);
           setSecret(privateBody.secret);
           setRecentlySaved(privateBody.recentlySaved);
+          setAtLeastOnceSaved(privateBody.atLeastOnceSaved);
           setIsLoading(false);
         })
         .catch((err) => {
@@ -124,7 +132,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <span>
             Leider ist ein Fehler aufgetreten. Lade die Seite neu. Sollte das
             Problem weiterhin bestehen,
-            <a href="https://rollenspieltage.ch/kontakt/" target="_blank" rel="noreferrer">
+            <a
+              href="https://rollenspieltage.ch/kontakt/"
+              target="_blank"
+              rel="noreferrer"
+            >
               bitten wir dich uns umgehend zu kontaktieren!
             </a>
           </span>

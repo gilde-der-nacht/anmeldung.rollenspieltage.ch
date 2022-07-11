@@ -34,7 +34,7 @@ export const IdentificationForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [hasNetworkError, setHasNetworkError] = useState(false);
   const [recentlySaved, setRecentlySaved] = useLocalStorage(
-    "setRecentlySaved",
+    "recentlySaved",
     false
   );
 
@@ -57,8 +57,8 @@ export const IdentificationForm = ({
       setIsLoading(false);
       setName(localName.trim());
       setEmail(localEmail);
-      saveToServer(secret);
       setRecentlySaved(false);
+      saveToServer(secret);
       Router.push("/" + getSecretQuery(secret));
       return;
     }

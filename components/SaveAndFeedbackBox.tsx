@@ -14,6 +14,7 @@ type BoxProps = {
   recentlySaved: boolean;
   secret: string;
   setRecentlySaved: (b: boolean) => void;
+  setAtLeastOnceSaved: (b: boolean) => void;
 };
 
 export const SaveAndFeedbackBox = ({
@@ -28,6 +29,7 @@ export const SaveAndFeedbackBox = ({
   recentlySaved,
   secret,
   setRecentlySaved,
+  setAtLeastOnceSaved,
 }: BoxProps) => {
   if (hasErrors) {
     return (
@@ -65,7 +67,11 @@ export const SaveAndFeedbackBox = ({
           <p>
             Du solltest eine E-Mail von uns erhalten haben. Sollte dies nicht
             der Fall sein,{" "}
-            <a href="https://rollenspieltage.ch/kontakt/" target="_blank" rel="noreferrer">
+            <a
+              href="https://rollenspieltage.ch/kontakt/"
+              target="_blank"
+              rel="noreferrer"
+            >
               dann melde dich bitte umgehend bei uns.
             </a>
           </p>
@@ -78,8 +84,9 @@ export const SaveAndFeedbackBox = ({
       type="danger"
       title="Deine Anmeldung ist noch nicht gespeichert!"
       event={() => {
-        saveToServer(secret, true);
         setRecentlySaved(true);
+        setAtLeastOnceSaved(true);
+        saveToServer(secret, true);
       }}
     >
       <p>Deine Anmeldung ist gültig.</p>

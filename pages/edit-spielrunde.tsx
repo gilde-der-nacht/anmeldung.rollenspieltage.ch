@@ -51,7 +51,7 @@ const SpielrundeAnpassen: NextPage = () => {
     });
   }, [gameRounds]);
   const [recentlySaved, setRecentlySaved] = useLocalStorage(
-    "setRecentlySaved",
+    "recentlySaved",
     false
   );
 
@@ -70,13 +70,13 @@ const SpielrundeAnpassen: NextPage = () => {
           gameRound={gameRound}
           onSubmit={(gameRound) => {
             updateGameRound(gameRound, setGameRounds);
-            saveToServer(secret);
             setRecentlySaved(false);
+            saveToServer(secret);
           }}
           onDelete={(gameRound) => {
             updateGameRound({ ...gameRound, active: false }, setGameRounds);
-            saveToServer(secret);
             setRecentlySaved(false);
+            saveToServer(secret);
           }}
         />
       )}

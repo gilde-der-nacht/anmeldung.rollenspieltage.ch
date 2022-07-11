@@ -41,60 +41,69 @@ export function checkIdentification(name: string, email: string): boolean {
 }
 
 export type StoreData = {
-  name: string,
-  email: string,
-  companion1: string,
-  companion2: string,
-  timeSlotSaturday1: boolean,
-  timeSlotSaturday2: boolean,
-  timeSlotSaturday3: boolean,
-  timeSlotSaturday4: boolean,
-  timeSlotSunday1: boolean,
-  timeSlotSunday2: boolean,
-  timeSlotSunday3: boolean,
-  likeToPlay: boolean,
-  fantasy: boolean,
-  scifi: boolean,
-  horror: boolean,
-  crime: boolean,
-  modern: boolean,
-  likeToMaster: boolean,
-  gameRounds: GameRound[],
-  catering: number,
-  kioskDuration: number,
-  cocAccepted: boolean,
-  secret: string,
-  recentlySaved: boolean,
-}
+  name: string;
+  email: string;
+  companion1: string;
+  companion2: string;
+  timeSlotSaturday1: boolean;
+  timeSlotSaturday2: boolean;
+  timeSlotSaturday3: boolean;
+  timeSlotSaturday4: boolean;
+  timeSlotSunday1: boolean;
+  timeSlotSunday2: boolean;
+  timeSlotSunday3: boolean;
+  likeToPlay: boolean;
+  fantasy: boolean;
+  scifi: boolean;
+  horror: boolean;
+  crime: boolean;
+  modern: boolean;
+  likeToMaster: boolean;
+  gameRounds: GameRound[];
+  catering: number;
+  kioskDuration: number;
+  cocAccepted: boolean;
+  secret: string;
+  recentlySaved: boolean;
+  atLeastOnceSaved: boolean;
+};
 
 export function getStateFromLocalStorage() {
-  const data = [
-    "name",
-    "email",
-    "companion1",
-    "companion2",
-    "timeSlotSaturday1",
-    "timeSlotSaturday2",
-    "timeSlotSaturday3",
-    "timeSlotSaturday4",
-    "timeSlotSunday1",
-    "timeSlotSunday2",
-    "timeSlotSunday3",
-    "likeToPlay",
-    "fantasy",
-    "scifi",
-    "horror",
-    "crime",
-    "modern",
-    "likeToMaster",
-    "gameRounds",
-    "catering",
-    "kioskDuration",
-    "cocAccepted",
-    "recentlySaved",
-  ].map((key) => {
-    const value: string = localStorage.getItem(key) ?? JSON.stringify("-missing-");
-    return { [key]: JSON.parse(value) };
-  })
-  return data.reduce((obj, item) => ({ ...obj, ...item }), {});
+  return new Promise((resolve) => setTimeout(resolve, 0))
+    .then(() => {
+      const data = [
+        "name",
+        "email",
+        "companion1",
+        "companion2",
+        "timeSlotSaturday1",
+        "timeSlotSaturday2",
+        "timeSlotSaturday3",
+        "timeSlotSaturday4",
+        "timeSlotSunday1",
+        "timeSlotSunday2",
+        "timeSlotSunday3",
+        "likeToPlay",
+        "fantasy",
+        "scifi",
+        "horror",
+        "crime",
+        "modern",
+        "likeToMaster",
+        "gameRounds",
+        "catering",
+        "kioskDuration",
+        "cocAccepted",
+        "recentlySaved",
+        "atLeastOnceSaved",
+      ].map((key) => {
+        const value: string =
+          localStorage.getItem(key) ?? JSON.stringify("-missing-");
+        return { [key]: JSON.parse(value) };
+      });
+      return data;
+    })
+    .then((data) => {
+      return data.reduce((obj, item) => ({ ...obj, ...item }), {});
+    });
 }

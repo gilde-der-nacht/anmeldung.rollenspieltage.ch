@@ -120,9 +120,7 @@ const Home: NextPage = () => {
         value: 0,
       },
       {
-        label: (
-          <span>Das weiss ich aktuell noch nicht.</span>
-        ),
+        label: <span>Das weiss ich aktuell noch nicht.</span>,
         value: 1,
       },
       {
@@ -140,8 +138,8 @@ const Home: NextPage = () => {
     setFood((currVal) => {
       return { ...currVal, currentValue: num };
     });
-    saveToServer(secret);
     setRecentlySaved(false);
+    saveToServer(secret);
   };
 
   const [kioskDuration, setKioskDuration] = useLocalStorage("kioskDuration", 0);
@@ -173,7 +171,11 @@ const Home: NextPage = () => {
     gameRounds,
   ]);
   const [recentlySaved, setRecentlySaved] = useLocalStorage(
-    "setRecentlySaved",
+    "recentlySaved",
+    false
+  );
+  const [atLeastOnceSaved, setAtLeastOnceSaved] = useLocalStorage(
+    "atLeastOnceSaved",
     false
   );
 
@@ -190,9 +192,8 @@ const Home: NextPage = () => {
         cocAccepted={cocAccepted}
         recentlySaved={recentlySaved}
         secret={secret}
-        setRecentlySaved={(bool) => {
-          setRecentlySaved(bool);
-        }}
+        setRecentlySaved={setRecentlySaved}
+        setAtLeastOnceSaved={setAtLeastOnceSaved}
       />
       <h1>Übersicht</h1>
       <DrawerWithLink
@@ -243,8 +244,8 @@ const Home: NextPage = () => {
           state={likeToPlay}
           setter={(newState) => {
             setLikeToPlay(newState);
-            saveToServer(secret);
             setRecentlySaved(false);
+            saveToServer(secret);
           }}
         >
           <span>
@@ -280,8 +281,8 @@ const Home: NextPage = () => {
           state={likeToMaster}
           setter={(newState) => {
             setLikeToMaster(newState);
-            saveToServer(secret);
             setRecentlySaved(false);
+            saveToServer(secret);
           }}
         >
           <span>
@@ -317,8 +318,8 @@ const Home: NextPage = () => {
         state={kioskDuration}
         setter={(val) => {
           setKioskDuration(Number(val));
-          saveToServer(secret);
           setRecentlySaved(false);
+          saveToServer(secret);
         }}
         placeholder="Zeit"
         type="number"
@@ -330,8 +331,8 @@ const Home: NextPage = () => {
           state={cocAccepted}
           setter={(newState) => {
             setCocAccepted(newState);
-            saveToServer(secret);
             setRecentlySaved(false);
+            saveToServer(secret);
           }}
         >
           <span>
@@ -358,9 +359,8 @@ const Home: NextPage = () => {
         cocAccepted={cocAccepted}
         recentlySaved={recentlySaved}
         secret={secret}
-        setRecentlySaved={(bool) => {
-          setRecentlySaved(bool);
-        }}
+        setRecentlySaved={setRecentlySaved}
+        setAtLeastOnceSaved={setAtLeastOnceSaved}
       />
     </>
   );

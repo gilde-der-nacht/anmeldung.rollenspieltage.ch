@@ -31,7 +31,7 @@ export const ButtonWithLink: FunctionComponent<ButtonProps> = ({
     setSecret(sec);
   }, [secret, setSecret]);
   const [recentlySaved, setRecentlySaved] = useLocalStorage(
-    "setRecentlySaved",
+    "recentlySaved",
     false
   );
 
@@ -49,8 +49,8 @@ export const ButtonWithLink: FunctionComponent<ButtonProps> = ({
 
   function onClick() {
     if (saveOnClick) {
-      saveToServer(secret);
       setRecentlySaved(false);
+      saveToServer(secret);
     }
     Router.push(link);
   }

@@ -121,9 +121,15 @@ const Home: NextPage = () => {
       },
       {
         label: (
-          <span>Nein, ich werde für meine Verpflegung selbst sorgen.</span>
+          <span>Das weiss ich aktuell noch nicht.</span>
         ),
         value: 1,
+      },
+      {
+        label: (
+          <span>Nein, ich werde für meine Verpflegung selbst sorgen.</span>
+        ),
+        value: 2,
       },
     ],
   });

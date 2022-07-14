@@ -30,7 +30,7 @@ export function getSecretQuery(secret: string, isFirstQuery = true): string {
   return "";
 }
 
-export function saveToServer(secret: string, sendConfirmation = false) {
+export function saveToServer(secret: string, sendConfirmation = false): Promise<Response> {
   return getStateFromLocalStorage().then((data) => {
     return fetch(
       API_BASE_URL + "/resources/" + PROJECT_ID + "/registration/" + secret,
@@ -41,7 +41,7 @@ export function saveToServer(secret: string, sendConfirmation = false) {
             ...data,
           },
           publicBody: {
-            sendDiscordMsg: true,
+            sendDiscordMsg: sendConfirmation,
             sendMailToApplicant: sendConfirmation,
           },
         }),

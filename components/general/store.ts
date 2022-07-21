@@ -10,7 +10,11 @@ export const useLocalStorage = <T>(
   if (typeof window !== "undefined") {
     const item = localStorage.getItem(storageKey);
     if (item !== null && item.trim().length > 0) {
-      initValue = JSON.parse(item);
+      try {
+        initValue = JSON.parse(item);
+      } catch (_) {
+        console.log(`Problem parsing localStorage item ${storageKey}. Will fallback to ${initValue}.`);
+      }
     }
   }
 

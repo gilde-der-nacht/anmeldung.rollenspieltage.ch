@@ -70,6 +70,9 @@ export type StoreData = {
   secret: string;
   recentlySaved: boolean;
   atLeastOnceSaved: boolean;
+  workshop1: boolean;
+  workshop2: boolean;
+  workshop3: boolean;
 };
 
 export function getStateFromLocalStorage() {
@@ -100,6 +103,9 @@ export function getStateFromLocalStorage() {
         "cocAccepted",
         "recentlySaved",
         "atLeastOnceSaved",
+        "workshop1",
+        "workshop2",
+        "workshop3",
       ].map((key) => {
         const value: string =
           localStorage.getItem(key) ?? JSON.stringify("-missing-");

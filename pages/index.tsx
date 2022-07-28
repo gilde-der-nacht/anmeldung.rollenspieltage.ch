@@ -179,6 +179,30 @@ const Home: NextPage = () => {
     false
   );
 
+  const [workshop1, setWorkshop1] = useLocalStorage("workshop1", false);
+  const [workshop2, setWorkshop2] = useLocalStorage("workshop2", false);
+  const [workshop3, setWorkshop3] = useLocalStorage("workshop3", false);
+  const [workshopSummary, setWorkshopSummary] = useState("");
+  const [workshopCount, setWorkshopCount] = useState(0);
+  useEffect(() => {
+    const sum: string[] = [];
+    if (workshop1) {
+      sum.push("Offene Fragerunde");
+    }
+    if (workshop2) {
+      sum.push("Warum spiele ich überhaupt Rollenspiele?");
+    }
+    if (workshop3) {
+      sum.push("Spielerischer Weltenbau");
+    }
+    setWorkshopCount(sum.length);
+    if (sum.length === 0) {
+      setWorkshopSummary("Keine Workshops ausgewählt");
+    } else {
+      setWorkshopSummary(sum.map((title) => `«${title}»`).join(", "));
+    }
+  }, [workshop1, workshop2, workshop3, setWorkshopSummary, setWorkshopCount]);
+
   return (
     <>
       <SaveAndFeedbackBox
@@ -293,6 +317,19 @@ const Home: NextPage = () => {
       <div>
         <GameRoundForm gameRounds={gameRounds} isActive={likeToMaster} />
       </div>
+      <h2>Workshops</h2>
+      <p>
+        <strong> Rollenspielerfahrungen sind nicht notwendig.</strong>
+      </p>
+      <DrawerWithLink
+        title="Workshops"
+        link={"/workshops" + getSecretQuery(secret)}
+      >
+        <>
+          <strong>{workshopSummary}</strong>
+          <span> ({workshopCount})</span>
+        </>
+      </DrawerWithLink>
       <h2>Verpflegung</h2>
       <p>
         Ein Kiosk steht während den Öffnungszeiten zur Verfügung und am Mittag

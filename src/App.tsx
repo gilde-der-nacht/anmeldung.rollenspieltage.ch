@@ -8,14 +8,17 @@ import { Component, createResource, Match, Switch } from "solid-js";
 const App: Component = () => {
   const [state] = createResource(getServerData);
 
-  const isAlone = () => true;
+  const isAlone = () => state()?.names?.length === 1 ?? true;
+
+  const namesList = (names: string[]): string =>
+    names.join(", ").replace(/, ([^,]*)$/, " und $1");
 
   return (
     <Layout>
       <h1>{isAlone() ? "Dein" : "Euer"} Programm</h1>
       <p>
-        Es folgt {isAlone() ? "dein" : "euer"} persöhnliches Programm für die
-        kommenden Rollenspiele.
+        Es folgt das persönliche Programm für{" "}
+        <strong>{namesList(state()?.names ?? ["..."])}</strong>.
       </p>
       <Box>
         {isAlone() ? "Kommst du" : "Kommt ihr"} verspätet oder{" "}

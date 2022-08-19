@@ -1,5 +1,7 @@
+import { Box } from "@components/Box";
+
 export const NetworkError = () => (
-  <div class="box-danger">
+  <Box isDanger={true}>
     <p>
       Leider ist ein <strong>Netzwerk-Fehler</strong> aufgetreten. Versuche die
       Seite neuzuladen.
@@ -8,5 +10,5 @@ export const NetworkError = () => (
       Erhältst du den Fehler erneut, schreibe uns bitte eine Nachricht per{" "}
       <a href="https://gildedernacht.ch/kontakt/">Kontaktformular</a>.
     </p>
-  </div>
+  </Box>
 );

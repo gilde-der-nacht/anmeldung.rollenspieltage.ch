@@ -1,9 +1,11 @@
 import { getServerData } from "@api/api";
 import { Box } from "@components/Box";
+import { DynamicEntry } from "@components/ProgramEntry";
 import { Layout } from "@layout/Layout";
 import { NetworkError } from "@util/NetworkError";
 import { Progress } from "@util/Progress";
-import { Component, createResource, Match, Switch } from "solid-js";
+import { Component, createResource, For, Match, Switch } from "solid-js";
+import { Dynamic } from "solid-js/web";
 
 const App: Component = () => {
   const [state] = createResource(getServerData);
@@ -32,7 +34,13 @@ const App: Component = () => {
           <NetworkError />
         </Match>
         <Match when={state()}>
-          {(state) => <h2>State konnte geladen werden</h2>}
+          {(state) => (
+            <For each={state.program}>
+              {(entry) => (
+                <Dynamic component={DynamicEntry[entry.identifier]} />
+              )}
+            </For>
+          )}
         </Match>
       </Switch>
       <p>Wir freuen uns auf {isAlone() ? "dich" : "euch"}.</p>

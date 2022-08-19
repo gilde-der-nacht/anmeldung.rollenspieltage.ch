@@ -1,6 +1,19 @@
+export type Identifier =
+  | "nothing"
+  | "lunch"
+  | "dinner"
+  | "helping"
+  | "welcome"
+  | "gameMaster"
+  | "participate"
+  | "workshop";
+
 type Game = {
   title: string;
 };
+
+type DAY = "sa" | "so";
+type HOUR = 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21;
 
 type Nothing = { identifier: "nothing" };
 type Lunch = { identifier: "lunch" };
@@ -11,7 +24,7 @@ type GameMaster = { identifier: "gameMaster"; game: Game };
 type Participate = { identifier: "participate"; game: Game };
 type Workshop = { identifier: "workshop"; game: Game };
 
-type ProgramEntry = { time: number; day: number } & (
+type ProgramEntry = { time: HOUR; day: DAY } & (
   | Nothing
   | Lunch
   | Dinner

@@ -1,4 +1,5 @@
 import { getServerData } from "@api/api";
+import { Box } from "@components/Box";
 import { Layout } from "@layout/Layout";
 import { NetworkError } from "@util/NetworkError";
 import { Progress } from "@util/Progress";
@@ -7,9 +8,22 @@ import { Component, createResource, Match, Switch } from "solid-js";
 const App: Component = () => {
   const [state] = createResource(getServerData);
 
+  const isAlone = () => true;
+
   return (
     <Layout>
-      <h1>Programm</h1>
+      <h1>{isAlone() ? "Dein" : "Euer"} Programm</h1>
+      <p>
+        Es folgt {isAlone() ? "dein" : "euer"} persöhnliches Programm für die
+        kommenden Rollenspiele.
+      </p>
+      <Box>
+        {isAlone() ? "Kommst du" : "Kommt ihr"} verspätet oder{" "}
+        {isAlone() ? "kannst du" : "könnt ihr"} gar nicht teilnehmen (Krankheit,
+        Stau etc.), sendet uns doch bitte eine Nachricht{" "}
+        <a href="https://rollenspieltage.ch/kontakt/">per Kontaktformular</a>{" "}
+        oder {isAlone() ? "rufe" : "ruft"} uns unter <strong>000</strong> an.
+      </Box>
       <Switch fallback={<Progress />}>
         <Match when={typeof state.error !== "undefined"}>
           <NetworkError />
@@ -18,6 +32,14 @@ const App: Component = () => {
           {(state) => <h2>State konnte geladen werden</h2>}
         </Match>
       </Switch>
+      <p>Wir freuen uns auf {isAlone() ? "dich" : "euch"}.</p>
+      <p>
+        Lieben Gruss
+        <br />
+        Thomas, Andy, Adrian, Michelle, Andrea und Oliver
+        <br />
+        <strong>OK Luzerner Rollenspieltage 2022</strong>
+      </p>
     </Layout>
   );
 };

@@ -1,44 +1,94 @@
-import { Identifier, ProgramEntry } from "@util/AppState";
-import { Component, Show } from "solid-js";
+import {
+  GameMaster,
+  Identifier,
+  Participate,
+  ProgramEntry,
+  Workshop,
+} from "@util/AppState";
+import { renderNamesList } from "@util/utils";
+import { Component } from "solid-js";
+import { ProgramEntryBase } from "./ProgrammEntryBase";
 
-const Dinner: Component<ProgramEntry> = (props) => (
-  <div class="event-entry special">
-    <div class="event-background-icon">
-      <i class="fa-duotone fa-stars"></i>
-    </div>
-    <h1 class="event-title">{props.identifier}</h1>
-    <div class="event-details">
-      <div class="event-date">
-        <span class="event-icon">
-          <i class="fa-duotone fa-calendar-range"></i>
-        </span>
-        <span>{props.day}</span>
-      </div>
-      <div class="event-location">
-        <div class="event-icon">
-          <i class="fa-duotone fa-calendar-range"></i>
-        </div>
-        <span>St. Johannes, Luzern</span>
-      </div>
-    </div>
-    <Show when={false}>
-      <div class="event-description content">
-        <p>{props.identifier}</p>
-      </div>
-    </Show>
-  </div>
+const NothingEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase {...props} color="gray" hint="kein persönliches Programm" />
+);
+const LunchEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title="Verpflegungspause"
+    hint="Am Mittag kochen wir etwas Leckeres für euch."
+    icon="pot-food"
+    color="gray"
+  />
+);
+const DinnerEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title="Verpflegungspause"
+    hint="Am Abend kochen wir etwas Leckeres für euch."
+    icon="pot-food"
+    color="gray"
+  />
+);
+const HelpingEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title="Helfen am Kiosk"
+    icon="user-helmet-safety"
+  />
+);
+const WelcomeEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title="Willkommenskomitee (OK)"
+    icon="hand-wave"
+  />
+);
+const GameMasterEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title={(props as GameMaster).game.title}
+    color="danger"
+    icon="dice-d20"
+    gameMaster={(props as GameMaster).game.gameMaster}
+    participants={renderNamesList((props as GameMaster).game.players)}
+  />
+);
+const ParticipateEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title={(props as Participate).game.title}
+    color="success"
+    icon="dice-d6"
+    gameMaster={(props as Participate).game.gameMaster}
+    participants={renderNamesList((props as Participate).game.players)}
+  />
+);
+const WorkshopEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase
+    {...props}
+    title={(props as Workshop).game.title}
+    color="success"
+    icon="waveform-lines"
+    gameMaster={(props as Workshop).game.gameMaster}
+    participants={renderNamesList((props as Workshop).game.players)}
+  />
+);
+const KitchenEntry: Component<ProgramEntry> = (props) => (
+  <ProgramEntryBase {...props} title="Küche (OK)" icon="hat-chef" />
 );
 
 export const DynamicEntry: Record<
   Identifier,
   (props: ProgramEntry) => Component
 > = {
-  nothing: (props) => () => <Dinner {...props} />,
-  lunch: (props) => () => <Dinner {...props} />,
-  dinner: (props) => () => <Dinner {...props} />,
-  helping: (props) => () => <Dinner {...props} />,
-  welcome: (props) => () => <Dinner {...props} />,
-  gameMaster: (props) => () => <Dinner {...props} />,
-  participate: (props) => () => <Dinner {...props} />,
-  workshop: (props) => () => <Dinner {...props} />,
+  nothing: (props) => () => <NothingEntry {...props} />,
+  lunch: (props) => () => <LunchEntry {...props} />,
+  dinner: (props) => () => <DinnerEntry {...props} />,
+  helping: (props) => () => <HelpingEntry {...props} />,
+  welcome: (props) => () => <WelcomeEntry {...props} />,
+  gameMaster: (props) => () => <GameMasterEntry {...props} />,
+  participate: (props) => () => <ParticipateEntry {...props} />,
+  workshop: (props) => () => <WorkshopEntry {...props} />,
+  kitchen: (props) => () => <KitchenEntry {...props} />,
 };

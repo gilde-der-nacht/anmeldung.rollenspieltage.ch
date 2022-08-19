@@ -13,3 +13,9 @@
 progress {
   padding-block: 5rem;
 }
+
+.event-background-icon {
+  font-size: 8em;
+  top: 0;
+  right: -1rem;
+}

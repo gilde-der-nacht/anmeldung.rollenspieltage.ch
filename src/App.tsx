@@ -4,6 +4,7 @@ import { DynamicEntry } from "@components/ProgramEntry";
 import { Layout } from "@layout/Layout";
 import { NetworkError } from "@util/NetworkError";
 import { Progress } from "@util/Progress";
+import { renderNamesList } from "@util/utils";
 import { Component, createResource, For, Match, Switch } from "solid-js";
 import { Dynamic } from "solid-js/web";
 
@@ -12,15 +13,12 @@ const App: Component = () => {
 
   const isAlone = () => state()?.names?.length === 1 ?? true;
 
-  const namesList = (names: string[]): string =>
-    names.join(", ").replace(/, ([^,]*)$/, " und $1");
-
   return (
     <Layout>
       <h1>{isAlone() ? "Dein" : "Euer"} Programm</h1>
       <p>
         Es folgt das persönliche Programm für{" "}
-        <strong>{namesList(state()?.names ?? ["..."])}</strong>.
+        <strong>{renderNamesList(state()?.names ?? ["..."])}</strong>.
       </p>
       <Box>
         {isAlone() ? "Kommst du" : "Kommt ihr"} verspätet oder{" "}
@@ -35,20 +33,28 @@ const App: Component = () => {
         </Match>
         <Match when={state()}>
           {(state) => (
-            <>
-              <h2>Samstag, 27. August 2022</h2>
-              <For each={state.program.filter((e) => e.day === "sa")}>
-                {(entry) => (
-                  <Dynamic component={DynamicEntry[entry.identifier](entry)} />
-                )}
-              </For>
-              <h2>Sonntag, 28. August 2022</h2>
-              <For each={state.program.filter((e) => e.day === "so")}>
-                {(entry) => (
-                  <Dynamic component={DynamicEntry[entry.identifier](entry)} />
-                )}
-              </For>
-            </>
+            <div class="rst-cal">
+              <div>
+                <h2>Samstag, 27. August 2022</h2>
+                <For each={state.program.filter((e) => e.day === "sa")}>
+                  {(entry) => (
+                    <Dynamic
+                      component={DynamicEntry[entry.identifier](entry)}
+                    />
+                  )}
+                </For>
+              </div>
+              <div>
+                <h2>Sonntag, 28. August 2022</h2>
+                <For each={state.program.filter((e) => e.day === "so")}>
+                  {(entry) => (
+                    <Dynamic
+                      component={DynamicEntry[entry.identifier](entry)}
+                    />
+                  )}
+                </For>
+              </div>
+            </div>
           )}
         </Match>
       </Switch>

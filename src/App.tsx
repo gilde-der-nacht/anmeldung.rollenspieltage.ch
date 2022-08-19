@@ -33,27 +33,32 @@ const App: Component = () => {
         </Match>
         <Match when={state()}>
           {(state) => (
-            <div class="rst-cal">
-              <div>
-                <h2>Samstag, 27. August 2022</h2>
-                <For each={state.program.filter((e) => e.day === "sa")}>
-                  {(entry) => (
-                    <Dynamic
-                      component={DynamicEntry[entry.identifier](entry)}
-                    />
-                  )}
-                </For>
-              </div>
-              <div>
-                <h2>Sonntag, 28. August 2022</h2>
-                <For each={state.program.filter((e) => e.day === "so")}>
-                  {(entry) => (
-                    <Dynamic
-                      component={DynamicEntry[entry.identifier](entry)}
-                    />
-                  )}
-                </For>
-              </div>
+            <div class="rst-grid" style="padding-block:2rem">
+              <div></div>
+              <h3 class="centered rst-saturday">Sa, 27.8.</h3>
+              <h3 class="centered rst-sunday">So, 28.8.</h3>
+              <div class="centered">10 Uhr</div>
+              <div class="centered">11 Uhr</div>
+              <div class="centered">12 Uhr</div>
+              <div class="centered">13 Uhr</div>
+              <div class="centered">14 Uhr</div>
+              <div class="centered">15 Uhr</div>
+              <div class="centered">16 Uhr</div>
+              <div class="centered">17 Uhr</div>
+              <div class="centered">18 Uhr</div>
+              <div class="centered">19 Uhr</div>
+              <div class="centered">20 Uhr</div>
+              <div class="centered">21 Uhr</div>
+              <For each={state.program.filter((e) => e.day === "sa")}>
+                {(entry) => (
+                  <Dynamic component={DynamicEntry[entry.identifier](entry)} />
+                )}
+              </For>
+              <For each={state.program.filter((e) => e.day === "so")}>
+                {(entry) => (
+                  <Dynamic component={DynamicEntry[entry.identifier](entry)} />
+                )}
+              </For>
             </div>
           )}
         </Match>

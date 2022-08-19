@@ -21,7 +21,14 @@ export const ProgramEntryBase: Component<Props> = (props) => {
   const merged = mergeProps({ color: "" }, props);
 
   return (
-    <div classList={{ "event-entry": true, [merged.color]: true }}>
+    <div
+      classList={{
+        "event-entry": true,
+        [merged.color]: true,
+        [`duration-${merged.duration}`]: true,
+        [`day-${merged.day}`]: true,
+      }}
+    >
       <Show when={merged.icon}>
         {(icon) => (
           <div class="event-background-icon">
@@ -38,14 +45,6 @@ export const ProgramEntryBase: Component<Props> = (props) => {
         </p>
       </Show>
       <div class="event-details">
-        <div class="event-date">
-          <span class="event-icon">
-            <i class="fa-duotone fa-calendar-range"></i>
-          </span>
-          <span>
-            von {merged.time} bis {merged.time + merged.duration} Uhr
-          </span>
-        </div>
         <Show when={props.gameMaster?.trim()?.length ?? 0 > 0}>
           <div class="event-date">
             <span class="event-icon">

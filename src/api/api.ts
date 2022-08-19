@@ -36,7 +36,7 @@ export const getServerData = async (): Promise<AppState> => {
               },
             },
             { identifier: "kitchen", day: "sa", time: 15, duration: 1 },
-            { identifier: "helping", day: "sa", time: 16, duration: 2 },
+            { identifier: "helping", day: "sa", time: 16, duration: 1 },
             { identifier: "dinner", day: "sa", time: 17, duration: 1 },
             {
               identifier: "workshop",

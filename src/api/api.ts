@@ -7,8 +7,8 @@ export const getServerData = async (): Promise<AppState> => {
         res({
           names: ["Adrian", "Oliver", "Andrea"],
           program: [
-            { identifier: "lunch", day: "sa", time: 10 },
-            { identifier: "helping", day: "sa", time: 11 },
+            { identifier: "lunch", day: "sa", time: 10, duration: 1 },
+            { identifier: "dinner", day: "sa", time: 11, duration: 2 },
           ],
         }),
       500

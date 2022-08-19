@@ -35,11 +35,20 @@ const App: Component = () => {
         </Match>
         <Match when={state()}>
           {(state) => (
-            <For each={state.program}>
-              {(entry) => (
-                <Dynamic component={DynamicEntry[entry.identifier]} />
-              )}
-            </For>
+            <>
+              <h2>Samstag, 27. August 2022</h2>
+              <For each={state.program.filter((e) => e.day === "sa")}>
+                {(entry) => (
+                  <Dynamic component={DynamicEntry[entry.identifier](entry)} />
+                )}
+              </For>
+              <h2>Sonntag, 28. August 2022</h2>
+              <For each={state.program.filter((e) => e.day === "so")}>
+                {(entry) => (
+                  <Dynamic component={DynamicEntry[entry.identifier](entry)} />
+                )}
+              </For>
+            </>
           )}
         </Match>
       </Switch>

@@ -24,7 +24,7 @@ type GameMaster = { identifier: "gameMaster"; game: Game };
 type Participate = { identifier: "participate"; game: Game };
 type Workshop = { identifier: "workshop"; game: Game };
 
-type ProgramEntry = { time: HOUR; day: DAY } & (
+export type ProgramEntry = { time: HOUR; day: DAY; duration: number } & (
   | Nothing
   | Lunch
   | Dinner

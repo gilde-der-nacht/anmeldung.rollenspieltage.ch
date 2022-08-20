@@ -15,10 +15,22 @@ type Props = ProgramEntry & {
   hint?: string;
   gameMaster?: string;
   participants?: string;
+  emptySeats?: number;
 };
 
 export const ProgramEntryBase: Component<Props> = (props) => {
   const merged = mergeProps({ color: "" }, props);
+
+  const emptySeatsOutput = (): string | null => {
+    if (merged.emptySeats && merged.emptySeats > 0) {
+      if (merged.emptySeats === 1) {
+        return "+ 1 freien Platz";
+      } else {
+        return `+ ${merged.emptySeats} freie Plätze`;
+      }
+    }
+    return null;
+  };
 
   return (
     <div
@@ -61,7 +73,8 @@ export const ProgramEntryBase: Component<Props> = (props) => {
               <i class="fa-duotone fa-users"></i>
             </span>
             <span>
-              Teilnehmende <strong>{props.participants}</strong>
+              Teilnehmende <strong>{props.participants}</strong>{" "}
+              {emptySeatsOutput() === null ? "" : `(${emptySeatsOutput()})`}
             </span>
           </div>
         </Show>

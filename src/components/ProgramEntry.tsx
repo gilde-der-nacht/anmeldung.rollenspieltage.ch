@@ -10,7 +10,11 @@ import { Component } from "solid-js";
 import { ProgramEntryBase } from "./ProgrammEntryBase";
 
 const NothingEntry: Component<ProgramEntry> = (props) => (
-  <ProgramEntryBase {...props} color="gray" hint="kein persönliches Programm" />
+  <ProgramEntryBase
+    {...props}
+    color="gray"
+    hint="Kein persönliches Programm. Zeit für spontane Spielrunden."
+  />
 );
 const LunchEntry: Component<ProgramEntry> = (props) => (
   <ProgramEntryBase
@@ -52,6 +56,10 @@ const GameMasterEntry: Component<ProgramEntry> = (props) => (
     icon="dice-d20"
     gameMaster={(props as GameMaster).game.gameMaster}
     participants={renderNamesList((props as GameMaster).game.players)}
+    emptySeats={
+      (props as Participate).game.maxPlayerCount -
+      (props as Participate).game.players.length
+    }
   />
 );
 const ParticipateEntry: Component<ProgramEntry> = (props) => (

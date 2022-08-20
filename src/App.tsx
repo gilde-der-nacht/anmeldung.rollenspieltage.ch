@@ -35,8 +35,6 @@ const App: Component = () => {
           {(state) => (
             <div class="rst-grid" style="padding-block:2rem">
               <div></div>
-              <h3 class="centered rst-saturday">Sa, 27.8.</h3>
-              <h3 class="centered rst-sunday">So, 28.8.</h3>
               <div class="centered">10 Uhr</div>
               <div class="centered">11 Uhr</div>
               <div class="centered">12 Uhr</div>
@@ -49,11 +47,22 @@ const App: Component = () => {
               <div class="centered">19 Uhr</div>
               <div class="centered">20 Uhr</div>
               <div class="centered">21 Uhr</div>
+              <h3 class="centered day-sa">Samstag, 27.8.</h3>
               <For each={state.program.filter((e) => e.day === "sa")}>
                 {(entry) => (
                   <Dynamic component={DynamicEntry[entry.identifier](entry)} />
                 )}
               </For>
+              <div class="rst-only-small"></div>
+              <div class="rst-only-small centered">10 Uhr</div>
+              <div class="rst-only-small centered">11 Uhr</div>
+              <div class="rst-only-small centered">12 Uhr</div>
+              <div class="rst-only-small centered">13 Uhr</div>
+              <div class="rst-only-small centered">14 Uhr</div>
+              <div class="rst-only-small centered">15 Uhr</div>
+              <div class="rst-only-small centered">16 Uhr</div>
+              <div class="rst-only-small centered">17 Uhr</div>
+              <h3 class="centered day-so">Sonntag, 28.8.</h3>
               <For each={state.program.filter((e) => e.day === "so")}>
                 {(entry) => (
                   <Dynamic component={DynamicEntry[entry.identifier](entry)} />

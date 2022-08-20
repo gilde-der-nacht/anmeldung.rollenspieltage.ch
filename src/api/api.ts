@@ -112,7 +112,7 @@ export const getServerData = async (): Promise<AppState> => {
                 maxPlayerCount: 4,
               },
             },
-            { identifier: "welcome", day: "so", time: 17, duration: 2 },
+            { identifier: "welcome", day: "so", time: 17, duration: 1 },
           ],
         }),
       500

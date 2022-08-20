@@ -40,30 +40,6 @@ const App: Component = () => {
 
   return (
     <Layout>
-      <Show when={state.loading || !state()?.hasLoaded}>
-        <h1>Programm</h1>
-        <p>
-          Weitere Anmeldungen für die Rollenspieltage 2022 sind nicht mehr
-          möglich.
-        </p>
-        <h2>Ich möchte gerne spontan teilnehmen</h2>
-        <p>
-          Wie bereits in vergangenen Jahren halten wir ein paar Plätze frei,
-          damit spontane Besucher ebenfalls teilnehmen können.
-        </p>
-        <p>
-          Hast du Fragen, dann nimm bitte mit uns
-          <a href="https://rollenspieltage.ch/kontakt/">Kontakt</a> auf.
-        </p>
-        <h2>Ich habe mich angemeldet</h2>
-        <p>
-          Du solltest einen Link mit deinem persönlichen Programm von uns
-          erhalten haben. Ist dies nicht der Fall, dann melde dich bitte
-          umgehend bei uns per
-          <a href="https://rollenspieltage.ch/kontakt/">Kontaktformular</a>.
-        </p>
-      </Show>
-
       <Switch fallback={<Progress />}>
         <Match when={typeof state.error !== "undefined"}>
           <NetworkError />
@@ -134,6 +110,34 @@ const App: Component = () => {
           }}
         </Match>
       </Switch>
+      <Show
+        when={
+          (state.loading || !state()?.hasLoaded) &&
+          typeof state.error === "undefined"
+        }
+      >
+        <h1>Programm</h1>
+        <p>
+          Weitere Anmeldungen für die Rollenspieltage 2022 sind nicht mehr
+          möglich.
+        </p>
+        <h2>Ich möchte gerne spontan teilnehmen</h2>
+        <p>
+          Wie bereits in vergangenen Jahren halten wir ein paar Plätze frei,
+          damit spontane Besucher ebenfalls teilnehmen können.
+        </p>
+        <p>
+          Hast du Fragen, dann nimm bitte mit uns
+          <a href="https://rollenspieltage.ch/kontakt/">Kontakt</a> auf.
+        </p>
+        <h2>Ich habe mich angemeldet</h2>
+        <p>
+          Du solltest einen Link mit deinem persönlichen Programm von uns
+          erhalten haben. Ist dies nicht der Fall, dann melde dich bitte
+          umgehend bei uns per
+          <a href="https://rollenspieltage.ch/kontakt/">Kontaktformular</a>.
+        </p>
+      </Show>
       <p>Wir freuen uns auf {isAlone() ? "dich" : "euch"}.</p>
       <p>
         Lieben Gruss

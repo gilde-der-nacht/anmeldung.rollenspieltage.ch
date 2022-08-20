@@ -11,6 +11,7 @@ import {
   createSignal,
   For,
   Match,
+  onMount,
   Show,
   Switch,
 } from "solid-js";
@@ -31,6 +32,11 @@ const App: Component = () => {
     }
     return s.names.length === 1 ?? true;
   };
+
+  onMount(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setSecret(urlParams.get("secret") ?? "");
+  });
 
   return (
     <Layout>

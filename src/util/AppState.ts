@@ -9,7 +9,7 @@ export type Identifier =
   | "workshop"
   | "kitchen";
 
-type Game = {
+export type Game = {
   id: number;
   isContinuation: boolean;
   title: string;

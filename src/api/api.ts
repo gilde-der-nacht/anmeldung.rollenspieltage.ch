@@ -1,6 +1,7 @@
-import { AppState } from "@util/AppState";
+import { aggregateData } from "@api/aggregate";
 import { parseRawData } from "@api/parse";
-import { aggregateData } from "./aggregate";
+import { transformEntry, transformName } from "@api/transform";
+import { AppState } from "@util/AppState";
 
 const RESOURCE_UID =
   "b0aa35bf4975af53132902fd615ade2e9039369e19531a5dfc4df0f81d6ba394";
@@ -22,7 +23,17 @@ export const getServerData = async (secret: string): Promise<AppState> => {
   const rawData: unknown = await serverData.json();
   try {
     const parsedData = parseRawData(rawData);
-    return aggregateData(parsedData);
+    const aggregatedData = aggregateData(parsedData);
+    if (!aggregatedData.hasLoaded) {
+      return aggregatedData;
+    }
+    return {
+      ...aggregatedData,
+      names: aggregatedData.names.map(transformName),
+      program: aggregatedData.program.map(transformEntry),
+    };
+
+    // return aggregatedData. transformEntry
   } catch (error) {
     return await new Promise((res, rej) => rej({ error }));
   }

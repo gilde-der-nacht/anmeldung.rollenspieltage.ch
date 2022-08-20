@@ -28,7 +28,7 @@ export type ServerData = {
   timetable: TimeEntry[];
 };
 
-const hasProp = <K extends PropertyKey>(
+export const hasProp = <K extends PropertyKey>(
   data: object,
   prop: K
 ): data is Record<K, unknown> => {

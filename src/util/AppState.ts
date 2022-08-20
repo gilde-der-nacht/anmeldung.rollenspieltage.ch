@@ -41,4 +41,10 @@ export type ProgramEntry = { time: HOUR; day: DAY; duration: number } & (
   | Kitchen
 );
 
-export type AppState = { program: ProgramEntry[]; names: string[] };
+export type LoadedAppState = {
+  program: ProgramEntry[];
+  names: string[];
+  hasLoaded: true;
+};
+
+export type AppState = LoadedAppState | { hasLoaded: false };

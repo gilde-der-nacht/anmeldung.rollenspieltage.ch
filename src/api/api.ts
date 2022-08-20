@@ -5,6 +5,7 @@ export const getServerData = async (): Promise<AppState> => {
     setTimeout(
       () =>
         res({
+          hasLoaded: true,
           names: ["Oliver Bucher"],
           program: [
             { identifier: "nothing", day: "sa", time: 10, duration: 2 },

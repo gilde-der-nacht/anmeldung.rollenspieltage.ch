@@ -10,6 +10,7 @@ export type Identifier =
   | "kitchen";
 
 type Game = {
+  id: number;
   title: string;
   gameMaster: string;
   players: string[];

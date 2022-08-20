@@ -1,5 +1,3 @@
-import { AppState } from "@util/AppState";
-
 type Game = {
   game_master: string;
   id: number;
@@ -22,6 +20,12 @@ type TimeEntry = {
     hour: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21;
     entry: Details;
   };
+};
+
+export type ServerData = {
+  companions: string[];
+  name: string;
+  timetable: TimeEntry[];
 };
 
 const hasProp = <K extends PropertyKey>(
@@ -153,39 +157,45 @@ const typecheckTimeEntries = (arr: object[]): arr is TimeEntry[] => {
   });
 };
 
-export const parseRawData = (raw: unknown): AppState => {
+const isCorrectData = (raw: unknown): raw is ServerData => {
+  if (typeof raw !== "object" || raw === null) {
+    return false;
+  }
+  if (
+    !hasProp(raw, "name") ||
+    !hasProp(raw, "companions") ||
+    !hasProp(raw, "timetable")
+  ) {
+    return false;
+  }
+
+  const { name, companions, timetable } = raw;
+
+  if (typeof name !== "string") {
+    return false;
+  }
+  if (!isArrayOfType<string>(companions, "string")) {
+    return false;
+  }
+  if (!isArrayOfType<object>(timetable, "object")) {
+    return false;
+  }
+  if (!typecheckTimeEntries(timetable)) {
+    return false;
+  }
+  return true;
+};
+
+export const parseRawData = (raw: unknown): ServerData => {
   if (typeof raw !== "object" || raw === null) {
     throw new Error("Invalid Server Data");
   }
   if (!hasProp(raw, "privateBody")) {
     throw new Error("Invalid Server Data");
   }
-  const { privateBody } = raw;
-  if (typeof privateBody !== "object" || privateBody === null) {
-    throw new Error("Invalid Server Data");
-  }
-  if (
-    !hasProp(privateBody, "name") ||
-    !hasProp(privateBody, "companions") ||
-    !hasProp(privateBody, "timetable")
-  ) {
+  if (!isCorrectData(raw.privateBody)) {
     throw new Error("Invalid Server Data");
   }
 
-  const { name, companions, timetable } = privateBody;
-
-  if (typeof name !== "string") {
-    throw new Error("Invalid Server Data");
-  }
-  if (!isArrayOfType<string>(companions, "string")) {
-    throw new Error("Invalid Server Data");
-  }
-  if (!isArrayOfType<object>(timetable, "object")) {
-    throw new Error("Invalid Server Data");
-  }
-  if (!typecheckTimeEntries(timetable)) {
-    throw new Error("Invalid Server Data");
-  }
-
-  return { hasLoaded: false };
+  return raw.privateBody;
 };

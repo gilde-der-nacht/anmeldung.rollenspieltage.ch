@@ -2,15 +2,23 @@ import { getServerData } from "@api/api";
 import { Box } from "@components/Box";
 import { DynamicEntry } from "@components/ProgramEntry";
 import { Layout } from "@layout/Layout";
-import { LoadedAppState } from "@util/AppState";
 import { NetworkError } from "@util/NetworkError";
 import { Progress } from "@util/Progress";
 import { renderNamesList } from "@util/utils";
-import { Component, createResource, For, Match, Show, Switch } from "solid-js";
+import {
+  Component,
+  createResource,
+  createSignal,
+  For,
+  Match,
+  Show,
+  Switch,
+} from "solid-js";
 import { Dynamic } from "solid-js/web";
 
 const App: Component = () => {
-  const [state] = createResource(getServerData);
+  const [secret, setSecret] = createSignal("");
+  const [state] = createResource(secret, getServerData);
 
   const isAlone = () => {
     const s = state();
@@ -26,7 +34,7 @@ const App: Component = () => {
 
   return (
     <Layout>
-      <Show when={state.loading}>
+      <Show when={state.loading || !state()?.hasLoaded}>
         <h1>Programm</h1>
         <p>
           Weitere Anmeldungen für die Rollenspieltage 2022 sind nicht mehr

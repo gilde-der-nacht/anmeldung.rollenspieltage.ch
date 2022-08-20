@@ -1,6 +1,9 @@
 import { AppState } from "@util/AppState";
 
-export const getServerData = async (): Promise<AppState> => {
+export const getServerData = async (secret: string): Promise<AppState> => {
+  if (secret.trim().length === 0) {
+    return await new Promise((res) => res({ hasLoaded: false }));
+  }
   return await new Promise((res, rej) =>
     setTimeout(
       () =>

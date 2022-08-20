@@ -11,6 +11,7 @@ export type Identifier =
 
 type Game = {
   id: number;
+  isContinuation: boolean;
   title: string;
   gameMaster: string;
   players: string[];

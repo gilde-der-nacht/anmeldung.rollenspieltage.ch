@@ -42,6 +42,7 @@ export const aggregateData = (serverData: ServerData): AppState => {
             players: game.players,
             title: game.name,
             id: game.id,
+            isContinuation: false,
           },
         };
       }
@@ -58,6 +59,7 @@ export const aggregateData = (serverData: ServerData): AppState => {
             players: game.players,
             title: game.name,
             id: game.id,
+            isContinuation: false,
           },
         };
       }
@@ -80,6 +82,7 @@ export const aggregateData = (serverData: ServerData): AppState => {
       return { day: ts.day, time: ts.hour, identifier: "nothing", duration: 1 };
     });
   const programGrouped: ProgramEntry[] = [];
+  const gameIds = new Set<number>();
   let lastEntry: ProgramEntry | null = null;
   programSeparated.forEach((p) => {
     if (lastEntry === null) {
@@ -109,7 +112,20 @@ export const aggregateData = (serverData: ServerData): AppState => {
       }
     }
     programGrouped.push(lastEntry);
-    lastEntry = p;
+    if (
+      lastEntry.identifier === "gameMaster" ||
+      lastEntry.identifier === "participate"
+    ) {
+      gameIds.add(lastEntry.game.id);
+    }
+    if (
+      (p.identifier === "gameMaster" || p.identifier === "participate") &&
+      gameIds.has(p.game.id)
+    ) {
+      lastEntry = { ...p, game: { ...p.game, isContinuation: true } };
+    } else {
+      lastEntry = p;
+    }
   });
   if (lastEntry !== null) {
     programGrouped.push(lastEntry);

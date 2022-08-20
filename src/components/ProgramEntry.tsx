@@ -57,9 +57,10 @@ const GameMasterEntry: Component<ProgramEntry> = (props) => (
     gameMaster={(props as GameMaster).game.gameMaster}
     participants={renderNamesList((props as GameMaster).game.players)}
     emptySeats={
-      (props as Participate).game.maxPlayerCount -
-      (props as Participate).game.players.length
+      (props as GameMaster).game.maxPlayerCount -
+      (props as GameMaster).game.players.length
     }
+    isContinuation={(props as GameMaster).game.isContinuation}
   />
 );
 const ParticipateEntry: Component<ProgramEntry> = (props) => (
@@ -70,6 +71,7 @@ const ParticipateEntry: Component<ProgramEntry> = (props) => (
     icon="dice-d6"
     gameMaster={(props as Participate).game.gameMaster}
     participants={renderNamesList((props as Participate).game.players)}
+    isContinuation={(props as Participate).game.isContinuation}
   />
 );
 const WorkshopEntry: Component<ProgramEntry> = (props) => (

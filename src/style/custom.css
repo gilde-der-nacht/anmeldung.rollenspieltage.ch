@@ -61,6 +61,14 @@ progress {
   grid-row: span 4;
 }
 
+.duration-5 {
+  grid-row: span 5;
+}
+
+.duration-6 {
+  grid-row: span 6;
+}
+
 .day-sa,
 .day-so {
   grid-column: 2/3;

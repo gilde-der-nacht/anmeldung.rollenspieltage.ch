@@ -16,10 +16,11 @@ type Props = ProgramEntry & {
   gameMaster?: string;
   participants?: string;
   emptySeats?: number;
+  isContinuation?: boolean;
 };
 
 export const ProgramEntryBase: Component<Props> = (props) => {
-  const merged = mergeProps({ color: "" }, props);
+  const merged = mergeProps({ color: "", isContinuation: false }, props);
 
   const emptySeatsOutput = (): string | null => {
     if (merged.emptySeats && merged.emptySeats > 0) {
@@ -49,7 +50,9 @@ export const ProgramEntryBase: Component<Props> = (props) => {
         )}
       </Show>
       <Show when={props.title?.trim()?.length ?? 0 > 0}>
-        <h1 class="event-title">{merged.title}</h1>
+        <h1 class="event-title">
+          {merged.title} {merged.isContinuation ? "(forts.)" : ""}
+        </h1>
       </Show>
       <Show when={props.hint?.trim()?.length ?? 0 > 0}>
         <p>

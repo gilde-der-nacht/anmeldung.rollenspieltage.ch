@@ -14,7 +14,7 @@ type Details = {
   player: null | Game;
 };
 
-type TimeEntry = {
+export type TimeEntry = {
   ts: {
     day: "sa" | "so";
     hour: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21;

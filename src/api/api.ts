@@ -1,6 +1,6 @@
 import { aggregateData } from "@api/aggregate";
 import { parseRawData } from "@api/parse";
-import { transformEntry, transformName } from "@api/transform";
+import { transformAfterEntry, transformBeforeEntry, transformName } from "@api/transform";
 import { AppState } from "@util/AppState";
 
 const RESOURCE_UID =
@@ -23,14 +23,15 @@ export const getServerData = async (secret: string): Promise<AppState> => {
   const rawData: unknown = await serverData.json();
   try {
     const parsedData = parseRawData(rawData);
-    const aggregatedData = aggregateData(parsedData);
+    const transformedData = transformBeforeEntry(parsedData);
+    const aggregatedData = aggregateData(transformedData);
     if (!aggregatedData.hasLoaded) {
       return aggregatedData;
     }
     return {
       ...aggregatedData,
       names: aggregatedData.names.map(transformName),
-      program: aggregatedData.program.map(transformEntry),
+      program: aggregatedData.program.map(transformAfterEntry),
     };
 
     // return aggregatedData. transformEntry

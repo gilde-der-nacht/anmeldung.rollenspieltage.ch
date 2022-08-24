@@ -17,10 +17,11 @@ type Props = ProgramEntry & {
   participants?: string;
   emptySeats?: number;
   isContinuation?: boolean;
+  id?: number;
 };
 
 export const ProgramEntryBase: Component<Props> = (props) => {
-  const merged = mergeProps({ color: "", isContinuation: false }, props);
+  const merged = mergeProps({ color: "", isContinuation: false, id: 0}, props);
 
   const emptySeatsOutput = (): string | null => {
     if (merged.emptySeats && merged.emptySeats > 0) {
@@ -41,6 +42,7 @@ export const ProgramEntryBase: Component<Props> = (props) => {
         [`duration-${merged.duration}`]: true,
         [`day-${merged.day}`]: true,
       }}
+      data-game-id={merged.id}
     >
       <Show when={merged.icon}>
         {(icon) => (

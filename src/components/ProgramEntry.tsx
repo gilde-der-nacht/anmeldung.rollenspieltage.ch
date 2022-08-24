@@ -7,7 +7,7 @@ import {
 } from "@util/AppState";
 import { renderNamesList } from "@util/utils";
 import { Component } from "solid-js";
-import { ProgramEntryBase } from "./ProgrammEntryBase";
+import { ProgramEntryBase } from "@components/ProgrammEntryBase";
 
 const NothingEntry: Component<ProgramEntry> = (props) => (
   <ProgramEntryBase
@@ -61,6 +61,7 @@ const GameMasterEntry: Component<ProgramEntry> = (props) => (
       (props as GameMaster).game.players.length
     }
     isContinuation={(props as GameMaster).game.isContinuation}
+    id={(props as GameMaster).game.id}
   />
 );
 const ParticipateEntry: Component<ProgramEntry> = (props) => (
@@ -72,6 +73,7 @@ const ParticipateEntry: Component<ProgramEntry> = (props) => (
     gameMaster={(props as Participate).game.gameMaster}
     participants={renderNamesList((props as Participate).game.players)}
     isContinuation={(props as Participate).game.isContinuation}
+    id={(props as Participate).game.id}
   />
 );
 const WorkshopEntry: Component<ProgramEntry> = (props) => (
@@ -82,6 +84,7 @@ const WorkshopEntry: Component<ProgramEntry> = (props) => (
     icon="waveform-lines"
     gameMaster={(props as Workshop).game.gameMaster}
     participants={renderNamesList((props as Workshop).game.players)}
+    id={(props as Workshop).game.id}
   />
 );
 const KitchenEntry: Component<ProgramEntry> = (props) => (

@@ -8,30 +8,66 @@ export const transformName = (original: string): string => {
   return original;
 };
 
-export const transformBeforeEntry = (original: ServerData): ServerData => {
-  const transformEntry = (entry: TimeEntry): TimeEntry => {
-    if (entry.ts.entry.player !== null && entry.ts.entry.player.id === 17) {
+const removePlayerFromGame =
+  (currentPerson: string, gameId: number, removeThisPlayer: string) =>
+  (e: TimeEntry): TimeEntry => {
+    const { ts } = e;
+    const { entry } = ts;
+    if (entry.player === null && entry.gamemaster === null) {
+      return e;
+    } else if (entry.player !== null && entry.player.id === gameId) {
+      if (currentPerson === removeThisPlayer) {
+        return {
+          ts: {
+            ...ts,
+            entry: {
+              ...entry,
+              player: null,
+            },
+          },
+        };
+      } else {
+        const { player: game } = entry;
+        const { players } = game;
+        return {
+          ts: {
+            ...ts,
+            entry: {
+              ...entry,
+              player: {
+                ...game,
+                players: [...players.filter((p) => p !== removeThisPlayer)],
+              },
+            },
+          },
+        };
+      }
+    } else if (entry.gamemaster !== null && entry.gamemaster.id) {
+      const { gamemaster: game } = entry;
+      const { players } = game;
       return {
         ts: {
-          ...entry.ts,
+          ...ts,
           entry: {
-            ...entry.ts.entry,
-            player: {
-              ...entry.ts.entry.player,
-              players: [
-                ...entry.ts.entry.player.players.filter(
-                  (p) => p !== "Artur Kröll"
-                ),
-              ],
+            ...entry,
+            gamemaster: {
+              ...game,
+              players: [...players.filter((p) => p !== removeThisPlayer)],
             },
           },
         },
       };
     }
-    return entry;
+    return e;
   };
 
-  return { ...original, timetable: original.timetable.map(transformEntry) };
+export const transformBeforeEntry = (original: ServerData): ServerData => {
+  return {
+    ...original,
+    timetable: original.timetable.map(
+      removePlayerFromGame(original.name, 17, "Artur Kröll")
+    ),
+  };
 };
 
 export const transformAfterEntry = (original: ProgramEntry): ProgramEntry => {
@@ -49,9 +85,6 @@ export const transformAfterEntry = (original: ProgramEntry): ProgramEntry => {
     }
     if (game.id === 23) {
       game.title = "New Avanian Night";
-    }
-    if (game.id === 17) {
-      game.players = game.players.filter((p) => p !== "Artur Kröll");
     }
     return { ...original, game };
   }

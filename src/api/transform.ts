@@ -11,14 +11,28 @@ export const transformName = (original: string): string => {
 export const transformBeforeEntry = (original: ServerData): ServerData => {
   const transformEntry = (entry: TimeEntry): TimeEntry => {
     if (entry.ts.entry.player !== null && entry.ts.entry.player.id === 17) {
-      console.log(entry.ts.entry.player);
-      return { ts: { ...entry.ts, entry: { ...entry.ts.entry, player: null } } };
+      return {
+        ts: {
+          ...entry.ts,
+          entry: {
+            ...entry.ts.entry,
+            player: {
+              ...entry.ts.entry.player,
+              players: [
+                ...entry.ts.entry.player.players.filter(
+                  (p) => p !== "Artur Kröll"
+                ),
+              ],
+            },
+          },
+        },
+      };
     }
     return entry;
   };
 
   return { ...original, timetable: original.timetable.map(transformEntry) };
-}
+};
 
 export const transformAfterEntry = (original: ProgramEntry): ProgramEntry => {
   if (hasProp(original, "game")) {
@@ -26,10 +40,10 @@ export const transformAfterEntry = (original: ProgramEntry): ProgramEntry => {
       original.game === null
         ? original.game
         : {
-          ...original.game,
-          players: original.game.players.map(transformName),
-          gameMaster: transformName(original.game.gameMaster),
-        };
+            ...original.game,
+            players: original.game.players.map(transformName),
+            gameMaster: transformName(original.game.gameMaster),
+          };
     if (game.id === 21) {
       game.title = "Dread";
     }
@@ -37,7 +51,7 @@ export const transformAfterEntry = (original: ProgramEntry): ProgramEntry => {
       game.title = "New Avanian Night";
     }
     if (game.id === 17) {
-      game.players = game.players.filter(p => p !== "Artur Kröll");
+      game.players = game.players.filter((p) => p !== "Artur Kröll");
     }
     return { ...original, game };
   }

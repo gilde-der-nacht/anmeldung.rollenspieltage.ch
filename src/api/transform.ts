@@ -64,9 +64,10 @@ const removePlayerFromGame =
 export const transformBeforeEntry = (original: ServerData): ServerData => {
   return {
     ...original,
-    timetable: original.timetable.map(
-      removePlayerFromGame(original.name, 17, "Artur Kröll")
-    ),
+    timetable: original.timetable
+      .map(removePlayerFromGame(original.name, 17, "Artur Kröll"))
+      .map(removePlayerFromGame(original.name, 4, "Deniz Aras"))
+      .map(removePlayerFromGame(original.name, 12, "Deniz Aras")),
   };
 };
 

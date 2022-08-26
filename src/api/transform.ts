@@ -8,6 +8,13 @@ export const transformName = (original: string): string => {
   return original;
 };
 
+const removeCompoanion = (data: ServerData, companion: string): ServerData => {
+  return {
+    ...data,
+    companions: data.companions.filter((c) => c !== companion),
+  };
+};
+
 const removePlayerFromGame =
   (currentPerson: string, gameId: number, removeThisPlayer: string) =>
   (e: TimeEntry): TimeEntry => {
@@ -63,11 +70,12 @@ const removePlayerFromGame =
 
 export const transformBeforeEntry = (original: ServerData): ServerData => {
   return {
-    ...original,
+    ...removeCompoanion(original, "Matea"),
     timetable: original.timetable
       .map(removePlayerFromGame(original.name, 17, "Artur Kröll"))
       .map(removePlayerFromGame(original.name, 4, "Deniz Aras"))
-      .map(removePlayerFromGame(original.name, 12, "Deniz Aras")),
+      .map(removePlayerFromGame(original.name, 12, "Deniz Aras"))
+      .map(removePlayerFromGame(original.name, 23, "Matea")),
   };
 };
 

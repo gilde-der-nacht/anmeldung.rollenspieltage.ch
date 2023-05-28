@@ -2,5 +2,13 @@
   "name": "Rollenspieltage: Anmeldung",
   "build": {
     "dockerfile": "./Dockerfile"
-  }
+},
+"customizations": {
+	"vscode": {
+		"extensions": [
+			"1YiB.svelte-bundle",
+			"bungcip.better-toml"
+		]
+	}
+}
 }

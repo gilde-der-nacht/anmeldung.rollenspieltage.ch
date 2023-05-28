@@ -38,6 +38,6 @@ export const actions = {
 			return fail(res.status, { name, email, serverError: true });
 		}
 
-		throw redirect(300, parsed.data.data.id + '?secret=' + secret);
+		throw redirect(300, parsed.data.data.id + '?secret=' + secret + '&created=true');
 	},
 } satisfies Actions;

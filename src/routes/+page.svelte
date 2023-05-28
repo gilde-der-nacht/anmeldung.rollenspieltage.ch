@@ -14,7 +14,7 @@
 <p>Melde dich jetzt für die Luzerner Rollenspieltage 2023 an.</p>
 
 {#if form?.invalidName || form?.invalidMail}
-	<Alert>
+	<Alert type="danger">
 		{#if form?.invalidName}
 			<p>Das Feld 'Name' ist ungültig.</p>
 		{:else if form?.invalidMail}
@@ -28,7 +28,7 @@
 <ServerErrorAlert/>
 {/if}
 
-<form method="POST" use:enhance>
+<form method="POST" use:enhance novalidate>
 	<TextInput
 		initValue={typeof form?.name === 'string' ? form.name : ''}
 		label="Name"

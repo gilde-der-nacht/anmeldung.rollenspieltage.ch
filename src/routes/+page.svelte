@@ -10,6 +10,8 @@
 	export let form: ActionData;
 </script>
 
+<Alert type="danger">Diese Webseite ist noch im Aufbau. Bitte noch nicht ausfüllen.</Alert>
+
 <h1>Anmeldung</h1>
 <p>Melde dich jetzt für die Luzerner Rollenspieltage 2023 an.</p>
 
@@ -19,13 +21,12 @@
 			<p>Das Feld 'Name' ist ungültig.</p>
 		{:else if form?.invalidMail}
 			<p>Das Feld 'E-Mail-Adresse' ist ungültig.</p>
-         
 		{/if}
 	</Alert>
 {/if}
 
 {#if form?.serverError}
-<ServerErrorAlert/>
+	<ServerErrorAlert />
 {/if}
 
 <form method="POST" use:enhance novalidate>

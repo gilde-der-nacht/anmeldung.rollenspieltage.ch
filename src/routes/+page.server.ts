@@ -1,15 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { OLYMP } from '$lib/Constants';
-import { z } from 'zod';
+import { emailSchema, initializeRegistration, nameSchema } from '$lib/api/olymp';
 
 type Error = { field: string; message: string };
-
-const nameSchema = z.string().trim().min(1);
-const emailSchema = z.string().trim().email();
-const itemSchema = z.object({
-	data: z.object({ id: z.string() }),
-});
 
 export const actions = {
 	default: async ({ request }) => {
@@ -28,32 +21,16 @@ export const actions = {
 			errors.push({ field: 'email', message: "Das Feld 'E-Mail-Adresse' ist invalid." });
 		}
 
-		console.log('failed?', errors);
-
-		if (errors.length > 0) {
+		if (!parsedName.success || !parsedEmail.success) {
 			return fail(400, { name, email, errors });
 		}
 
-		const secret = crypto.randomUUID();
-		const body = { name, email, secret };
-		const headers = { 'Content-Type': 'application/json' };
+		const res = await initializeRegistration(parsedName.data, parsedEmail.data);
 
-		const res = await fetch(OLYMP + '/items/participant_23', {
-			method: 'POST',
-			headers,
-			body: JSON.stringify(body),
-		});
-
-		if (!res.ok) {
+		if (!res.success) {
 			return fail(res.status, { name, email, serverError: true });
 		}
 
-		const parsed = itemSchema.safeParse((await res.json()) as unknown);
-
-		if (!parsed.success) {
-			return fail(res.status, { name, email, serverError: true });
-		}
-
-		throw redirect(300, parsed.data.data.id + '?secret=' + secret + '&created=true');
+		throw redirect(300, res.id + '?secret=' + res.secret + '&created=true');
 	},
 } satisfies Actions;

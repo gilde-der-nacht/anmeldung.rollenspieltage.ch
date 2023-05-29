@@ -5,6 +5,7 @@
 	export let data: PageData;
 </script>
 
+<h1>Anmeldung</h1>
 <h1>{data.id}</h1>
 <h2>{data.secret}</h2>
 

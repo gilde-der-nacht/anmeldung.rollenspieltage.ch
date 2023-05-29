@@ -6,41 +6,63 @@
 	import type { ActionData } from './$types';
 	import { enhance } from '$app/forms';
 	import ServerErrorAlert from '$lib/common/ServerErrorAlert.svelte';
+	import Loader from '$lib/common/Loader.svelte';
 
 	export let form: ActionData;
-</script>
+	let nameErrorMsg: string | undefined;
+	let emailErrorMsg: string | undefined;
 
-<Alert type="danger">Diese Webseite ist noch im Aufbau. Bitte noch nicht ausfüllen.</Alert>
+	$: {
+		nameErrorMsg = form?.errors?.find((e) => e.field === 'name')?.message;
+		emailErrorMsg = form?.errors?.find((e) => e.field === 'email')?.message;
+	}
+
+	let loading: boolean = false;
+</script>
 
 <h1>Anmeldung</h1>
 <p>Melde dich jetzt für die Luzerner Rollenspieltage 2023 an.</p>
-
-{#if form?.invalidName || form?.invalidMail}
-	<Alert type="danger">
-		{#if form?.invalidName}
-			<p>Das Feld 'Name' ist ungültig.</p>
-		{:else if form?.invalidMail}
-			<p>Das Feld 'E-Mail-Adresse' ist ungültig.</p>
-		{/if}
-	</Alert>
-{/if}
 
 {#if form?.serverError}
 	<ServerErrorAlert />
 {/if}
 
-<form method="POST" use:enhance novalidate>
+<form
+	method="POST"
+	use:enhance={() => {
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			update();
+		};
+	}}
+	novalidate
+>
 	<TextInput
 		initValue={typeof form?.name === 'string' ? form.name : ''}
 		label="Name"
 		name="name"
 		required
 	/>
+	{#if nameErrorMsg !== undefined}
+		<Alert type="danger">
+			{nameErrorMsg}
+		</Alert>
+	{/if}
 	<EmailInput
 		initValue={typeof form?.email === 'string' ? form.email : ''}
 		label="E-Mail-Adresse"
 		name="email"
 		required
 	/>
-	<Button label="Anmeldung starten" type="submit" />
+	{#if emailErrorMsg !== undefined}
+		<Alert type="danger">
+			{emailErrorMsg}
+		</Alert>
+	{/if}
+	{#if loading}
+		<Button type="submit" kind="gray" disabled><Loader /> Anmeldung wird gestartet ...</Button>
+	{:else}
+		<Button type="submit">Anmeldung starten</Button>
+	{/if}
 </form>

@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { emailSchema, initializeRegistration, nameSchema } from '$lib/api/olymp';
+import { emailSchema, nameSchema } from '$lib/api/schema';
+import { initializeRegistration } from '$lib/api/methods/initialize';
 
 type Error = { field: string; message: string };
 

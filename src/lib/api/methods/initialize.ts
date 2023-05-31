@@ -1,16 +1,6 @@
 import { OLYMP } from '$lib/Constants';
-import { z } from 'zod';
-
-export const uuidSchema = z.string().uuid();
-type UUID = z.infer<typeof uuidSchema>;
-export const nameSchema = z.string().trim().min(1);
-type Name = z.infer<typeof nameSchema>;
-export const emailSchema = z.string().trim().email();
-type Email = z.infer<typeof emailSchema>;
-
-const itemSchema = z.object({
-	data: z.object({ id: uuidSchema }),
-});
+import { headerJSON } from '../common';
+import { itemSchema, type Email, type Name, type UUID } from '../schema';
 
 type SuccessfullRegistration = {
 	success: true;
@@ -23,8 +13,6 @@ type FailedRegistration = {
 	status: number;
 };
 
-const headers = { 'Content-Type': 'application/json' };
-
 export async function initializeRegistration(
 	name: Name,
 	email: Email,
@@ -33,7 +21,7 @@ export async function initializeRegistration(
 
 	const res = await fetch(OLYMP + '/items/participant_23', {
 		method: 'POST',
-		headers,
+		headers: headerJSON,
 		body: JSON.stringify({ name, email, secret }),
 	});
 

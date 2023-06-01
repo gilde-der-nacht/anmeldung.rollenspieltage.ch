@@ -10,9 +10,13 @@ export const load = (async ({ params, url }) => {
 		throw error(401, "'Secret' fehlt.");
 	}
 
-	const res = await loadBySecret(params.id, secret);
+	const res = await loadBySecret(secret);
 	if (!res.success) {
 		return fail(res.status, { serverError: true });
+	}
+
+	if (res.id !== params.id) {
+		throw error(401, "'Id' inkorrekt.");
 	}
 
 	return { ...res, created };

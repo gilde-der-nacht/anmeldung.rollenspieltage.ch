@@ -22,13 +22,9 @@ const responseSchema = z.object({
 	registrations: z.array(allDataSchema).nonempty(),
 });
 
-export async function loadBySecret(
-	id: string,
-	secret: string,
-): Promise<SuccessfullLoad | FailedRegistration> {
+export async function loadBySecret(secret: string): Promise<SuccessfullLoad | FailedRegistration> {
 	const base = TARTAROS + '/webhook/26bda799-cc26-40b0-b0f5-9167738c4896';
 	const url = new URL(base);
-	url.searchParams.set('id', id);
 	url.searchParams.set('secret', secret);
 
 	const res = await fetch(url);
@@ -48,8 +44,8 @@ export async function loadBySecret(
 
 	return {
 		success: true,
-		id: id,
-		secret: secret,
+		id: parsed.data.participant.id,
+		secret: parsed.data.participant.secret,
 		registration: latestRegistration,
 	};
 }

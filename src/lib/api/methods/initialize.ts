@@ -1,7 +1,6 @@
 import { OLYMP } from '$lib/Constants';
-import { loadConfigFromFile } from 'vite';
 import { headerJSON } from '../common';
-import { itemSchema, type Email, type Name } from '../schema';
+import { itemSchema } from '../schema';
 
 type SuccessfullRegistration = {
 	success: true;
@@ -15,8 +14,8 @@ type FailedRegistration = {
 };
 
 export async function initializeRegistration(
-	name: Name,
-	email: Email,
+	name: string,
+	email: string,
 ): Promise<SuccessfullRegistration | FailedRegistration> {
 	const secret = crypto.randomUUID();
 

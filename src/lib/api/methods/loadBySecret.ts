@@ -1,11 +1,11 @@
 import { TARTAROS } from '$lib/Constants';
 import { z } from 'zod';
-import { uuidSchema, type Data, type UUID } from '../schema';
+import { uuidSchema, type Data, allDataSchema } from '../schema';
 
 type SuccessfullLoad = {
 	success: true;
-	id: UUID;
-	secret: UUID;
+	id: string;
+	secret: string;
 	registration: Data;
 };
 
@@ -19,18 +19,12 @@ const responseSchema = z.object({
 		id: uuidSchema,
 		secret: uuidSchema,
 	}),
-	registrations: z
-		.array(
-			z.object({
-				date_created: z.string(),
-			}),
-		)
-		.nonempty(),
+	registrations: z.array(allDataSchema).nonempty(),
 });
 
 export async function loadBySecret(
-	id: UUID,
-	secret: UUID,
+	id: string,
+	secret: string,
 ): Promise<SuccessfullLoad | FailedRegistration> {
 	const base = TARTAROS + '/webhook/26bda799-cc26-40b0-b0f5-9167738c4896';
 	const url = new URL(base);

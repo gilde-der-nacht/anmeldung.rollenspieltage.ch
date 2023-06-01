@@ -7,6 +7,7 @@
 	import { enhance } from '$app/forms';
 	import ServerErrorAlert from '$lib/common/ServerErrorAlert.svelte';
 	import Loader from '$lib/common/Loader.svelte';
+	import { goto } from '$app/navigation';
 
 	export let form: ActionData;
 	let nameErrorMsg: string | undefined;
@@ -18,6 +19,7 @@
 	}
 
 	let loading: boolean = false;
+	let initSuccess: boolean = false;
 </script>
 
 <h1>Anmeldung</h1>
@@ -31,9 +33,13 @@
 	method="POST"
 	use:enhance={() => {
 		loading = true;
-		return async ({ update }) => {
-			loading = false;
-			update();
+		return async ({ result }) => {
+			if (result.type !== 'success') {
+				loading = false;
+			} else {
+				initSuccess = true;
+				goto(`/${result.data?.id}?secret=${result.data?.secret}&created=true`);
+			}
 		};
 	}}
 	novalidate
@@ -60,9 +66,21 @@
 			{emailErrorMsg}
 		</Alert>
 	{/if}
-	{#if loading}
-		<Button type="submit" kind="gray" disabled><Loader /> Anmeldung wird gestartet ...</Button>
-	{:else}
-		<Button type="submit">Anmeldung starten</Button>
+
+	<Button
+		type="submit"
+		kind={!loading && !initSuccess ? 'accent' : 'gray'}
+		disabled={loading || initSuccess}>Anmeldung starten</Button
+	>
+	{#if initSuccess}
+		<span style="margin-inline-start: 1rem;">
+			<Loader />
+			Erfolg, du wirst demnächst weitergeleitet ...
+		</span>
+	{:else if loading}
+		<span style="margin-inline-start: 1rem;">
+			<Loader />
+			Anmeldung wird gestartet ...
+		</span>
 	{/if}
 </form>

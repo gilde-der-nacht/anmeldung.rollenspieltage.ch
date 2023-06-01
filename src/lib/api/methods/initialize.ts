@@ -1,11 +1,12 @@
 import { OLYMP } from '$lib/Constants';
+import { loadConfigFromFile } from 'vite';
 import { headerJSON } from '../common';
-import { itemSchema, type Email, type Name, type UUID } from '../schema';
+import { itemSchema, type Email, type Name } from '../schema';
 
 type SuccessfullRegistration = {
 	success: true;
-	id: UUID;
-	secret: UUID;
+	id: string;
+	secret: string;
 };
 
 type FailedRegistration = {
@@ -19,22 +20,32 @@ export async function initializeRegistration(
 ): Promise<SuccessfullRegistration | FailedRegistration> {
 	const secret = crypto.randomUUID();
 
-	const res = await fetch(OLYMP + '/items/participant_23', {
+	const resParticipant = await fetch(OLYMP + '/items/participant_23', {
 		method: 'POST',
 		headers: headerJSON,
-		body: JSON.stringify({ name, email, secret }),
+		body: JSON.stringify({ secret }),
 	});
 
-	if (!res.ok) {
-		return { success: false, status: res.status };
+	if (!resParticipant.ok) {
+		return { success: false, status: resParticipant.status };
 	}
-	const parsed = itemSchema.safeParse((await res.json()) as unknown);
+	const parsed = itemSchema.safeParse((await resParticipant.json()) as unknown);
 
 	if (!parsed.success) {
-		return { success: false, status: res.status };
+		return { success: false, status: resParticipant.status };
 	}
 
 	const { id } = parsed.data.data;
+
+	const resRegistration = await fetch(OLYMP + '/items/registration_23', {
+		method: 'POST',
+		headers: headerJSON,
+		body: JSON.stringify({ name, email, registration_participant: id }),
+	});
+
+	if (!resRegistration.ok) {
+		return { success: false, status: resRegistration.status };
+	}
 
 	return { success: true, id, secret };
 }

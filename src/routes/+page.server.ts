@@ -32,6 +32,6 @@ export const actions = {
 			return fail(res.status, { name, email, serverError: true });
 		}
 
-		throw redirect(300, res.id + '?secret=' + res.secret + '&created=true');
+		return res;
 	},
 } satisfies Actions;

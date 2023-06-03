@@ -1,4 +1,4 @@
-import { error, fail } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { loadBySecret } from '$lib/api/methods/loadBySecret';
 
@@ -12,12 +12,12 @@ export const load = (async ({ params, url }) => {
 
 	const res = await loadBySecret(secret);
 	if (!res.success) {
-		return fail(res.status, { serverError: true });
+		throw error(401, "'Secret' ist ungültig.");
 	}
 
 	if (res.id !== params.id) {
 		throw error(401, "'Id' inkorrekt.");
 	}
 
-	return { ...res, created };
+	return { ...res, id: params.id, secret, created };
 }) satisfies PageServerLoad;

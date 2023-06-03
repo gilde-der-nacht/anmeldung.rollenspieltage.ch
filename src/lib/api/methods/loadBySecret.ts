@@ -1,12 +1,12 @@
 import { TARTAROS } from '$lib/Constants';
 import { z } from 'zod';
-import { uuidSchema, type Data, allDataSchema } from '../schema';
+import { uuidSchema, type ServerData, serverDataSchema } from '../schema';
 
 type SuccessfullLoad = {
 	success: true;
 	id: string;
 	secret: string;
-	registration: Data;
+	registration: ServerData;
 };
 
 type FailedRegistration = {
@@ -19,7 +19,7 @@ const responseSchema = z.object({
 		id: uuidSchema,
 		secret: uuidSchema,
 	}),
-	registrations: z.array(allDataSchema).nonempty(),
+	registrations: z.array(serverDataSchema).nonempty(),
 });
 
 export async function loadBySecret(secret: string): Promise<SuccessfullLoad | FailedRegistration> {

@@ -6,4 +6,6 @@
 	export let required: boolean = false;
 </script>
 
-<label>{label} <input type="email" value={initValue} {name} {placeholder} {required} /> </label>
+<label
+	>{label} <input type="email" bind:value={initValue} {name} {placeholder} {required} />
+</label>

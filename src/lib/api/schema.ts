@@ -8,7 +8,7 @@ export const itemSchema = z.object({
 	data: z.object({ id: uuidSchema }),
 });
 
-export const allDataSchema = z.object({
+export const serverDataSchema = z.object({
 	id: z.string().uuid(),
 	date_created: z.string(),
 	registration_participant: z.string().uuid(),
@@ -18,4 +18,4 @@ export const allDataSchema = z.object({
 	name: z.string(),
 	email: z.string(),
 });
-export type Data = z.infer<typeof allDataSchema>;
+export type ServerData = z.infer<typeof serverDataSchema>;

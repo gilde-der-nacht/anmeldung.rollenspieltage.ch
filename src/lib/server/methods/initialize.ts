@@ -1,5 +1,5 @@
 import { OLYMP } from '$lib/Constants';
-import { headerJSON } from '../common';
+import { headerJSON } from '../../shared/common';
 import { itemSchema } from '../schema';
 
 type SuccessfullRegistration = {

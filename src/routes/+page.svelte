@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Alert from '$lib/common/Alert.svelte';
-	import Button from '$lib/form/Button.svelte';
-	import EmailInput from '$lib/form/EmailInput.svelte';
-	import TextInput from '$lib/form/TextInput.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import Button from '$lib/components/form/Button.svelte';
+	import EmailInput from '$lib/components/form/EmailInput.svelte';
+	import TextInput from '$lib/components/form/TextInput.svelte';
 	import type { ActionData } from './$types';
 	import { enhance } from '$app/forms';
-	import ServerErrorAlert from '$lib/common/ServerErrorAlert.svelte';
-	import Loader from '$lib/common/Loader.svelte';
+	import ServerErrorAlert from '$lib/components/common/ServerErrorAlert.svelte';
+	import Loader from '$lib/components/common/Loader.svelte';
 	import { goto } from '$app/navigation';
 
 	export let form: ActionData;

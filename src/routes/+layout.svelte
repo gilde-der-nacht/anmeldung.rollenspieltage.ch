@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Alert from '$lib/common/Alert.svelte';
-	import Footer from '$lib/layout/Footer.svelte';
-	import Header from '$lib/layout/Header.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
+	import Header from '$lib/components/layout/Header.svelte';
 </script>
 
 <Header />

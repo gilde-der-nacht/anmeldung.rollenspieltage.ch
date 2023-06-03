@@ -1,20 +1,9 @@
-import type { ServerData } from '$lib/api/schema';
 import { writable } from 'svelte/store';
 import { z } from 'zod';
+import type { AppState } from '../schema/app';
+import type { ServerData } from '../schema/server';
 
-const appStateSchema = z.object({
-	id: z.string().uuid(),
-	secret: z.string().uuid(),
-	previous_registration_entry: z.string().uuid(),
-	name: z.string(),
-	email: z.string(),
-	wants_to_help: z.boolean(),
-	name_friend_one: z.string(),
-	name_friend_two: z.string(),
-});
-type AppState = z.infer<typeof appStateSchema>;
-
-export const initAppState = (id: string, secret: string, serverData: ServerData) => {
+export function initAppState(id: string, secret: string, serverData: ServerData) {
 	const appState = writable<AppState>({
 		id: z.string().uuid().parse(id),
 		secret: z.string().uuid().parse(secret),
@@ -26,4 +15,4 @@ export const initAppState = (id: string, secret: string, serverData: ServerData)
 		name_friend_two: serverData.name_friend_two ?? '',
 	});
 	return appState;
-};
+}

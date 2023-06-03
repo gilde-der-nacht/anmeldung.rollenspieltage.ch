@@ -1,6 +1,6 @@
 import { TARTAROS } from '$lib/Constants';
+import { uuidSchema, type ServerData, serverDataSchema } from '$lib/shared/schema/server';
 import { z } from 'zod';
-import { uuidSchema, type ServerData, serverDataSchema } from '../schema';
 
 type SuccessfullLoad = {
 	success: true;

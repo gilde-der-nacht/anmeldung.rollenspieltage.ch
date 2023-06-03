@@ -12,10 +12,13 @@ export const serverDataSchema = z.object({
 	id: z.string().uuid(),
 	date_created: z.string(),
 	registration_participant: z.string().uuid(),
+	previous_registration_entry: z.nullable(z.string()),
+	name: z.string(),
+	email: z.string(),
 	wants_to_help: z.boolean(),
 	name_friend_one: z.nullable(z.string()),
 	name_friend_two: z.nullable(z.string()),
-	name: z.string(),
-	email: z.string(),
 });
 export type ServerData = z.infer<typeof serverDataSchema>;
+
+export type ToSaveState = Omit<ServerData, 'id' | 'date_created'>;

@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { loadBySecret } from '$lib/api/methods/loadBySecret';
+import { loadBySecret } from '$lib/server/methods/loadBySecret';
 
 export const load = (async ({ params, url }) => {
 	const secret = url.searchParams.get('secret');

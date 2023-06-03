@@ -11,3 +11,5 @@ export const appStateSchema = z.object({
 	name_friend_two: z.string(),
 });
 export type AppState = z.infer<typeof appStateSchema>;
+
+export type ClientSaveState = Omit<AppState, 'id' | 'secret' | 'previous_registration_entry'>;

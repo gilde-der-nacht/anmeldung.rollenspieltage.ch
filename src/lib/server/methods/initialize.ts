@@ -1,6 +1,6 @@
 import { OLYMP } from '$lib/Constants';
+import { itemSchema } from '$lib/shared/schema/server';
 import { headerJSON } from '../../shared/common';
-import { itemSchema } from '../schema';
 
 type SuccessfullRegistration = {
 	success: true;

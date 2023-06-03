@@ -9,7 +9,7 @@ type SuccessfullLoad = {
 	registration: ServerData;
 };
 
-type FailedRegistration = {
+type FailedLoad = {
 	success: false;
 	status: number;
 };
@@ -22,7 +22,7 @@ const responseSchema = z.object({
 	registrations: z.array(serverDataSchema).nonempty(),
 });
 
-export async function loadBySecret(secret: string): Promise<SuccessfullLoad | FailedRegistration> {
+export async function loadBySecret(secret: string): Promise<SuccessfullLoad | FailedLoad> {
 	const base = TARTAROS + '/webhook/26bda799-cc26-40b0-b0f5-9167738c4896';
 	const url = new URL(base);
 	url.searchParams.set('secret', secret);

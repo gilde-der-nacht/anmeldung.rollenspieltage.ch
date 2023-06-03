@@ -14,7 +14,7 @@ type FailedSave = {
 	success: false;
 };
 
-type SaveState =
+export type SaveState =
 	| 'DEBOUNCING'
 	| 'DIFFING_LIVE_STATE'
 	| 'ABORTING'
@@ -54,6 +54,11 @@ export async function save(
 			eventListener?.('DIFFING_LAST_SAVE');
 			if (!stateHasChanged(newState, convertForClient(parsed.data.registration))) {
 				eventListener?.('NO_NEW_STATE');
+				return resolve({ success: false });
+			}
+			eventListener?.('DIFFING_LIVE_STATE');
+			if (stateHasChangedReadonlyStore(newState, lastState)) {
+				eventListener?.('ABORTING');
 				return resolve({ success: false });
 			}
 			eventListener?.('SAVING');

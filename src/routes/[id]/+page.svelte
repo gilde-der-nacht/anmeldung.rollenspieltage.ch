@@ -1,13 +1,20 @@
 <script lang="ts">
 	import Alert from '$lib/components/common/Alert.svelte';
-	import TextInput from '$lib/components/form/TextInput.svelte';
 	import { initAppState } from '$lib/shared/stores/appState';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import RegistrationFooter from '$lib/components/general/RegistrationFooter.svelte';
-	import { removeCreated } from './urlUtil';
+	import { removeCreated, updateUrl } from './urlUtil';
 	import { saveOnUpdate } from './saveUtil';
 	import type { SaveState } from '$lib/shared/save';
+	import Steps from '$lib/components/navigation/Steps.svelte';
+	import ContactPage from '$lib/components/main/ContactPage.svelte';
+	import { pages } from '$lib/shared/schema/app';
+	import GroupPage from '$lib/components/main/GroupPage.svelte';
+	import TimePage from '$lib/components/main/TimePage.svelte';
+	import PlayPage from '$lib/components/main/PlayPage.svelte';
+	import MasterPage from '$lib/components/main/MasterPage.svelte';
+	import SummaryPage from '$lib/components/main/SummaryPage.svelte';
 
 	export let data: PageData;
 	const appState = initAppState(data.id, data.secret, data.registration);
@@ -21,21 +28,57 @@
 	);
 
 	onMount(removeCreated);
+	onMount(updateUrl(appState));
 </script>
 
-<h1>Anmeldung</h1>
+<h1>Anmeldung 2023</h1>
 
 {#if data.created}
 	<Alert type="success">Anmeldung erfolgreich geöffnet.</Alert>
 {/if}
 
-<TextInput bind:initValue={$appState.name} label="Name" name="name" required />
+<section class="with-sidebar">
+	<aside>
+		<Steps {appState} />
+	</aside>
+	<main>
+		{#if $appState.page === pages.Enum.kontaktperson}
+			<ContactPage {appState} />
+		{:else if $appState.page === pages.Enum.gruppe}
+			<GroupPage {appState} />
+		{:else if $appState.page === pages.Enum.zeit}
+			<TimePage {appState} />
+		{:else if $appState.page === pages.Enum.spielen}
+			<PlayPage {appState} />
+		{:else if $appState.page === pages.Enum.leiten}
+			<MasterPage {appState} />
+		{:else if $appState.page === pages.Enum.zusammenfassung}
+			<SummaryPage {appState} />
+		{/if}
+	</main>
+</section>
 
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
 <pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
 
 <RegistrationFooter {saveState} />
+
+<style>
+	.with-sidebar {
+		display: grid;
+		margin-block-start: 3rem;
+		gap: 3rem;
+		position: relative;
+	}
+
+	@media (min-width: 1000px) {
+		.with-sidebar {
+			grid-template-columns: min-content 1fr;
+		}
+	}
+
+	main {
+		background-color: var(--clr-5);
+		padding: 1rem;
+		border-radius: 0.5rem;
+	}
+</style>

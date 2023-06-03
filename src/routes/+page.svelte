@@ -10,19 +10,15 @@
 	import { goto } from '$app/navigation';
 
 	export let form: ActionData;
-	let nameErrorMsg: string | undefined;
-	let emailErrorMsg: string | undefined;
 
-	$: {
-		nameErrorMsg = form?.errors?.find((e) => e.field === 'name')?.message;
-		emailErrorMsg = form?.errors?.find((e) => e.field === 'email')?.message;
-	}
+	$: nameErrorMsg = form?.errors?.find((e) => e.field === 'name')?.message;
+	$: emailErrorMsg = form?.errors?.find((e) => e.field === 'email')?.message;
 
 	let loading: boolean = false;
 	let initSuccess: boolean = false;
 </script>
 
-<h1>Anmeldung</h1>
+<h1>Anmeldung 2023</h1>
 <p>Melde dich jetzt für die Luzerner Rollenspieltage 2023 an.</p>
 
 {#if form?.serverError}

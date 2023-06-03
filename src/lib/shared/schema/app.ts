@@ -9,10 +9,20 @@ const clientSaveState = z.object({
 });
 export type ClientSaveState = z.infer<typeof clientSaveState>;
 
+export const pages = z.enum([
+	'kontaktperson',
+	'gruppe',
+	'zeit',
+	'spielen',
+	'leiten',
+	'zusammenfassung',
+]);
+export type Page = z.infer<typeof pages>;
+
 export const appStateSchema = clientSaveState.extend({
 	id: z.string().uuid(),
 	secret: z.string().uuid(),
 	previous_registration_entry: z.string().uuid(),
-	page: z.enum(['kontaktperson', 'gruppe']),
+	page: pages,
 });
 export type AppState = z.infer<typeof appStateSchema>;

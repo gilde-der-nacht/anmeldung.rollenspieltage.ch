@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pages, type Page, type AppState } from '$lib/shared/schema/app';
+	import { pages, type Page, type AppState, pageMap } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;
@@ -8,67 +8,20 @@
 
 <h3>Navigation</h3>
 <ul class="steps">
-	<li class="steps-segment">
-		<span class="steps-marker" />
-		<div class="steps-content">
-			<button
-				class={`link ${currentPage === pages.Enum.kontaktperson ? 'active' : ''}`}
-				on:click={() => appState.update((prev) => ({ ...prev, page: pages.Enum.kontaktperson }))}
-				>Kontaktperson</button
-			>
-		</div>
-	</li>
-	<li class="steps-segment">
-		<span class="steps-marker" />
-		<div class="steps-content">
-			<button
-				class={`link ${currentPage === pages.Enum.gruppe ? 'active' : ''}`}
-				on:click={() => appState.update((prev) => ({ ...prev, page: pages.Enum.gruppe }))}
-				>Gruppe</button
-			>
-		</div>
-	</li>
-	<li class="steps-segment">
-		<span class="steps-marker" />
-		<div class="steps-content">
-			<button
-				class={`link ${currentPage === pages.Enum.zeit ? 'active' : ''}`}
-				on:click={() => appState.update((prev) => ({ ...prev, page: pages.Enum.zeit }))}
-				>Zeit</button
-			>
-		</div>
-	</li>
-	<li class="steps-segment">
-		<span class="steps-marker" />
-		<div class="steps-content">
-			<button
-				class={`link ${currentPage === pages.Enum.spielen ? 'active' : ''}`}
-				on:click={() => appState.update((prev) => ({ ...prev, page: pages.Enum.spielen }))}
-				>Spielen</button
-			>
-		</div>
-	</li>
-	<li class="steps-segment">
-		<span class="steps-marker" />
-		<div class="steps-content">
-			<button
-				class={`link ${currentPage === pages.Enum.leiten ? 'active' : ''}`}
-				on:click={() => appState.update((prev) => ({ ...prev, page: pages.Enum.leiten }))}
-			>
-				Spiel Leiten
-			</button>
-		</div>
-	</li>
-	<li class="steps-segment">
-		<span class="steps-marker" />
-		<div class="steps-content">
-			<button
-				class={`link ${currentPage === pages.Enum.zusammenfassung ? 'active' : ''}`}
-				on:click={() => appState.update((prev) => ({ ...prev, page: pages.Enum.zusammenfassung }))}
-				>Zusammenfassung</button
-			>
-		</div>
-	</li>
+	{#each pages as page}
+		{@const curr = pageMap[page]}
+		<li class="steps-segment">
+			<span class="steps-marker" />
+			<div class="steps-content">
+				<button
+					class={`link ${currentPage === curr.curr.page ? 'active' : ''}`}
+					on:click={() => appState.update((prev) => ({ ...prev, page: curr.curr.page }))}
+				>
+					{curr.curr.label}
+				</button>
+			</div>
+		</li>
+	{/each}
 </ul>
 
 <style>

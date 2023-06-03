@@ -4,7 +4,9 @@
 	export let disabled: boolean = false;
 </script>
 
-<button {type} class={`button-${kind}`} {disabled}><slot /></button>
+<button {type} class={`button-${kind}`} {disabled} on:click>
+	<slot />
+</button>
 
 <style>
 	[disabled] {

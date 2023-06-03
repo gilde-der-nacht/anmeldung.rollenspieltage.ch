@@ -9,12 +9,13 @@
 	import type { SaveState } from '$lib/shared/save';
 	import Steps from '$lib/components/navigation/Steps.svelte';
 	import ContactPage from '$lib/components/main/ContactPage.svelte';
-	import { pages } from '$lib/shared/schema/app';
 	import GroupPage from '$lib/components/main/GroupPage.svelte';
 	import TimePage from '$lib/components/main/TimePage.svelte';
 	import PlayPage from '$lib/components/main/PlayPage.svelte';
 	import MasterPage from '$lib/components/main/MasterPage.svelte';
 	import SummaryPage from '$lib/components/main/SummaryPage.svelte';
+	import NavFooter from '$lib/components/navigation/NavFooter.svelte';
+	import { pageEnum } from '$lib/shared/schema/app';
 
 	export let data: PageData;
 	const appState = initAppState(data.id, data.secret, data.registration);
@@ -42,21 +43,23 @@
 		<Steps {appState} />
 	</aside>
 	<main>
-		{#if $appState.page === pages.Enum.kontaktperson}
+		{#if $appState.page === pageEnum.Enum.kontaktperson}
 			<ContactPage {appState} />
-		{:else if $appState.page === pages.Enum.gruppe}
+		{:else if $appState.page === pageEnum.Enum.gruppe}
 			<GroupPage {appState} />
-		{:else if $appState.page === pages.Enum.zeit}
+		{:else if $appState.page === pageEnum.Enum.zeit}
 			<TimePage {appState} />
-		{:else if $appState.page === pages.Enum.spielen}
+		{:else if $appState.page === pageEnum.Enum.spielen}
 			<PlayPage {appState} />
-		{:else if $appState.page === pages.Enum.leiten}
+		{:else if $appState.page === pageEnum.Enum.leiten}
 			<MasterPage {appState} />
-		{:else if $appState.page === pages.Enum.zusammenfassung}
+		{:else if $appState.page === pageEnum.Enum.zusammenfassung}
 			<SummaryPage {appState} />
 		{/if}
 	</main>
 </section>
+
+<NavFooter {appState} />
 
 <pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
 

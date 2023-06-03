@@ -15,6 +15,7 @@ type FailedSave = {
 };
 
 export type SaveState =
+	| 'WAITING'
 	| 'DEBOUNCING'
 	| 'DIFFING_LIVE_STATE'
 	| 'ABORTING'

@@ -13,6 +13,7 @@ export function initAppState(id: string, secret: string, serverData: ServerData)
 		wants_to_help: serverData.wants_to_help,
 		name_friend_one: serverData.name_friend_one ?? '',
 		name_friend_two: serverData.name_friend_two ?? '',
+		page: 'kontaktperson',
 	});
 	return appState;
 }

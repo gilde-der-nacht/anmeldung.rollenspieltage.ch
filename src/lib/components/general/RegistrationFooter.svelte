@@ -40,14 +40,22 @@
 
 <style>
 	.registration-footer-wrapper {
-		position: sticky;
-		bottom: 0;
 		padding-block-start: 1rem;
-		margin-inline: -1rem;
 	}
 
 	.registration-footer {
 		padding-block-end: 1rem;
-		background-color: var(--clr-2);
+	}
+
+	@media (min-width: 600px) {
+		.registration-footer-wrapper {
+			position: sticky;
+			bottom: 0;
+			margin-inline: -1rem;
+		}
+
+		.registration-footer {
+			background-color: var(--clr-2);
+		}
 	}
 </style>

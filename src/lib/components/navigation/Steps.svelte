@@ -6,7 +6,7 @@
 	$: currentPage = $appState.page;
 </script>
 
-<h3>Navigation</h3>
+<h4>Navigation</h4>
 <ul class="steps">
 	{#each pages as page}
 		{@const curr = pageMap[page]}

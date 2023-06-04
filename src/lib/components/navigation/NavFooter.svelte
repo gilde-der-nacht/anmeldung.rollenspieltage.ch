@@ -18,7 +18,7 @@
 			kind="special"
 			on:click={() => appState.update((p) => ({ ...p, page: prev2.page }))}
 		>
-			<div class="flex">
+			<div class="flex left">
 				<i class="fa-duotone fa-arrow-left" />
 				<div style="text-align: left;">
 					<small>Vorherige Seite</small>
@@ -37,7 +37,7 @@
 			kind="special"
 			on:click={() => appState.update((p) => ({ ...p, page: next2.page }))}
 		>
-			<div class="flex">
+			<div class="flex right">
 				<div style="text-align: right;">
 					<small>Nächste Seite</small>
 					<br />
@@ -62,6 +62,14 @@
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		align-items: center;
+	}
+
+	.left {
+		padding-inline: .5rem 1.5rem;
+	}
+
+	.right {
+		padding-inline: 1.5rem .5rem;
 	}
 
 	small {

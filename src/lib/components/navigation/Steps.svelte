@@ -74,7 +74,6 @@
 		font-weight: 700;
 		justify-content: center;
 		position: relative;
-		z-index: 10;
 	}
 
 	.steps-content {

@@ -1,14 +1,12 @@
 <script lang="ts">
 	import theme from '$lib/shared/stores/theme';
-	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
-	function reflectPreference() {
-		if (browser) {
-			const [bodyEl] = document.querySelectorAll('body');
-			bodyEl.setAttribute('color-scheme', $theme);
-		}
-	}
-	reflectPreference();
+	onMount(() => {
+		const [bodyEl] = document.querySelectorAll('body');
+		bodyEl.setAttribute('color-scheme', $theme);
+	});
+
 	function toggleTheme() {
 		theme.set($theme === 'dark' ? 'light' : 'dark');
 	}

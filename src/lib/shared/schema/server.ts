@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ageGroupEnum } from './shared';
 
 export const uuidSchema = z.string().uuid();
 export const nameSchema = z.string().trim().min(1);
@@ -15,6 +16,7 @@ export const serverDataSchema = z.object({
 	previous_registration_entry: z.nullable(z.string()),
 	name: z.string(),
 	email: z.string(),
+	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
 	name_friend_one: z.nullable(z.string()),
 	name_friend_two: z.nullable(z.string()),

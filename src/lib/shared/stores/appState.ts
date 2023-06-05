@@ -10,6 +10,7 @@ export function initAppState(id: string, secret: string, serverData: ServerData)
 		previous_registration_entry: z.string().uuid().parse(serverData.id),
 		name: serverData.name,
 		email: serverData.email,
+		age_group: serverData.age_group,
 		wants_to_help: serverData.wants_to_help,
 		name_friend_one: serverData.name_friend_one ?? '',
 		name_friend_two: serverData.name_friend_two ?? '',

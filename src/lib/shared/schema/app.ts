@@ -1,15 +1,17 @@
-import { z } from 'zod';
+import { z, type TypeOf } from 'zod';
+import { ageGroupEnum } from './shared';
 
 const clientSaveState = z.object({
 	name: z.string(),
 	email: z.string(),
+	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
 	name_friend_one: z.string(),
 	name_friend_two: z.string(),
 });
 export type ClientSaveState = z.infer<typeof clientSaveState>;
 
-export const pages = [
+export const PAGES = [
 	'kontaktperson',
 	'gruppe',
 	'zeit',
@@ -17,7 +19,7 @@ export const pages = [
 	'leiten',
 	'zusammenfassung',
 ] as const;
-export const pageEnum = z.enum(pages);
+export const pageEnum = z.enum(PAGES);
 export type Page = z.infer<typeof pageEnum>;
 export const pageMap: {
 	[Property in Page]: {

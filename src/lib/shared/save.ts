@@ -99,7 +99,8 @@ function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
 		n.email !== l.email ||
 		n.wants_to_help !== l.wants_to_help ||
 		n.name_friend_one !== l.name_friend_one ||
-		n.name_friend_two !== l.name_friend_two
+		n.name_friend_two !== l.name_friend_two ||
+		n.age_group !== l.age_group
 	) {
 		hasChanged = true;
 	}

@@ -8,8 +8,6 @@
 
 <div class="page">
 	<h3>Zeit</h3>
-
-	<TextInput bind:initValue={$appState.name} label="Name" name="name" required />
 </div>
 
 <style>

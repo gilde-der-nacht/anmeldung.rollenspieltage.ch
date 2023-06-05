@@ -5,6 +5,7 @@
 	import { isNonEmptyString } from '../form/Validation';
 	import Checkbox from '../form/Checkbox.svelte';
 	import RadioGroup from '../form/RadioGroup.svelte';
+	import Alert from '../common/Alert.svelte';
 
 	export let appState: Writable<AppState>;
 </script>
@@ -48,6 +49,15 @@
 	<Checkbox bind:state={$appState.wants_to_help}>
 		Ich bin bereit bei einer Spiellücke maximal 2 Stunden an der Kiosk-Kasse auszuhelfen.
 	</Checkbox>
+
+	<div style="margin-top: 1.5rem;">
+		<Alert>
+			Die Kontaktdaten werden ausschliesslich verwendet, um dir die notwendigen Informationen zu den
+			Luzerner Rollenspieltage 2023 zu senden. Möchtest du gerne darüber hinaus über Spielevents von
+			uns informiert werden, dann trage dich am besten für unseren Newsletter ein:
+			<a href="https://rollenspieltage.ch/newsletter/">rollenspieltage.ch/newsletter</a>
+		</Alert>
+	</div>
 </div>
 
 <style>

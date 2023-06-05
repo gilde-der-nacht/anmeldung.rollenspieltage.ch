@@ -10,7 +10,7 @@
 <ul class="steps">
 	{#each pages as page}
 		{@const curr = pageMap[page]}
-		<li class="steps-segment">
+		<li class={`steps-segment ${currentPage === curr.curr.page ? 'active' : ''}`}>
 			<span class="steps-marker" />
 			<div class="steps-content">
 				<button
@@ -31,6 +31,7 @@
 		margin: 0;
 		font-size: 0.75rem;
 		margin-top: 2rem;
+		padding-inline-start: 0.5rem;
 	}
 
 	@media (min-width: 1000px) {
@@ -74,6 +75,12 @@
 		font-weight: 700;
 		justify-content: center;
 		position: relative;
+		overflow: visible;
+	}
+
+	.active > .steps-marker {
+		outline: 3px solid var(--clr-accent-1);
+		outline-offset: 0.25rem;
 	}
 
 	.steps-content {

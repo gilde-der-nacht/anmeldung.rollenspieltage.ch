@@ -6,7 +6,7 @@
 
 <Header />
 <div class="main-wrapper">
-	<main class="main-content content">
+	<main class="primary-content content">
 		<Alert type="danger">Diese Webseite ist noch im Aufbau. Bitte noch nicht ausfüllen.</Alert>
 		<slot />
 	</main>

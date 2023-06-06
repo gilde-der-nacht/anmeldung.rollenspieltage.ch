@@ -6,8 +6,6 @@ const clientSaveState = z.object({
 	email: z.string(),
 	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
-	name_friend_one: z.string(),
-	name_friend_two: z.string(),
 });
 export type ClientSaveState = z.infer<typeof clientSaveState>;
 

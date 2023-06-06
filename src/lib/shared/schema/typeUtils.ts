@@ -9,8 +9,6 @@ export function convertForServer(appState: AppState): ToSaveState {
 		email: appState.email,
 		age_group: appState.age_group,
 		wants_to_help: appState.wants_to_help,
-		name_friend_one: appState.name_friend_one,
-		name_friend_two: appState.name_friend_two,
 	};
 }
 
@@ -20,7 +18,5 @@ export function convertForClient(serverState: ServerData): ClientSaveState {
 		email: serverState.email,
 		age_group: serverState.age_group,
 		wants_to_help: serverState.wants_to_help,
-		name_friend_one: serverState.name_friend_one ?? '',
-		name_friend_two: serverState.name_friend_two ?? '',
 	};
 }

@@ -18,7 +18,7 @@
 	import { pageEnum } from '$lib/shared/schema/app';
 
 	export let data: PageData;
-	const appState = initAppState(data.id, data.secret, data.registration);
+	const appState = initAppState(data.id, data.secret, 'kontaktperson', data.registration);
 
 	let saveState: SaveState = 'WAITING';
 

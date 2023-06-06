@@ -4,6 +4,7 @@ import { headerJSON } from './common';
 import type { Readable } from 'svelte/store';
 import { convertForClient } from './schema/typeUtils';
 import { serverDataSchema } from './schema/server';
+import _ from 'lodash';
 
 type SuccessfullSave = {
 	success: true;
@@ -94,11 +95,13 @@ function stateHasChangedReadonlyStore(n: AppState, l: Readable<AppState>): boole
 
 function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
 	let hasChanged = false;
+
 	if (
 		n.name !== l.name ||
 		n.email !== l.email ||
 		n.wants_to_help !== l.wants_to_help ||
-		n.age_group !== l.age_group
+		n.age_group !== l.age_group ||
+		!_.isEqual(n.group, l.group)
 	) {
 		hasChanged = true;
 	}

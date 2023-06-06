@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ageGroupEnum } from './shared';
+import { ageGroupEnum, dayEnum } from './shared';
 
 export const uuidSchema = z.string().uuid();
 export const nameSchema = z.string().trim().min(1);
@@ -8,6 +8,15 @@ export const emailSchema = z.string().trim().email();
 export const itemSchema = z.object({
 	data: z.object({ id: uuidSchema }),
 });
+
+export const groupSchema = z.array(
+	z.object({
+		active: z.boolean(),
+		name: z.string(),
+		age_group: ageGroupEnum,
+		days: z.array(dayEnum),
+	}),
+);
 
 export const serverDataSchema = z.object({
 	id: z.string().uuid(),
@@ -18,6 +27,7 @@ export const serverDataSchema = z.object({
 	email: z.string(),
 	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
+	group: groupSchema,
 });
 export type ServerData = z.infer<typeof serverDataSchema>;
 

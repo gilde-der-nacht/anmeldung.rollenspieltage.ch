@@ -6,12 +6,13 @@
 	export let initValue: string = '';
 	export let placeholder: string = '';
 	export let required: boolean = false;
+	export let disabled: boolean = false;
 	export let error: { condition: () => boolean; message: string } | undefined = undefined;
 </script>
 
 <div>
 	<label
-		>{label} <input type="text" bind:value={initValue} {name} {placeholder} {required} />
+		>{label} <input type="text" bind:value={initValue} {name} {placeholder} {required} {disabled} />
 	</label>
 
 	{#if error !== undefined && error.condition()}

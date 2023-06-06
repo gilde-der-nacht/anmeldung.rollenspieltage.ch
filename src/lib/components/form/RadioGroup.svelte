@@ -6,6 +6,7 @@
 	export let label: string;
 	export let options: RadioOption[];
 	export let value: string;
+	export let disabled: boolean = false;
 </script>
 
 <fieldset>
@@ -15,7 +16,7 @@
 		{#each options as option}
 			<li>
 				<label class="input-radio">
-					<input type="radio" value={option.value} bind:group={value} />
+					<input type="radio" value={option.value} bind:group={value} {disabled} />
 					{option.label}
 				</label>
 			</li>

@@ -1,12 +1,26 @@
-import { z, type TypeOf } from 'zod';
-import { ageGroupEnum } from './shared';
+import { z } from 'zod';
+import { ageGroupEnum, dayEnum } from './shared';
+
+const groupEntry = z.object({
+	active: z.boolean(),
+	name: z.string(),
+	age_group: ageGroupEnum,
+	days: z.array(dayEnum),
+});
+const groupSchema = z.object({
+	one: groupEntry,
+	two: groupEntry,
+});
+export type Group = z.infer<typeof groupSchema>;
 
 const clientSaveState = z.object({
 	name: z.string(),
 	email: z.string(),
 	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
+	group: groupSchema,
 });
+
 export type ClientSaveState = z.infer<typeof clientSaveState>;
 
 export const PAGES = [

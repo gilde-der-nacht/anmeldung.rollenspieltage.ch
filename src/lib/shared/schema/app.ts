@@ -19,6 +19,10 @@ const clientSaveState = z.object({
 	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
 	group: groupSchema,
+	days: z.object({
+		saturday: z.boolean(),
+		sunday: z.boolean(),
+	}),
 });
 
 export type ClientSaveState = z.infer<typeof clientSaveState>;

@@ -28,6 +28,7 @@ export const serverDataSchema = z.object({
 	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
 	group: groupSchema,
+	days: z.array(dayEnum),
 });
 export type ServerData = z.infer<typeof serverDataSchema>;
 

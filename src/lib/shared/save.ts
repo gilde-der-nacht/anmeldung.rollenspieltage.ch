@@ -101,7 +101,8 @@ function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
 		n.email !== l.email ||
 		n.wants_to_help !== l.wants_to_help ||
 		n.age_group !== l.age_group ||
-		!_.isEqual(n.group, l.group)
+		!_.isEqual(n.group, l.group) ||
+		!_.isEqual(n.days, l.days)
 	) {
 		hasChanged = true;
 	}

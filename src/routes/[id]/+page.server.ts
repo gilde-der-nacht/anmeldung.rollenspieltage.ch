@@ -10,7 +10,7 @@ export const load = (async ({ params, url }) => {
 		throw error(401, "'Secret' fehlt.");
 	}
 
-	const res = await loadBySecret(secret);
+	const res = await loadBySecret(secret);	
 	if (!res.success) {
 		throw error(401, "'Secret' ist ungültig.");
 	}

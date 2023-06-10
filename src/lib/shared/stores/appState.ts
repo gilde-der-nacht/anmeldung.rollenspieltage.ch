@@ -21,6 +21,8 @@ export function initAppState(id: string, secret: string, page: Page, serverData:
 		saturday_endtime: converted.saturday_endtime,
 		sunday_starttime: converted.sunday_starttime,
 		sunday_endtime: converted.sunday_endtime,
+		eat_preference: converted.eat_preference,
+		genres: converted.genres,
 		page,
 	});
 	return appState;

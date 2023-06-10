@@ -106,7 +106,9 @@ function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
 		n.saturday_starttime !== l.saturday_starttime ||
 		n.saturday_endtime !== l.saturday_endtime ||
 		n.sunday_starttime !== l.sunday_starttime ||
-		n.sunday_endtime !== l.sunday_endtime
+		n.sunday_endtime !== l.sunday_endtime ||
+		n.eat_preference !== l.eat_preference ||
+		!_.isEqual(n.genres, l.genres)
 	) {
 		hasChanged = true;
 	}

@@ -1,6 +1,5 @@
-import type { z } from 'zod';
 import type { AppState, ClientSaveState, Group } from './app';
-import type { ServerData, ServerGroup, ToSaveState, groupSchema } from './server';
+import type { ServerData, ServerGroup, ToSaveState } from './server';
 import type { Day } from './shared';
 
 export function convertForServer(appState: AppState): ToSaveState {
@@ -17,6 +16,8 @@ export function convertForServer(appState: AppState): ToSaveState {
 		saturday_endtime: appState.saturday_endtime,
 		saturday_starttime: appState.saturday_starttime,
 		sunday_endtime: appState.sunday_endtime,
+		eat_preference: appState.eat_preference,
+		genres: appState.genres,
 	};
 }
 
@@ -35,6 +36,8 @@ export function convertForClient(serverState: ServerData): ClientSaveState {
 		saturday_endtime: serverState.saturday_endtime,
 		saturday_starttime: serverState.saturday_starttime,
 		sunday_endtime: serverState.sunday_endtime,
+		eat_preference: serverState.eat_preference,
+		genres: serverState.genres,
 	};
 }
 
@@ -68,17 +71,23 @@ export function convertGroupForServer(group: Group): ServerGroup {
 }
 
 export function convertGroupForClient(group: ServerGroup): Group {
+	const first = group[0];
+	const second = group[1];
+	if (first === undefined || second === undefined) {
+		throw new Error("This should not happen 2382.");
+	}
+
 	return {
 		one: {
-			...group[0], days: {
-				saturday: group[0].days.includes("SATURDAY"),
-				sunday: group[0].days.includes("SUNDAY"),
+			...first, days: {
+				saturday: first.days.includes("SATURDAY"),
+				sunday: first.days.includes("SUNDAY"),
 			}
 		},
 		two: {
-			...group[1], days: {
-				saturday: group[0].days.includes("SATURDAY"),
-				sunday: group[0].days.includes("SUNDAY"),
+			...second, days: {
+				saturday: second!.days.includes("SATURDAY"),
+				sunday: second!.days.includes("SUNDAY"),
 			}
 		},
 	};

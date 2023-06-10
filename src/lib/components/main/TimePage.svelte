@@ -4,6 +4,7 @@
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import TimeTable from '../tables/TimeTable.svelte';
+	import RadioGroup from '../form/RadioGroup.svelte';
 
 	export let appState: Writable<AppState>;
 </script>
@@ -35,6 +36,31 @@
 	{:else}
 		<Alert>Sonntag wurde nicht ausgewählt.</Alert>
 	{/if}
+
+	<h4 style="margin-top: 1rem;">Verpflegung</h4>
+	<Alert>
+		Wir werden wie oben im Programm markiert drei warme Malzeiten kochen. Falls du an einem oder
+		mehreren Mittag-/Abendessen vor Ort sein wirst, würden wir uns vorab freuen, eine ungefähre
+		Einschätzung zu erhalten, wie viele Malzeiten wir vorbereiten dürfen.
+	</Alert>
+	<RadioGroup
+		label="Planst du vor Ort zu Essen?"
+		bind:value={$appState.eat_preference}
+		options={[
+			{
+				value: 'nothing_selected',
+				label: 'Keine Angabe',
+			},
+			{
+				value: 'plans_to_eat',
+				label: 'Ich werde vermutlich von eure Essensangebot gebrauch machen.',
+			},
+			{
+				value: 'plans_not_to_eat',
+				label: 'Ich werde mich voraussichtlich selber um meine Verpflegung kümmern.',
+			},
+		]}
+	/>
 </div>
 
 <style>

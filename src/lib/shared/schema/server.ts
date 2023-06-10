@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ageGroupEnum, dayEnum } from './shared';
+import { ageGroupEnum, dayEnum, eatPrefEnum, genreEnum } from './shared';
 
 export const uuidSchema = z.string().uuid();
 export const nameSchema = z.string().trim().min(1);
@@ -34,6 +34,8 @@ export const serverDataSchema = z.object({
 	saturday_endtime: z.nullable(z.number()),
 	sunday_starttime: z.nullable(z.number()),
 	sunday_endtime: z.nullable(z.number()),
+	eat_preference: eatPrefEnum,
+	genres: z.array(genreEnum),
 });
 export type ServerData = z.infer<typeof serverDataSchema>;
 

@@ -8,6 +8,14 @@ export const DAYS = ['SATURDAY', 'SUNDAY'] as const;
 export const dayEnum = z.enum(DAYS);
 export type Day = z.infer<typeof dayEnum>;
 
+export const EAT_PREF = ['nothing_selected', 'plans_to_eat', "plans_not_to_eat"] as const;
+export const eatPrefEnum = z.enum(EAT_PREF);
+export type EatPref = z.infer<typeof eatPrefEnum>;
+
+export const GENRES = ['fantasy', 'science_fiction', "horror", "crime", "modern"] as const;
+export const genreEnum = z.enum(GENRES);
+export type Genre = z.infer<typeof genreEnum>;
+
 export type Range = {
     range: number[];
     start: number;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ageGroupEnum, dayEnum } from './shared';
+import { ageGroupEnum, dayEnum, eatPrefEnum, genreEnum } from './shared';
 
 const daysSchema = z.object({
 	saturday: z.boolean(),
@@ -29,6 +29,8 @@ const clientSaveState = z.object({
 	saturday_endtime: z.nullable(z.number()),
 	sunday_starttime: z.nullable(z.number()),
 	sunday_endtime: z.nullable(z.number()),
+	eat_preference: eatPrefEnum,
+	genres: z.array(genreEnum),
 });
 
 export type ClientSaveState = z.infer<typeof clientSaveState>;

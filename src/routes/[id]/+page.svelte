@@ -32,7 +32,7 @@
 	onMount(updateUrl(appState));
 </script>
 
-<h1>Anmeldung 2023</h1>
+<h1 id="main-title">Anmeldung 2023</h1>
 
 {#if data.created}
 	<Alert type="success">Anmeldung erfolgreich geöffnet.</Alert>
@@ -42,7 +42,7 @@
 	<aside>
 		<Steps {appState} />
 	</aside>
-	<main>
+	<main id="main-box">
 		{#if $appState.page === pageEnum.Enum.kontaktperson}
 			<ContactPage {appState} />
 		{:else if $appState.page === pageEnum.Enum.gruppe}

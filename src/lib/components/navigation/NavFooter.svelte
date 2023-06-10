@@ -16,7 +16,10 @@
 		<Button
 			type="button"
 			kind="special"
-			on:click={() => appState.update((p) => ({ ...p, page: prev2.page }))}
+			on:click={() => {
+				appState.update((p) => ({ ...p, page: prev2.page }));
+				document.getElementById('main-title')?.scrollIntoView(true);
+			}}
 		>
 			<div class="flex left">
 				<i class="fa-duotone fa-arrow-left" />
@@ -35,7 +38,10 @@
 		<Button
 			type="button"
 			kind="special"
-			on:click={() => appState.update((p) => ({ ...p, page: next2.page }))}
+			on:click={() => {
+				appState.update((p) => ({ ...p, page: next2.page }));
+				document.getElementById('main-title')?.scrollIntoView(true);
+			}}
 		>
 			<div class="flex right">
 				<div style="text-align: right;">
@@ -65,11 +71,11 @@
 	}
 
 	.left {
-		padding-inline: .5rem 1.5rem;
+		padding-inline: 0.5rem 1.5rem;
 	}
 
 	.right {
-		padding-inline: 1.5rem .5rem;
+		padding-inline: 1.5rem 0.5rem;
 	}
 
 	small {

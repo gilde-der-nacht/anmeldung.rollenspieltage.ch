@@ -15,7 +15,10 @@
 			<div class="steps-content">
 				<button
 					class={`link ${currentPage === curr.curr.page ? 'active' : ''}`}
-					on:click={() => appState.update((prev) => ({ ...prev, page: curr.curr.page }))}
+					on:click={() => {
+						appState.update((prev) => ({ ...prev, page: curr.curr.page }));
+						document.getElementById('main-title')?.scrollIntoView(true);
+					}}
 				>
 					{curr.curr.label}
 				</button>

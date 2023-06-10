@@ -48,16 +48,16 @@
 		bind:value={$appState.eat_preference}
 		options={[
 			{
-				value: 'nothing_selected',
-				label: 'Keine Angabe',
-			},
-			{
 				value: 'plans_to_eat',
 				label: 'Ich werde vermutlich von eure Essensangebot gebrauch machen.',
 			},
 			{
 				value: 'plans_not_to_eat',
 				label: 'Ich werde mich voraussichtlich selber um meine Verpflegung kümmern.',
+			},
+			{
+				value: 'nothing_selected',
+				label: 'Keine Angabe',
 			},
 		]}
 	/>

@@ -30,6 +30,10 @@ export const serverDataSchema = z.object({
 	wants_to_help: z.boolean(),
 	group: groupSchema,
 	days: z.array(dayEnum),
+	saturday_starttime: z.nullable(z.number()),
+	saturday_endtime: z.nullable(z.number()),
+	sunday_starttime: z.nullable(z.number()),
+	sunday_endtime: z.nullable(z.number()),
 });
 export type ServerData = z.infer<typeof serverDataSchema>;
 

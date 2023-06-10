@@ -1,3 +1,5 @@
+import { toRange, type Day } from "$lib/shared/schema/shared";
+
 type DayConfig = {
     start: number,
     end: number,
@@ -28,7 +30,7 @@ const sunday: DayConfig = {
 };
 
 const constructDayInfos = (day: DayConfig) => {
-    const range = Array(day.end - day.start).fill(0).map((_, i) => i + day.start);
+    const range = toRange(day.start, day.end);
 
     const details: Details = {}
     range.forEach(t => {
@@ -54,7 +56,7 @@ const constructDayInfos = (day: DayConfig) => {
     }
 }
 
-export const getDayInfos = (day: "SATURDAY" | "SUNDAY") => {
+export const getDayInfos = (day: Day) => {
     return constructDayInfos(day === "SATURDAY" ? saturday : sunday);
 }
 
@@ -64,4 +66,77 @@ export const labelMap: LabelMap = {
     GAME_BLOCK_CONT: "",
     LUNCH: "Mittagessen",
     DINNER: "Nachtessen",
+}
+
+export function getFieldType(day: Day, field: number): EntryType | "OUT_OF_BOUNDS" {
+    const config = day === "SATURDAY" ? saturday : sunday;
+    if (field < config.start || field >= config.end) {
+        return "OUT_OF_BOUNDS";
+    }
+
+    if (field === config.lunch) {
+        return "LUNCH";
+    }
+
+    if (field === config.dinner) {
+        return "DINNER";
+    }
+
+    if (config.blocks.includes(field)) {
+        return "GAME_BLOCK_START";
+    }
+
+    return "GAME_BLOCK_CONT";
+}
+
+type FieldBlock = {
+    activeField: number,
+    hoveredFields: number[],
+    type: "LUNCH" | "DINNER" | "GAME",
+}
+
+export function getFieldBlock(day: Day, field: number): FieldBlock {
+    const affectedFields: number[] = [field];
+    const currentType = getFieldType(day, field);
+
+    if (currentType === "LUNCH" || currentType === "DINNER") {
+        return {
+            activeField: field,
+            hoveredFields: affectedFields,
+            type: currentType
+        };
+    }
+
+    let pointer = 0;
+    while (true && currentType !== "GAME_BLOCK_START") {
+        pointer--;
+        const hour = field + pointer;
+        const currType = getFieldType(day, hour);
+
+        if (currType === "GAME_BLOCK_CONT" || currType === "GAME_BLOCK_START") {
+            affectedFields.push(hour);
+            if (currType === "GAME_BLOCK_START") {
+                break;
+            }
+        } else {
+            break;
+        }
+    }
+    pointer = 0;
+    while (true) {
+        pointer++;
+        const hour = field + pointer;
+        const currentType = getFieldType(day, hour);
+
+        if (currentType === "GAME_BLOCK_CONT") {
+            affectedFields.push(hour);
+        } else {
+            break;
+        }
+    }
+    return {
+        activeField: field,
+        hoveredFields: affectedFields,
+        type: "GAME"
+    }
 }

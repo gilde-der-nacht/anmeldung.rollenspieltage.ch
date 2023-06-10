@@ -13,6 +13,10 @@ export function convertForServer(appState: AppState): ToSaveState {
 		wants_to_help: appState.wants_to_help,
 		group: convertGroupForServer(appState.group),
 		days: convertDaysForServer(appState.days),
+		sunday_starttime: appState.sunday_starttime,
+		saturday_endtime: appState.saturday_endtime,
+		saturday_starttime: appState.saturday_starttime,
+		sunday_endtime: appState.sunday_endtime,
 	};
 }
 
@@ -23,7 +27,14 @@ export function convertForClient(serverState: ServerData): ClientSaveState {
 		age_group: serverState.age_group,
 		wants_to_help: serverState.wants_to_help,
 		group: convertGroupForClient(serverState.group),
-		days: { saturday: serverState.days.includes("SATURDAY"), sunday: serverState.days.includes("SUNDAY") },
+		days: {
+			saturday: serverState.days.includes("SATURDAY"),
+			sunday: serverState.days.includes("SUNDAY")
+		},
+		sunday_starttime: serverState.sunday_starttime,
+		saturday_endtime: serverState.saturday_endtime,
+		saturday_starttime: serverState.saturday_starttime,
+		sunday_endtime: serverState.sunday_endtime,
 	};
 }
 

@@ -28,7 +28,7 @@
 					on:click={i.resetDay}
 				>
 					<i
-						class="fa-duotone fa-arrow-rotate-left"
+						class="fa-duotone fa-trash-can-check"
 						title={`${day === 'SATURDAY' ? 'Samstag' : 'Sonntag'} zurücksetzen`}
 					/>
 				</th>

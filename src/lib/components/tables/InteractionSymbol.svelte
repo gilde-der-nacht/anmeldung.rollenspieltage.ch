@@ -5,7 +5,7 @@
 </script>
 
 <span style={`display: ${type === 'DELETE' ? 'initial' : 'none'};`} title="Diese Zeiten löschen">
-	<i class="fa-duotone fa-trash-xmark" />
+	<i class="fa-duotone fa-square-check" />
 </span>
 
 <span style={`display: ${type === 'CHECKED' ? 'initial' : 'none'};`}>

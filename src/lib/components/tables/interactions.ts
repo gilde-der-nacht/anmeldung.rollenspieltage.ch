@@ -32,8 +32,7 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
         if (activeHours === null) {
             return;
         }
-        interactionDetails.set(activeHours.range.reduce((acc, cur) => ({ ...acc, [cur]: "CHECKED" }), {}))
-
+        interactionDetails.set(activeHours.range.reduce((acc, cur) => ({ ...acc, [cur]: "CHECKED" }), {}));
     }
     resetInteraction();
 
@@ -47,6 +46,7 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
                         saturday_endtime: null,
                     };
                 })
+                resetInteraction();
                 return true;
 
             case "SUNDAY":
@@ -57,6 +57,7 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
                         sunday_endtime: null,
                     };
                 })
+                resetInteraction();
                 return true;
         }
     }
@@ -152,6 +153,8 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
             activateHours(range);
             dayHasActiveHours.set(true);
         }
+
+        resetInteraction();
     }
 
     return {

@@ -8,18 +8,35 @@ export const DAYS = ['SATURDAY', 'SUNDAY'] as const;
 export const dayEnum = z.enum(DAYS);
 export type Day = z.infer<typeof dayEnum>;
 
-export const toRange = (from: number, to: number): number[] => {
+export type Range = {
+    range: number[];
+    start: number;
+    end: number;
+}
+
+export const toRange = (from: number, to: number): Range => {
     const _toRange = (from: number, to: number): number[] => {
         return Array(to - from).fill(0).map((_, i) => i + from);
     }
 
     if (from === to) {
-        return [from];
+        return {
+            range: [from],
+            start: from,
+            end: from,
+        };
     }
 
     if (from > to) {
-        return _toRange(to, from);
+        return {
+            range: _toRange(to, from),
+            start: to,
+            end: from,
+        };
     }
-    return _toRange(from, to);
-
+    return {
+        range: _toRange(from, to),
+        start: from,
+        end: to,
+    };
 }

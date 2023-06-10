@@ -11,3 +11,7 @@
 <span style={`display: ${type === 'CHECKED' ? 'initial' : 'none'};`}>
 	<i class="fa-duotone fa-square-check" />
 </span>
+
+<span style={`display: ${type === 'PRE_CHECKED' ? 'initial' : 'none'};`}>
+	<i class="fa-duotone fa-square-check" />
+</span>

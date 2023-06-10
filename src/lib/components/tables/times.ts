@@ -1,4 +1,4 @@
-import { toRange, type Day } from "$lib/shared/schema/shared";
+import { toRange, type Day, type Range } from "$lib/shared/schema/shared";
 
 type DayConfig = {
     start: number,
@@ -33,7 +33,7 @@ const constructDayInfos = (day: DayConfig) => {
     const range = toRange(day.start, day.end);
 
     const details: Details = {}
-    range.forEach(t => {
+    range.range.forEach(t => {
         details[t] = "GAME_BLOCK_CONT"
     })
 
@@ -91,7 +91,7 @@ export function getFieldType(day: Day, field: number): EntryType | "OUT_OF_BOUND
 
 type FieldBlock = {
     activeField: number,
-    hoveredFields: number[],
+    hoveredFields: Range,
     type: "LUNCH" | "DINNER" | "GAME",
 }
 
@@ -102,7 +102,7 @@ export function getFieldBlock(day: Day, field: number): FieldBlock {
     if (currentType === "LUNCH" || currentType === "DINNER") {
         return {
             activeField: field,
-            hoveredFields: affectedFields,
+            hoveredFields: toRange(field, field + 1),
             type: currentType
         };
     }
@@ -134,9 +134,10 @@ export function getFieldBlock(day: Day, field: number): FieldBlock {
             break;
         }
     }
+
     return {
         activeField: field,
-        hoveredFields: affectedFields,
+        hoveredFields: toRange(Math.min(...affectedFields), Math.max(...affectedFields) + 1),
         type: "GAME"
     }
 }

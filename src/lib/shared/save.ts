@@ -102,7 +102,11 @@ function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
 		n.wants_to_help !== l.wants_to_help ||
 		n.age_group !== l.age_group ||
 		!_.isEqual(n.group, l.group) ||
-		!_.isEqual(n.days, l.days)
+		!_.isEqual(n.days, l.days) ||
+		n.saturday_starttime !== l.saturday_starttime ||
+		n.saturday_endtime !== l.saturday_endtime ||
+		n.sunday_starttime !== l.sunday_starttime ||
+		n.sunday_endtime !== l.sunday_endtime
 	) {
 		hasChanged = true;
 	}

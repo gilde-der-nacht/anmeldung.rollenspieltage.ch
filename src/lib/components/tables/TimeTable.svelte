@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each timeRange.range as block}
+			{#each timeRange.range.range as block}
 				{@const type = timeRange.details[block] ?? 'GAME_BLOCK_CONT'}
 				<tr
 					class={type.toLowerCase() + ' pointer'}
@@ -39,7 +39,7 @@
 					on:mouseleave={i.onMouseLeave}
 					on:click={() => i.onClick(block)}
 				>
-					<td>
+					<td class={$interactionDetails[block]?.toLowerCase()}>
 						<InteractionSymbol type={$interactionDetails[block]} />
 					</td>
 					<td>{block} Uhr</td>
@@ -52,13 +52,31 @@
 </div>
 
 <style>
-	.dinner,
-	.lunch {
+	.lunch,
+	.dinner {
 		background-color: var(--clr-11);
 		color: var(--clr-2);
 	}
 
 	.pointer:hover {
 		cursor: pointer;
+	}
+
+	.checked {
+		color: var(--clr-success-10);
+	}
+
+	.lunch .checked,
+	.dinner .checked {
+		color: var(--clr-success-6);
+	}
+
+	.delete {
+		color: var(--clr-danger-10);
+	}
+
+	.lunch .delete,
+	.dinner .delete {
+		color: var(--clr-danger-6);
 	}
 </style>

@@ -1,5 +1,5 @@
 import type { AppState } from "$lib/shared/schema/app";
-import { toRange, type Day } from "$lib/shared/schema/shared";
+import { toRange, type Day, type Range } from "$lib/shared/schema/shared";
 import { get, writable, type Writable } from "svelte/store";
 import { getDayInfos, getFieldBlock } from "./times";
 
@@ -9,27 +9,29 @@ type InteractionDetails = {
     [hour: number]: InteractionType;
 }
 
+type ActiveHours = Range | null
+
 
 export const getInteractions = (day: Day, appState: Writable<AppState>) => {
-    const getActiveHours = (): number[] => {
+    const getActiveHours = (): ActiveHours => {
         const start = day === "SATURDAY" ? get(appState).saturday_starttime : get(appState).sunday_starttime;
         const end = day === "SATURDAY" ? get(appState).saturday_endtime : get(appState).sunday_endtime;
         if (start === null || end === null) {
-            return [];
+            return null;
         }
-        return toRange(start, end);
+        return toRange(start, end)
     }
 
     const mouseIsHovering = writable(false);
     const interactionDetails = writable<InteractionDetails>({})
     const resetInteraction = () => {
-        interactionDetails.set(getDayInfos(day).range.reduce((acc, cur) => ({ ...acc, [cur]: "NONE" }), {}))
+        interactionDetails.set(getDayInfos(day).range.range.reduce((acc, cur) => ({ ...acc, [cur]: "NONE" }), {}))
 
         const activeHours = getActiveHours();
-        if (activeHours.length === 0) {
+        if (activeHours === null) {
             return;
         }
-        interactionDetails.set(activeHours.reduce((acc, cur) => ({ ...acc, [cur]: "CHECKED" }), {}))
+        interactionDetails.set(activeHours.range.reduce((acc, cur) => ({ ...acc, [cur]: "CHECKED" }), {}))
 
     }
     resetInteraction();
@@ -59,17 +61,49 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
     }
 
     const onMouseEnter = (field: number) => {
-        if (field !== 0) {
-            const fieldBlock = getFieldBlock(day, field);
+        mouseIsHovering.set(true)
+        if (field === 0) {
+            return;
+        }
+        const fieldBlock = getFieldBlock(day, field);
+
+        const activeHours = getActiveHours();
+
+        if (activeHours === null) {
             interactionDetails.update(prev => {
                 const next = { ...prev };
-                fieldBlock.hoveredFields.forEach(h => {
+                fieldBlock.hoveredFields.range.forEach(h => {
+                    next[h] = "PRE_CHECKED";
+                })
+                return next;
+            })
+        } else if (activeHours.start <= field && activeHours.end > field) {
+            interactionDetails.update(prev => {
+                const next = { ...prev };
+                activeHours.range.forEach(h => {
                     next[h] = "DELETE";
                 })
                 return next;
             })
+        } else if (activeHours.start > field) {
+            const range = toRange(fieldBlock.hoveredFields.start, activeHours.start);
+            interactionDetails.update(prev => {
+                const next = { ...prev };
+                range.range.forEach(h => {
+                    next[h] = "PRE_CHECKED";
+                })
+                return next;
+            })
+        } else {
+            const range = toRange(fieldBlock.hoveredFields.end, activeHours.end);
+            interactionDetails.update(prev => {
+                const next = { ...prev };
+                range.range.forEach(h => {
+                    next[h] = "PRE_CHECKED";
+                })
+                return next;
+            })
         }
-        mouseIsHovering.set(true)
     }
 
     const onMouseLeave = () => {

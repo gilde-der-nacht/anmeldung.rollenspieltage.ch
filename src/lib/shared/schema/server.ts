@@ -17,6 +17,7 @@ export const groupSchema = z.array(
 		days: z.array(dayEnum),
 	}),
 );
+export type ServerGroup = z.infer<typeof groupSchema>;
 
 export const serverDataSchema = z.object({
 	id: z.string().uuid(),

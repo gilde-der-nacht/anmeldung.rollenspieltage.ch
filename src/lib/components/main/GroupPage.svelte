@@ -42,6 +42,44 @@
 		]}
 	/>
 
+	<fieldset>
+		<legend>Anwesenheit Begleitung #1</legend>
+		<div class="checkbox-list">
+			<Checkbox
+				bind:state={$appState.group.one.days.saturday}
+				disabled={!$appState.group.one.active}>Samstag</Checkbox
+			>
+			<Checkbox bind:state={$appState.group.one.days.sunday} disabled={!$appState.group.one.active}
+				>Sonntag</Checkbox
+			>
+		</div>
+		{#if $appState.group.one.active && ($appState.days.saturday || $appState.days.sunday)}
+			{#if !$appState.days.saturday && $appState.group.one.days.saturday}
+				<div style="margin-top: .5rem;">
+					<Alert type="danger"
+						>Du hast ausgewählt, dass ihr am Samstag nicht teilnehmt. Begleitungen können nicht ohne
+						die Kontaktperson teilnehmen. Deaktiviere somit bitte hier den Samstag.</Alert
+					>
+				</div>
+			{/if}
+			{#if !$appState.days.sunday && $appState.group.one.days.sunday}
+				<div style="margin-top: .5rem;">
+					<Alert type="danger"
+						>Du hast ausgewählt, dass ihr am Sonntag nicht teilnehmt. Begleitungen können nicht ohne
+						die Kontaktperson teilnehmen. Deaktiviere somit bitte hier den Sonntag.</Alert
+					>
+				</div>
+			{/if}
+			{#if !$appState.group.one.days.saturday && !$appState.group.one.days.sunday}
+				<div style="margin-top: .5rem;">
+					<Alert type="danger"
+						>Wähle mindestens einen Tag für deine Begleitung aus oder deaktivere Begleitung #1.</Alert
+					>
+				</div>
+			{/if}
+		{/if}
+	</fieldset>
+
 	<h4 style="margin-top: 1.5rem;">Begleitung #2</h4>
 	<Checkbox bind:state={$appState.group.two.active}>Aktiv</Checkbox>
 	<TextInput
@@ -65,9 +103,47 @@
 		]}
 	/>
 
+	<fieldset>
+		<legend>Anwesenheit Begleitung #2</legend>
+		<div class="checkbox-list">
+			<Checkbox
+				bind:state={$appState.group.two.days.saturday}
+				disabled={!$appState.group.two.active}>Samstag</Checkbox
+			>
+			<Checkbox bind:state={$appState.group.two.days.sunday} disabled={!$appState.group.two.active}
+				>Sonntag</Checkbox
+			>
+		</div>
+		{#if $appState.group.two.active && ($appState.days.saturday || $appState.days.sunday)}
+			{#if !$appState.days.saturday && $appState.group.two.days.saturday}
+				<div style="margin-top: .5rem;">
+					<Alert type="danger"
+						>Du hast ausgewählt, dass ihr am Samstag nicht teilnehmt. Begleitungen können nicht ohne
+						die Kontaktperson teilnehmen. Deaktiviere somit bitte hier den Samstag.</Alert
+					>
+				</div>
+			{/if}
+			{#if !$appState.days.sunday && $appState.group.two.days.sunday}
+				<div style="margin-top: .5rem;">
+					<Alert type="danger"
+						>Du hast ausgewählt, dass ihr am Sonntag nicht teilnehmt. Begleitungen können nicht ohne
+						die Kontaktperson teilnehmen. Deaktiviere somit bitte hier den Sonntag.</Alert
+					>
+				</div>
+			{/if}
+			{#if !$appState.group.two.days.saturday && !$appState.group.two.days.sunday}
+				<div style="margin-top: .5rem;">
+					<Alert type="danger"
+						>Wähle mindestens einen Tag für deine Begleitung aus oder deaktivere Begleitung #2.</Alert
+					>
+				</div>
+			{/if}
+		{/if}
+	</fieldset>
+
 	<div style="margin-top: 1.5rem;">
 		<Alert>
-			<p>Seid ihr mehr als drei Personen, dann teilt euch bitte in kleinere Gruppen auf.</p>
+			<p>Seid ihr mehr als drei Personen, dann teilt euch bitte in mehrere kleinere Gruppen auf.</p>
 		</Alert>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 import type { AppState, ClientSaveState, Group } from './app';
-import type { ServerData, ToSaveState, groupSchema } from './server';
+import type { ServerData, ServerGroup, ToSaveState, groupSchema } from './server';
 import type { Day } from './shared';
 
 export function convertForServer(appState: AppState): ToSaveState {
@@ -11,7 +11,7 @@ export function convertForServer(appState: AppState): ToSaveState {
 		email: appState.email,
 		age_group: appState.age_group,
 		wants_to_help: appState.wants_to_help,
-		group: [appState.group.one, appState.group.two],
+		group: convertGroupForServer(appState.group),
 		days: convertDaysForServer(appState.days),
 	};
 }
@@ -27,10 +27,49 @@ export function convertForClient(serverState: ServerData): ClientSaveState {
 	};
 }
 
-export function convertGroupForClient(group: z.infer<typeof groupSchema>): Group {
+export function convertGroupForServer(group: Group): ServerGroup {
+	const daysOne: Day[] = []
+	if (group.one.days.saturday) {
+		daysOne.push("SATURDAY");
+	}
+	if (group.one.days.sunday) {
+		daysOne.push("SUNDAY");
+	}
+
+	const daysTwo: Day[] = []
+	if (group.two.days.saturday) {
+		daysTwo.push("SATURDAY");
+	}
+	if (group.two.days.sunday) {
+		daysTwo.push("SUNDAY");
+	}
+
+	return [
+		{
+			...group.one,
+			days: daysOne
+		}, {
+			...group.two,
+			days: daysTwo
+		},
+	]
+
+}
+
+export function convertGroupForClient(group: ServerGroup): Group {
 	return {
-		one: { ...group[0] },
-		two: { ...group[1] },
+		one: {
+			...group[0], days: {
+				saturday: group[0].days.includes("SATURDAY"),
+				sunday: group[0].days.includes("SUNDAY"),
+			}
+		},
+		two: {
+			...group[1], days: {
+				saturday: group[0].days.includes("SATURDAY"),
+				sunday: group[0].days.includes("SUNDAY"),
+			}
+		},
 	};
 }
 

@@ -1,11 +1,16 @@
 import { z } from 'zod';
 import { ageGroupEnum, dayEnum } from './shared';
 
+const daysSchema = z.object({
+	saturday: z.boolean(),
+	sunday: z.boolean()
+})
+
 const groupEntry = z.object({
 	active: z.boolean(),
 	name: z.string(),
 	age_group: ageGroupEnum,
-	days: z.array(dayEnum),
+	days: daysSchema,
 });
 const groupSchema = z.object({
 	one: groupEntry,
@@ -19,10 +24,7 @@ const clientSaveState = z.object({
 	age_group: ageGroupEnum,
 	wants_to_help: z.boolean(),
 	group: groupSchema,
-	days: z.object({
-		saturday: z.boolean(),
-		sunday: z.boolean(),
-	}),
+	days: daysSchema,
 });
 
 export type ClientSaveState = z.infer<typeof clientSaveState>;

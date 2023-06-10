@@ -1,4 +1,5 @@
-import { type AppState, pageEnum } from '$lib/shared/schema/app';
+import { pageEnum } from '$lib/shared/schema/ navigation';
+import type { AppState } from '$lib/shared/schema/app';
 import type { Writable } from 'svelte/store';
 
 export const removeCreated = () => {

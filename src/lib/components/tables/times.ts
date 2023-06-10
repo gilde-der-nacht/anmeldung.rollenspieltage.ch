@@ -1,4 +1,5 @@
-import { toRange, type Day, type Range } from "$lib/shared/schema/shared";
+import { toRange, type Range } from "$lib/shared/rangeUtil";
+import type { Day } from "$lib/shared/schema/shared";
 
 type DayConfig = {
     start: number,

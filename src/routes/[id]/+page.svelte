@@ -15,7 +15,7 @@
 	import MasterPage from '$lib/components/main/MasterPage.svelte';
 	import SummaryPage from '$lib/components/main/SummaryPage.svelte';
 	import NavFooter from '$lib/components/navigation/NavFooter.svelte';
-	import { pageEnum } from '$lib/shared/schema/app';
+	import { pageEnum } from '$lib/shared/schema/ navigation';
 
 	export let data: PageData;
 	const appState = initAppState(data.id, data.secret, 'kontaktperson', data.registration);

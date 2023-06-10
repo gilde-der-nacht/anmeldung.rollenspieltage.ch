@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { PAGES, type Page, type AppState, pageMap } from '$lib/shared/schema/app';
+	import { PAGES, pageMap } from '$lib/shared/schema/ navigation';
+	import type { AppState } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;

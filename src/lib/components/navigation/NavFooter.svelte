@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { pageMap } from '$lib/shared/schema/ navigation';
+	import type { AppState } from '$lib/shared/schema/app';
 	import Button from '../form/Button.svelte';
-	import { type AppState, pageMap } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;

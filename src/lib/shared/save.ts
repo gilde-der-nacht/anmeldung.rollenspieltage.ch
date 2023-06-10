@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import type { AppState, ClientSaveState } from './schema/app';
+import { clientSaveState, type AppState, type ClientSaveState } from './schema/app';
 import { headerJSON } from './common';
-import type { Readable } from 'svelte/store';
+import { get, type Readable } from 'svelte/store';
 import { convertForClient } from './schema/typeUtils';
 import { serverDataSchema } from './schema/server';
 import _ from 'lodash';
@@ -85,32 +85,11 @@ export async function save(
 }
 
 function stateHasChangedReadonlyStore(n: AppState, l: Readable<AppState>): boolean {
-	let hasChanged = false;
-	const unsubscribe = l.subscribe((last) => {
-		hasChanged = stateHasChanged(n, last);
-	});
-	unsubscribe();
-	return hasChanged;
+	return stateHasChanged(n, get(l));
 }
 
 function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
-	let hasChanged = false;
-
-	if (
-		n.name !== l.name ||
-		n.email !== l.email ||
-		n.wants_to_help !== l.wants_to_help ||
-		n.age_group !== l.age_group ||
-		!_.isEqual(n.group, l.group) ||
-		!_.isEqual(n.days, l.days) ||
-		n.saturday_starttime !== l.saturday_starttime ||
-		n.saturday_endtime !== l.saturday_endtime ||
-		n.sunday_starttime !== l.sunday_starttime ||
-		n.sunday_endtime !== l.sunday_endtime ||
-		n.eat_preference !== l.eat_preference ||
-		!_.isEqual(n.genres, l.genres)
-	) {
-		hasChanged = true;
-	}
-	return hasChanged;
+	const newState = clientSaveState.parse(n);
+	const lastState = clientSaveState.parse(l);
+	return !_.isEqual(newState, lastState);
 }

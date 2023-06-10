@@ -1,7 +1,8 @@
 import type { AppState } from "$lib/shared/schema/app";
-import { toRange, type Day, type Range } from "$lib/shared/schema/shared";
 import { get, writable, type Writable } from "svelte/store";
 import { getDayInfos, getFieldBlock } from "./times";
+import type { Day } from "$lib/shared/schema/shared";
+import { toRange, type Range } from "$lib/shared/rangeUtil";
 
 export type InteractionType = "NONE" | "DELETE" | "PRE_CHECKED" | "CHECKED";
 

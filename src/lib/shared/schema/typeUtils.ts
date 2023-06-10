@@ -4,40 +4,20 @@ import type { Day } from './shared';
 
 export function convertForServer(appState: AppState): ToSaveState {
 	return {
-		registration_participant: appState.id,
-		previous_registration_entry: appState.previous_registration_entry,
-		name: appState.name,
-		email: appState.email,
-		age_group: appState.age_group,
-		wants_to_help: appState.wants_to_help,
+		...appState,
 		group: convertGroupForServer(appState.group),
 		days: convertDaysForServer(appState.days),
-		sunday_starttime: appState.sunday_starttime,
-		saturday_endtime: appState.saturday_endtime,
-		saturday_starttime: appState.saturday_starttime,
-		sunday_endtime: appState.sunday_endtime,
-		eat_preference: appState.eat_preference,
-		genres: appState.genres,
 	};
 }
 
 export function convertForClient(serverState: ServerData): ClientSaveState {
 	return {
-		name: serverState.name,
-		email: serverState.email,
-		age_group: serverState.age_group,
-		wants_to_help: serverState.wants_to_help,
+		...serverState,
 		group: convertGroupForClient(serverState.group),
 		days: {
 			saturday: serverState.days.includes("SATURDAY"),
 			sunday: serverState.days.includes("SUNDAY")
 		},
-		sunday_starttime: serverState.sunday_starttime,
-		saturday_endtime: serverState.saturday_endtime,
-		saturday_starttime: serverState.saturday_starttime,
-		sunday_endtime: serverState.sunday_endtime,
-		eat_preference: serverState.eat_preference,
-		genres: serverState.genres,
 	};
 }
 

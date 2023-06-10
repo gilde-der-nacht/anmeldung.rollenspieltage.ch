@@ -12,39 +12,11 @@ export const EAT_PREF = ['nothing_selected', 'plans_to_eat', "plans_not_to_eat"]
 export const eatPrefEnum = z.enum(EAT_PREF);
 export type EatPref = z.infer<typeof eatPrefEnum>;
 
+export const GAME_LENGTH = ["nothing_selected", "short_rounds", "long_rounds"] as const;
+export const gameLengthEnum = z.enum(GAME_LENGTH);
+export type GameLength = z.infer<typeof gameLengthEnum>;
+
 export const GENRES = ['fantasy', 'science_fiction', "horror", "crime", "modern"] as const;
 export const genreEnum = z.enum(GENRES);
 export type Genre = z.infer<typeof genreEnum>;
 
-export type Range = {
-    range: number[];
-    start: number;
-    end: number;
-}
-
-export const toRange = (from: number, to: number): Range => {
-    const _toRange = (from: number, to: number): number[] => {
-        return Array(to - from).fill(0).map((_, i) => i + from);
-    }
-
-    if (from === to) {
-        return {
-            range: [from],
-            start: from,
-            end: from,
-        };
-    }
-
-    if (from > to) {
-        return {
-            range: _toRange(to, from),
-            start: to,
-            end: from,
-        };
-    }
-    return {
-        range: _toRange(from, to),
-        start: from,
-        end: to,
-    };
-}

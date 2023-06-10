@@ -1,5 +1,12 @@
+<script lang="ts">
+	import { getDayInfos, labelMap } from './times';
+
+	export let day: 'SATURDAY' | 'SUNDAY';
+	$: timeRange = getDayInfos(day);
+</script>
+
 <div class="table-container">
-	<table>
+	<table style="min-width: 100%;">
 		<thead>
 			<tr>
 				<th />
@@ -9,42 +16,23 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>ct.js</td>
-				<td><a href="https://ctjs.rocks/">ctjs.rocks</a></td>
-				<td>Ja <a href="https://github.com/ct-js">github.com</a></td>
-				<td>JavaScript</td>
-			</tr>
-			<tr>
-				<td>Phaser</td>
-				<td><a href="https://phaser.io">phaser.io</a></td>
-				<td>Ja <a href="https://github.com/photonstorm/phaser">github.com</a></td>
-				<td>JavaScript</td>
-			</tr>
-			<tr>
-				<td>PixiJS</td>
-				<td><a href="https://pixijs.com">pixijs.com</a></td>
-				<td>Ja <a href="https://github.com/pixijs">github.com</a></td>
-				<td>JavaScript</td>
-			</tr>
-			<tr>
-				<td>GDevelop</td>
-				<td><a href="https://gdevelop.io">gdevelop.io</a></td>
-				<td>Ja <a href="https://github.com/4ian/GDevelop">github.com</a></td>
-				<td>Event/Action Board, JavaScript</td>
-			</tr>
-			<tr>
-				<td>Godot</td>
-				<td><a href="https://godotengine.org/">godotengine.org</a></td>
-				<td>Ja <a href="https://github.com/">github.com</a></td>
-				<td>GDScript, C#, C++, Visual Scripting</td>
-			</tr>
-			<tr>
-				<td>Impact</td>
-				<td><a href="https://impactjs.com">impactjs.com</a></td>
-				<td>??? <a href="https://github.com/phoboslab/Impact">github.com</a></td>
-				<td>JavaScript</td>
-			</tr>
+			{#each timeRange.range as block}
+				{@const type = timeRange.details[block]}
+				<tr class={type.toLowerCase()}>
+					<td><i class="fa-duotone fa-square-check" /></td>
+					<td>{block} Uhr</td>
+					<td>{labelMap[type]}</td>
+					<td>Flohmarkt offen</td>
+				</tr>
+			{/each}
 		</tbody>
 	</table>
 </div>
+
+<style>
+	.dinner,
+	.lunch {
+		background-color: var(--clr-11);
+		color: var(--clr-2);
+	}
+</style>

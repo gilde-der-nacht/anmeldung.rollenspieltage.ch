@@ -21,9 +21,9 @@
 		<Checkbox bind:state={$appState.days.sunday}>Sonntag</Checkbox>
 	</div>
 	<h4>Samstag, 26. August 2023</h4>
-	<TimeTable />
+	<TimeTable day="SATURDAY" />
 	<h4>Sonntag, 27. August 2023</h4>
-	<TimeTable />
+	<TimeTable day="SUNDAY" />
 </div>
 
 <style>

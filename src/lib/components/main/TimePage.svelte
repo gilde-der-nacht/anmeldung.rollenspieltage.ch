@@ -20,10 +20,21 @@
 		<Checkbox bind:state={$appState.days.saturday}>Samstag</Checkbox>
 		<Checkbox bind:state={$appState.days.sunday}>Sonntag</Checkbox>
 	</div>
+	{#if !$appState.days.saturday && !$appState.days.sunday}
+		<Alert type="danger">Du musst mindestens einen Tag auswählen.</Alert>
+	{/if}
 	<h4>Samstag, 26. August 2023</h4>
-	<TimeTable day="SATURDAY" {appState} />
+	{#if $appState.days.saturday}
+		<TimeTable day="SATURDAY" {appState} />
+	{:else}
+		<Alert>Samstag wurde nicht ausgewählt.</Alert>
+	{/if}
 	<h4>Sonntag, 27. August 2023</h4>
-	<TimeTable day="SUNDAY" {appState} />
+	{#if $appState.days.sunday}
+		<TimeTable day="SUNDAY" {appState} />
+	{:else}
+		<Alert>Sonntag wurde nicht ausgewählt.</Alert>
+	{/if}
 </div>
 
 <style>

@@ -5,13 +5,14 @@
 	import type { AppState } from '$lib/shared/schema/app';
 	import { getInteractions } from './interactions';
 	import InteractionSymbol from './InteractionSymbol.svelte';
+	import Alert from '../common/Alert.svelte';
 
 	export let day: Day;
 	export let appState: Writable<AppState>;
 	$: timeRange = getDayInfos(day);
 	const i = getInteractions(day, appState);
-	$: isHovering = i.mouseIsHovering;
 	$: interactionDetails = i.interactionDetails;
+	$: dayHasActiveHours = i.dayHasActiveHours;
 </script>
 
 <div class="table-container">
@@ -22,8 +23,14 @@
 	>
 		<thead>
 			<tr>
-				<th class="pointer" on:click={i.resetDay}>
-					<i class="fa-duotone fa-arrow-rotate-left" />
+				<th
+					class={`pointer ${$dayHasActiveHours ? 'active' : 'disabled'} reset`}
+					on:click={i.resetDay}
+				>
+					<i
+						class="fa-duotone fa-arrow-rotate-left"
+						title={`${day === 'SATURDAY' ? 'Samstag' : 'Sonntag'} zurücksetzen`}
+					/>
 				</th>
 				<th>Startzeit</th>
 				<th>Programm</th>
@@ -51,7 +58,17 @@
 	</table>
 </div>
 
+{#if !$dayHasActiveHours}
+	<Alert type="danger"
+		>Wähle mindestens einen Zeitblock aus, indem du diesen per Klick in der Tabelle markierst.</Alert
+	>
+{/if}
+
 <style>
+	td:first-child {
+		min-width: 3rem;
+	}
+
 	.lunch,
 	.dinner {
 		background-color: var(--clr-11);
@@ -78,5 +95,14 @@
 	.lunch .delete,
 	.dinner .delete {
 		color: var(--clr-danger-6);
+	}
+
+	.reset.active:hover {
+		color: var(--clr-danger-11);
+	}
+
+	.reset.disabled {
+		color: var(--clr-gray-8);
+		cursor: not-allowed;
 	}
 </style>

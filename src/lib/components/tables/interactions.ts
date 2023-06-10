@@ -23,6 +23,7 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
     }
 
     const mouseIsHovering = writable(false);
+    const dayHasActiveHours = writable(getActiveHours() !== null);
     const interactionDetails = writable<InteractionDetails>({})
     const resetInteraction = () => {
         interactionDetails.set(getDayInfos(day).range.range.reduce((acc, cur) => ({ ...acc, [cur]: "NONE" }), {}))
@@ -60,13 +61,30 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
         }
     }
 
+    const activateHours = (range: Range) => {
+        if (day === "SATURDAY") {
+            appState.update(prev => ({ ...prev, saturday_starttime: range.start, saturday_endtime: range.end }));
+        }
+        if (day === "SUNDAY") {
+            appState.update(prev => ({ ...prev, sunday_starttime: range.start, sunday_endtime: range.end }));
+        }
+    }
+
+    const deleteHours = () => {
+        if (day === "SATURDAY") {
+            appState.update(prev => ({ ...prev, saturday_starttime: null, saturday_endtime: null }));
+        }
+        if (day === "SUNDAY") {
+            appState.update(prev => ({ ...prev, sunday_starttime: null, sunday_endtime: null }));
+        }
+    }
+
     const onMouseEnter = (field: number) => {
         mouseIsHovering.set(true)
         if (field === 0) {
             return;
         }
         const fieldBlock = getFieldBlock(day, field);
-
         const activeHours = getActiveHours();
 
         if (activeHours === null) {
@@ -111,14 +129,37 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
         mouseIsHovering.set(false)
     }
 
-    const onClick = (field: number) => { }
+    const onClick = (field: number) => {
+        if (field === 0) {
+            return;
+        }
+
+        const fieldBlock = getFieldBlock(day, field);
+        const activeHours = getActiveHours();
+
+        if (activeHours === null) {
+            activateHours(fieldBlock.hoveredFields);
+            dayHasActiveHours.set(true);
+        } else if (activeHours.start <= field && activeHours.end > field) {
+            deleteHours();
+            dayHasActiveHours.set(false);
+        } else if (activeHours.start > field) {
+            const range = toRange(fieldBlock.hoveredFields.start, activeHours.end);
+            activateHours(range);
+            dayHasActiveHours.set(true);
+        } else {
+            const range = toRange(activeHours.start, fieldBlock.hoveredFields.end);
+            activateHours(range);
+            dayHasActiveHours.set(true);
+        }
+    }
 
     return {
         resetDay,
         onMouseEnter,
         onMouseLeave,
         onClick,
-        mouseIsHovering,
-        interactionDetails
+        interactionDetails,
+        dayHasActiveHours,
     }
 }

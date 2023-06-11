@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
-	import TextInput from '../form/TextInput.svelte';
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
+	import GameRoundList from '../rounds/GameRoundList.svelte';
 
 	export let appState: Writable<AppState>;
 </script>
@@ -12,8 +12,8 @@
 	<h3>Spiel Leiten</h3>
 	<Alert>
 		<p>
-			Auf dieser Seite kannst du auswählen, ob du als Spieler:in teilnehmen möchtest und einige
-			Einstellungen vornehmen.
+			Auf dieser Seite kannst du auswählen, ob du als Spielleiter:in teilnehmen möchtest und deine
+			Spielrunden erfassen.
 		</p>
 	</Alert>
 	<div class="checkbox-list">
@@ -21,6 +21,12 @@
 			Ich möchte gerne als Spielleiter:in teilnehmen.
 		</Checkbox>
 	</div>
+	<h4 style="margin-top: .5rem;">Deine Spielrunden</h4>
+	{#if $appState.wants_to_master}
+		<GameRoundList {appState} />
+	{:else}
+		<Alert>'Spiel Leiten' wurde nicht ausgewählt.</Alert>
+	{/if}
 </div>
 
 <style>

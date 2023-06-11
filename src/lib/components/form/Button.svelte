@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let type: 'submit' | 'button' | 'reset';
-	export let kind: 'accent' | 'success' | 'special' | 'gray' = 'accent';
+	export let kind: 'accent' | 'success' | 'danger' | 'special' | 'gray' = 'accent';
 	export let disabled: boolean = false;
 </script>
 

@@ -3,7 +3,7 @@
 
 	export let label: string;
 	export let name: string;
-	export let value: string = '';
+	export let value: number = 0;
 	export let placeholder: string = '';
 	export let required: boolean = false;
 	export let disabled: boolean = false;
@@ -12,7 +12,7 @@
 
 <div>
 	<label
-		>{label} <input type="text" bind:value {name} {placeholder} {required} {disabled} />
+		>{label} <input type="number" bind:value {name} {placeholder} {required} {disabled} />
 	</label>
 
 	{#if error !== undefined && error.condition()}

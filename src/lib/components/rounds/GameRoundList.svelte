@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import type { AgeGroup, Genre } from '$lib/shared/schema/shared';
+	import type { AgeGroup, GameRound, Genre } from '$lib/shared/schema/shared';
 	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;
@@ -16,13 +16,15 @@
 		TEEN: '10 bis 15 Jahre',
 		ADULT: '16+ Jahre',
 	};
+
+	export let saveExistingRound: (gr: GameRound) => void;
 </script>
 
 <!-- svelte-ignore a11y-no-redundant-roles -->
 <ul class="event-list" role="list">
 	{#each $appState.game_rounds as round}
 		{#if round.active}
-			<li class="event-entry" data-event-tags="Spieltreffen,Brettspiele">
+			<li class="event-entry gray">
 				<h1 class="event-title">{round.title} <small>({round.system})</small></h1>
 				<div class="event-details">
 					<div class="event-date" title="Rundendauer">

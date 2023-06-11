@@ -41,7 +41,7 @@
 	novalidate
 >
 	<TextInput
-		initValue={typeof form?.name === 'string' ? form.name : ''}
+		value={typeof form?.name === 'string' ? form.name : ''}
 		label="Name"
 		name="name"
 		required

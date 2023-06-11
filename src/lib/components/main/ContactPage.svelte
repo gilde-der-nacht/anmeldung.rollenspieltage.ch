@@ -14,7 +14,7 @@
 	<h3>Kontaktperson</h3>
 
 	<TextInput
-		bind:initValue={$appState.name}
+		bind:value={$appState.name}
 		label="Name"
 		name="name"
 		required
@@ -25,7 +25,7 @@
 	/>
 
 	<TextInput
-		bind:initValue={$appState.email}
+		bind:value={$appState.email}
 		label="E-Mail"
 		name="email"
 		required

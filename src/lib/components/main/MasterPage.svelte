@@ -4,8 +4,18 @@
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import GameRoundList from '../rounds/GameRoundList.svelte';
+	import AddNewGameRound from '../rounds/AddNewGameRound.svelte';
+	import type { GameRound } from '$lib/shared/schema/shared';
 
 	export let appState: Writable<AppState>;
+
+	const saveNewRound = (gr: GameRound) => {
+		console.log('new saved');
+	};
+
+	const saveExistingRound = (gr: GameRound) => {
+		console.log('new saved');
+	};
 </script>
 
 <div class="page">
@@ -23,7 +33,8 @@
 	</div>
 	<h4 style="margin-top: .5rem;">Deine Spielrunden</h4>
 	{#if $appState.wants_to_master}
-		<GameRoundList {appState} />
+		<AddNewGameRound {saveNewRound} />
+		<GameRoundList {appState} {saveExistingRound} />
 	{:else}
 		<Alert>'Spiel Leiten' wurde nicht ausgewählt.</Alert>
 	{/if}

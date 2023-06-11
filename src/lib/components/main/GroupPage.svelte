@@ -25,7 +25,7 @@
 		label="Name Begleitung #1"
 		name="name-friend-1"
 		disabled={!$appState.group.one.active}
-		bind:initValue={$appState.group.one.name}
+		bind:value={$appState.group.one.name}
 		error={{
 			condition: () => !isNonEmptyString($appState.group.one.name) && $appState.group.one.active,
 			message: 'Begleitung #1 ist aktiv, aber "Name" ist leer.',
@@ -86,7 +86,7 @@
 		label="Name Begleitung #2"
 		name="name-friend-2"
 		disabled={!$appState.group.two.active}
-		bind:initValue={$appState.group.two.name}
+		bind:value={$appState.group.two.name}
 		error={{
 			condition: () => !isNonEmptyString($appState.group.two.name) && $appState.group.two.active,
 			message: 'Begleitung #2 ist aktiv, aber "Name" ist leer.',

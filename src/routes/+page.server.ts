@@ -29,7 +29,7 @@ export const actions = {
 		const res = await initializeRegistration(parsedName.data, parsedEmail.data);
 
 		if (!res.success) {
-			return fail(res.status, { name, email, serverError: true });
+			return fail(parseInt(res.status), { name, email, serverError: true });
 		}
 
 		return res;

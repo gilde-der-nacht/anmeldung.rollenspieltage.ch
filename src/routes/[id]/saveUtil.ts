@@ -1,6 +1,6 @@
 import { save, type SaveState } from '$lib/shared/save';
 import type { AppState } from '$lib/shared/schema/app';
-import _, { lowerFirst } from 'lodash';
+import _ from 'lodash';
 import { readonly, type Writable } from 'svelte/store';
 
 export const saveOnUpdate =

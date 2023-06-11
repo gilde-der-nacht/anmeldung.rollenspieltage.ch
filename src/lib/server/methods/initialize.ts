@@ -1,6 +1,7 @@
 import { OLYMP } from '$lib/Constants';
-import { itemSchema } from '$lib/shared/schema/server';
+import { z } from 'zod';
 import { headerJSON } from '../../shared/common';
+import { uuidSchema } from '$lib/shared/schema/server';
 
 type SuccessfullRegistration = {
 	success: true;
@@ -12,6 +13,10 @@ type FailedRegistration = {
 	success: false;
 	status: string;
 };
+
+export const itemSchema = z.object({
+	data: z.object({ id: uuidSchema }),
+});
 
 export async function initializeRegistration(
 	name: string,

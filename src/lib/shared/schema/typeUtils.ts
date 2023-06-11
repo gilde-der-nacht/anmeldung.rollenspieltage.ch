@@ -1,6 +1,7 @@
 import type { AppState, ClientSaveState, Group } from './app';
-import type { ServerData, ServerGroup, ToSaveState } from './server';
-import type { Day } from './shared';
+import type { ServerGroup } from './complex/companionSchema';
+import type { Day } from './enums';
+import type { ServerData, ToSaveState } from './server';
 
 export function convertForServer(appState: AppState): ToSaveState {
 	return {

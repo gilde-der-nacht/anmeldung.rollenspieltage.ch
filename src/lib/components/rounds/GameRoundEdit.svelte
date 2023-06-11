@@ -1,16 +1,17 @@
 <script lang="ts">
-	import type { AgeGroup, GameLength, GameRound, Genre } from '$lib/shared/schema/shared';
 	import { writable } from 'svelte/store';
 	import Button from '../form/Button.svelte';
 	import TextInput from '../form/TextInput.svelte';
 	import RadioGroup from '../form/RadioGroup.svelte';
 	import NumberInput from '../form/NumberInput.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
+	import type { AgeGroup, GameLength2, Genre } from '$lib/shared/schema/enums';
+	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 
 	export let id: string = crypto.randomUUID();
 	export let title = '';
 	export let system = '';
-	export let duration: GameLength = 'long_rounds';
+	export let duration: GameLength2 = 'long_rounds';
 	export let player_count_min = 3;
 	export let player_count_max = 4;
 	export let genres: Genre[] = [];

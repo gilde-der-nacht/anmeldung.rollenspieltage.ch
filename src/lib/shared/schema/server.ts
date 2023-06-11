@@ -1,43 +1,31 @@
 import { z } from 'zod';
-import { ageGroupEnum, dayEnum, eatPrefEnum, gameLengthEnum, gameRoundSchema, genreEnum } from './shared';
+import { groupSchema } from './complex/companionSchema';
+import { ageGroupEnumSchema, daysSchema, eatPreferenceEnumSchema, gameLength2EnumSchema, genresSchema } from './enums';
+import { gameRoundsSchema } from './complex/gameRoundSchema';
 
 export const uuidSchema = z.string().uuid();
 export const nameSchema = z.string().trim().min(1);
 export const emailSchema = z.string().trim().email();
-
-export const itemSchema = z.object({
-	data: z.object({ id: uuidSchema }),
-});
-
-export const groupSchema = z.array(
-	z.object({
-		active: z.boolean(),
-		name: z.string(),
-		age_group: ageGroupEnum,
-		days: z.array(dayEnum),
-	}),
-);
-export type ServerGroup = z.infer<typeof groupSchema>;
 
 export const toSaveStateSchema = z.object({
 	registration_participant: z.string().uuid(),
 	previous_registration_entry: z.nullable(z.string()),
 	name: z.string(),
 	email: z.string(),
-	age_group: ageGroupEnum,
+	age_group: ageGroupEnumSchema,
 	wants_to_help: z.boolean(),
 	group: groupSchema,
-	days: z.array(dayEnum),
+	days: daysSchema,
 	saturday_starttime: z.nullable(z.number()),
 	saturday_endtime: z.nullable(z.number()),
 	sunday_starttime: z.nullable(z.number()),
 	sunday_endtime: z.nullable(z.number()),
-	eat_preference: eatPrefEnum,
+	eat_preference: eatPreferenceEnumSchema,
 	wants_to_play: z.boolean(),
-	preferred_game_length: gameLengthEnum,
-	genres: z.array(genreEnum),
+	preferred_game_length: gameLength2EnumSchema,
+	genres: genresSchema,
 	wants_to_master: z.boolean(),
-	game_rounds: z.nullable(z.array(gameRoundSchema)),
+	game_rounds: z.nullable(gameRoundsSchema),
 });
 export type ToSaveState = z.infer<typeof toSaveStateSchema>;
 

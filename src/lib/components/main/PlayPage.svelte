@@ -4,7 +4,7 @@
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import RadioGroup from '../form/RadioGroup.svelte';
-	import type { Genre } from '$lib/shared/schema/shared';
+	import type { Genre } from '$lib/shared/schema/enums';
 
 	export let appState: Writable<AppState>;
 	const genres = writable({

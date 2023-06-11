@@ -5,7 +5,7 @@
 	import Checkbox from '../form/Checkbox.svelte';
 	import GameRoundList from '../rounds/GameRoundList.svelte';
 	import AddNewGameRound from '../rounds/AddNewGameRound.svelte';
-	import type { GameRound } from '$lib/shared/schema/shared';
+	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 
 	export let appState: Writable<AppState>;
 

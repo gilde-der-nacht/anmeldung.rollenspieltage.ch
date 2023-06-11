@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import type { AgeGroup, GameRound, Genre } from '$lib/shared/schema/shared';
+	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
+	import type { AgeGroup, Genre } from '$lib/shared/schema/enums';
 	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;

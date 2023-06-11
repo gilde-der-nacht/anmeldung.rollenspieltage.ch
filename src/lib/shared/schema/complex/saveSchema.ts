@@ -3,7 +3,6 @@ import { ageGroupEnumSchema, daysSchema, eatPreferenceEnumSchema, gameLength2Enu
 import { gameRoundsSchema } from './gameRoundSchema';
 import { groupSchema } from './companionSchema';
 
-
 export const saveSchema = z.object({
     registration_participant: z.string().uuid(),
     previous_registration_entry: z.nullable(z.string()),

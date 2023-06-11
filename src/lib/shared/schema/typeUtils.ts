@@ -1,9 +1,9 @@
 import type { AppState, ClientSaveState, Group } from './app';
 import type { ServerGroup } from './complex/companionSchema';
+import type { SaveSchema } from './complex/saveSchema';
 import type { Day } from './enums';
-import type { ServerData, ToSaveState } from './server';
 
-export function convertForServer(appState: AppState): ToSaveState {
+export function convertForServer(appState: AppState): SaveSchema {
 	return {
 		...appState,
 		group: convertGroupForServer(appState.group),
@@ -11,7 +11,7 @@ export function convertForServer(appState: AppState): ToSaveState {
 	};
 }
 
-export function convertForClient(serverState: ServerData): ClientSaveState {
+export function convertForClient(serverState: SaveSchema): ClientSaveState {
 	return {
 		...serverState,
 		group: convertGroupForClient(serverState.group),

@@ -1,7 +1,7 @@
 import { OLYMP } from '$lib/Constants';
-import { toSaveStateSchema, type ToSaveState } from '$lib/shared/schema/server';
 import { z } from 'zod';
 import { headerJSON } from '../../shared/common';
+import { saveSchema, type SaveSchema } from '$lib/shared/schema/complex/saveSchema';
 
 const saveResponseSchema = z.object({
 	data: z.object({
@@ -20,9 +20,9 @@ type FailedSave = {
 };
 
 export async function saveRegistration(
-	payload: ToSaveState,
+	payload: SaveSchema,
 ): Promise<SuccessfullSave | FailedSave> {
-	const parsed = toSaveStateSchema.parse(payload);
+	const parsed = saveSchema.parse(payload);
 	const base = OLYMP + '/items/registration_23';
 	const res = await fetch(base, {
 		method: 'POST',

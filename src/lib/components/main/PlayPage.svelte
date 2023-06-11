@@ -1,38 +1,13 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import { writable, type Writable } from 'svelte/store';
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import RadioGroup from '../form/RadioGroup.svelte';
-	import type { Genre } from '$lib/shared/schema/enums';
+	import { createGenresStore } from '$lib/shared/stores/genres';
+	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;
-	const genres = writable({
-		fantasy: $appState.genres.includes('fantasy'),
-		science_fiction: $appState.genres.includes('science_fiction'),
-		horror: $appState.genres.includes('horror'),
-		crime: $appState.genres.includes('crime'),
-		modern: $appState.genres.includes('modern'),
-	});
-	genres.subscribe((g) => {
-		const activeGenres: Genre[] = [];
-		if (g.fantasy) {
-			activeGenres.push('fantasy');
-		}
-		if (g.science_fiction) {
-			activeGenres.push('science_fiction');
-		}
-		if (g.horror) {
-			activeGenres.push('horror');
-		}
-		if (g.crime) {
-			activeGenres.push('crime');
-		}
-		if (g.modern) {
-			activeGenres.push('modern');
-		}
-		$appState.genres = activeGenres;
-	});
+	const genres = createGenresStore(appState);
 </script>
 
 <div class="page">

@@ -7,80 +7,22 @@
 	import Checkbox from '../form/Checkbox.svelte';
 	import type { AgeGroup, GameLength2, Genre } from '$lib/shared/schema/enums';
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
+	import { getDefaultGameRound } from './roundUtil';
+	import _ from 'lodash';
+	import { createGenresStore } from '$lib/shared/stores/genres';
+	import { createAgeGroupStore } from '$lib/shared/stores/ageGroup';
 
-	export let id: string = crypto.randomUUID();
-	export let title = '';
-	export let system = '';
-	export let duration: GameLength2 = 'long_rounds';
-	export let player_count_min = 3;
-	export let player_count_max = 4;
-	export let genres: Genre[] = [];
-	export let age_groups: AgeGroup[] = ['CHILD', 'TEEN', 'ADULT'];
-	export let active = true;
+	export let gameRound: GameRound = getDefaultGameRound();
+	const round = writable<GameRound>(_.clone(gameRound));
 
 	export let onSave: (gr: GameRound) => void;
 	export let onDelete: (() => void) | undefined = undefined;
 	export let onAbort: () => void;
 
-	const round = writable<GameRound>({
-		title,
-		system,
-		duration,
-		player_count_min,
-		player_count_max,
-		genres: [...genres],
-		age_groups: [...age_groups],
-		active,
-		id,
-	});
-
 	$: isNew = onDelete === undefined;
 
-	const _genres = writable({
-		fantasy: $round.genres.includes('fantasy'),
-		science_fiction: $round.genres.includes('science_fiction'),
-		horror: $round.genres.includes('horror'),
-		crime: $round.genres.includes('crime'),
-		modern: $round.genres.includes('modern'),
-	});
-	_genres.subscribe((g) => {
-		const activeGenres: Genre[] = [];
-		if (g.fantasy) {
-			activeGenres.push('fantasy');
-		}
-		if (g.science_fiction) {
-			activeGenres.push('science_fiction');
-		}
-		if (g.horror) {
-			activeGenres.push('horror');
-		}
-		if (g.crime) {
-			activeGenres.push('crime');
-		}
-		if (g.modern) {
-			activeGenres.push('modern');
-		}
-		$round.genres = activeGenres;
-	});
-
-	const _age_groups = writable({
-		child: $round.age_groups.includes('CHILD'),
-		teen: $round.age_groups.includes('TEEN'),
-		adult: $round.age_groups.includes('ADULT'),
-	});
-	_age_groups.subscribe((g) => {
-		const activeGroups: AgeGroup[] = [];
-		if (g.child) {
-			activeGroups.push('CHILD');
-		}
-		if (g.teen) {
-			activeGroups.push('TEEN');
-		}
-		if (g.adult) {
-			activeGroups.push('ADULT');
-		}
-		$round.age_groups = activeGroups;
-	});
+	const genres = createGenresStore(round);
+	const age_groups = createAgeGroupStore(round);
 </script>
 
 <div class="event-entry">
@@ -118,20 +60,20 @@
 			<fieldset>
 				<legend>Genres</legend>
 				<div class="checkbox-list">
-					<Checkbox bind:state={$_genres.fantasy}>Fantasy</Checkbox>
-					<Checkbox bind:state={$_genres.science_fiction}>Science Fiction</Checkbox>
-					<Checkbox bind:state={$_genres.horror}>Horror</Checkbox>
-					<Checkbox bind:state={$_genres.crime}>Krimi</Checkbox>
-					<Checkbox bind:state={$_genres.modern}>Modern</Checkbox>
+					<Checkbox bind:state={$genres.fantasy}>Fantasy</Checkbox>
+					<Checkbox bind:state={$genres.science_fiction}>Science Fiction</Checkbox>
+					<Checkbox bind:state={$genres.horror}>Horror</Checkbox>
+					<Checkbox bind:state={$genres.crime}>Krimi</Checkbox>
+					<Checkbox bind:state={$genres.modern}>Modern</Checkbox>
 				</div>
 			</fieldset>
 
 			<fieldset>
 				<legend>Altersgruppen</legend>
 				<div class="checkbox-list">
-					<Checkbox bind:state={$_age_groups.child}>6 bis 9 Jahre</Checkbox>
-					<Checkbox bind:state={$_age_groups.teen}>10 bis 15 Jahre</Checkbox>
-					<Checkbox bind:state={$_age_groups.adult}>16+ Jahre</Checkbox>
+					<Checkbox bind:state={$age_groups.child}>6 bis 9 Jahre</Checkbox>
+					<Checkbox bind:state={$age_groups.teen}>10 bis 15 Jahre</Checkbox>
+					<Checkbox bind:state={$age_groups.adult}>16+ Jahre</Checkbox>
 				</div>
 			</fieldset>
 

@@ -1,70 +1,17 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import { writable, type Writable } from 'svelte/store';
 	import TextInput from '../form/TextInput.svelte';
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import { isNonEmptyString } from '../form/Validation';
 	import RadioGroup from '../form/RadioGroup.svelte';
-	import type { Day } from '$lib/shared/schema/enums';
+	import { createDaysStore } from '$lib/shared/stores/days';
+	import { createGroupStore } from '$lib/shared/stores/group';
+	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;
-
-	const [one, two] = $appState.group;
-	if (one === undefined || two === undefined) {
-		throw new Error('3204: Unbekannter Fehler');
-	}
-	const group = writable({
-		one: {
-			...one,
-			days: {
-				SATURDAY: one.days.includes('SATURDAY'),
-				SUNDAY: one.days.includes('SUNDAY'),
-			},
-		},
-		two: {
-			...two,
-			days: {
-				SATURDAY: two.days.includes('SATURDAY'),
-				SUNDAY: two.days.includes('SUNDAY'),
-			},
-		},
-	});
-	group.subscribe((g) => {
-		const daysOne: Day[] = [];
-		if (g.one.days.SATURDAY) {
-			daysOne.push('SATURDAY');
-		}
-		if (g.one.days.SUNDAY) {
-			daysOne.push('SUNDAY');
-		}
-		const daysTwo: Day[] = [];
-		if (g.two.days.SATURDAY) {
-			daysTwo.push('SATURDAY');
-		}
-		if (g.two.days.SUNDAY) {
-			daysTwo.push('SUNDAY');
-		}
-		$appState.group = [
-			{ ...g.one, days: daysOne },
-			{ ...g.two, days: daysTwo },
-		];
-	});
-
-	const days = writable({
-		SATURDAY: $appState.days.includes('SATURDAY'),
-		SUNDAY: $appState.days.includes('SUNDAY'),
-	});
-	days.subscribe((d) => {
-		const ds: Day[] = [];
-		if (d.SATURDAY) {
-			ds.push('SATURDAY');
-		}
-		if (d.SUNDAY) {
-			ds.push('SUNDAY');
-		}
-		$appState.days = ds;
-	});
+	const group = createGroupStore(appState);
+	const days = createDaysStore(appState);
 </script>
 
 <div class="page">

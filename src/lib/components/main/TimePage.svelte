@@ -1,28 +1,15 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import { writable, type Writable } from 'svelte/store';
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import TimeTable from '../tables/TimeTable.svelte';
 	import RadioGroup from '../form/RadioGroup.svelte';
-	import type { Day } from '$lib/shared/schema/enums';
+	import { createDaysStore } from '$lib/shared/stores/days';
+	import type { Writable } from 'svelte/store';
 
 	export let appState: Writable<AppState>;
 
-	const days = writable({
-		SATURDAY: $appState.days.includes('SATURDAY'),
-		SUNDAY: $appState.days.includes('SUNDAY'),
-	});
-	days.subscribe((d) => {
-		const ds: Day[] = [];
-		if (d.SATURDAY) {
-			ds.push('SATURDAY');
-		}
-		if (d.SUNDAY) {
-			ds.push('SUNDAY');
-		}
-		$appState.days = ds;
-	});
+	const days = createDaysStore(appState);
 </script>
 
 <div class="page">

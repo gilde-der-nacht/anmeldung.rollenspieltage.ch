@@ -9,4 +9,4 @@ export const groupSchema = z.array(
         days: daysSchema,
     }),
 ).length(2);
-export type ServerGroup = z.infer<typeof groupSchema>;
+export type Group = z.infer<typeof groupSchema>;

@@ -1,9 +1,10 @@
-import { z } from 'zod';
-import { clientSaveState, type AppState, type ClientSaveState } from './schema/app';
 import { headerJSON } from './common';
 import { get, type Readable } from 'svelte/store';
 import { serverDataSchema } from './schema/server';
 import _ from 'lodash';
+import { saveSchema, type SaveSchema } from './schema/complex/saveSchema';
+import type { AppState } from './schema/app';
+import { z } from 'zod';
 
 type SuccessfullSave = {
 	success: true;
@@ -83,8 +84,8 @@ export async function save(
 	});
 }
 
-function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
-	const compareSchema = clientSaveState.omit({ previous_registration_entry: true });
+function stateHasChanged(n: SaveSchema, l: SaveSchema): boolean {
+	const compareSchema = saveSchema.omit({ previous_registration_entry: true });
 	const newState = compareSchema.parse(n);
 	const lastState = compareSchema.parse(l);
 	return !_.isEqual(newState, lastState);

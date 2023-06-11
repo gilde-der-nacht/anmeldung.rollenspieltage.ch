@@ -48,6 +48,7 @@
 			Ich möchte gerne als Spieler:in teilnehmen.
 		</Checkbox>
 	</div>
+	<h4 style="margin-top: .5rem;">Vorlieben</h4>
 	<RadioGroup
 		label="Bevorzugst du eher kurze oder lange Spielrunden?"
 		bind:value={$appState.preferred_game_length}

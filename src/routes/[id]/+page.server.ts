@@ -7,16 +7,16 @@ export const load = (async ({ params, url }) => {
 	const created = url.searchParams.get('created') === 'true';
 
 	if (secret === null) {
-		throw error(401, "'Secret' fehlt.");
+		throw error(401, "'Secret' fehlt. (1043)");
 	}
 
-	const res = await loadBySecret(secret);	
+	const res = await loadBySecret(secret);
 	if (!res.success) {
-		throw error(401, "'Secret' ist ungültig.");
+		throw error(401, "'Secret' ist ungültig. " + res.status);
 	}
 
 	if (res.id !== params.id) {
-		throw error(401, "'Id' inkorrekt.");
+		throw error(401, "'Id' inkorrekt. (1032)");
 	}
 
 	return { ...res, id: params.id, secret, created };

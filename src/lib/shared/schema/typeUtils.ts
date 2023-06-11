@@ -18,6 +18,7 @@ export function convertForClient(serverState: ServerData): ClientSaveState {
 			saturday: serverState.days.includes("SATURDAY"),
 			sunday: serverState.days.includes("SUNDAY")
 		},
+		game_rounds: serverState.game_rounds ?? []
 	};
 }
 

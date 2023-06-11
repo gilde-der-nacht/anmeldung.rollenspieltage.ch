@@ -11,7 +11,7 @@ type SuccessfullLoad = {
 
 type FailedLoad = {
 	success: false;
-	status: number;
+	status: string;
 };
 
 const responseSchema = z.object({
@@ -29,13 +29,15 @@ export async function loadBySecret(secret: string): Promise<SuccessfullLoad | Fa
 
 	const res = await fetch(url);
 	if (!res.ok) {
-		return { success: false, status: res.status };
+		return { success: false, status: "0144-" + res.status };
 	}
-
-	const parsed = responseSchema.safeParse(await res.json());
+	const json = await res.json();
+	const parsed = responseSchema.safeParse(json);
 
 	if (!parsed.success) {
-		return { success: false, status: res.status };
+		console.log(parsed.error);
+
+		return { success: false, status: "0142-" + res.status };
 	}
 
 	const latestRegistration = parsed.data.registrations.sort((a, b) =>

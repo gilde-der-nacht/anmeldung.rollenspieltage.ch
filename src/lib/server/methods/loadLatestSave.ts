@@ -8,7 +8,7 @@ type SuccessfullLoad = {
 
 type FailedLoad = {
 	success: false;
-	status: number;
+	status: string;
 };
 
 export async function loadLatestSave(secret: string): Promise<SuccessfullLoad | FailedLoad> {

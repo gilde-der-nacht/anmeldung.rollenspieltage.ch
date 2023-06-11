@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ageGroupEnum, dayEnum, eatPrefEnum, gameLengthEnum, genreEnum } from './shared';
+import { ageGroupEnum, dayEnum, eatPrefEnum, gameLengthEnum, gameRoundSchema, genreEnum } from './shared';
 
 export const uuidSchema = z.string().uuid();
 export const nameSchema = z.string().trim().min(1);
@@ -36,6 +36,8 @@ export const toSaveStateSchema = z.object({
 	wants_to_play: z.boolean(),
 	preferred_game_length: gameLengthEnum,
 	genres: z.array(genreEnum),
+	wants_to_master: z.boolean(),
+	game_rounds: z.nullable(z.array(gameRoundSchema)),
 });
 export type ToSaveState = z.infer<typeof toSaveStateSchema>;
 

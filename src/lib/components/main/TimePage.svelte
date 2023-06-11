@@ -24,13 +24,13 @@
 	{#if !$appState.days.saturday && !$appState.days.sunday}
 		<Alert type="danger">Du musst mindestens einen Tag auswählen.</Alert>
 	{/if}
-	<h4>Samstag, 26. August 2023</h4>
+	<h4 style="margin-top: .5rem;">Samstag, 26. August 2023</h4>
 	{#if $appState.days.saturday}
 		<TimeTable day="SATURDAY" {appState} />
 	{:else}
 		<Alert>Samstag wurde nicht ausgewählt.</Alert>
 	{/if}
-	<h4>Sonntag, 27. August 2023</h4>
+	<h4 style="margin-top: .5rem;">Sonntag, 27. August 2023</h4>
 	{#if $appState.days.sunday}
 		<TimeTable day="SUNDAY" {appState} />
 	{:else}

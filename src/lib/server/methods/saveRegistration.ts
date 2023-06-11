@@ -16,7 +16,7 @@ type SuccessfullSave = {
 
 type FailedSave = {
 	success: false;
-	status: number;
+	status: string;
 };
 
 export async function saveRegistration(
@@ -31,12 +31,12 @@ export async function saveRegistration(
 	});
 
 	if (!res.ok) {
-		return { success: false, status: res.status };
+		return { success: false, status: "0244-" + res.status };
 	}
 
 	const body = saveResponseSchema.safeParse((await res.json()) as unknown);
 	if (!body.success) {
-		return { success: false, status: res.status };
+		return { success: false, status: "0278-" + res.status };
 	}
 
 	return { success: true, id: body.data.data.id };

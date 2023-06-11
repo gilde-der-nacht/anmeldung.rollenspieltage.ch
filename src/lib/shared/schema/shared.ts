@@ -20,3 +20,14 @@ export const GENRES = ['fantasy', 'science_fiction', "horror", "crime", "modern"
 export const genreEnum = z.enum(GENRES);
 export type Genre = z.infer<typeof genreEnum>;
 
+export const gameRoundSchema = z.object({
+    title: z.string(),
+    system: z.string(),
+    duration: gameLengthEnum,
+    player_count_min: z.number(),
+    player_count_max: z.number(),
+    genres: z.array(genreEnum),
+    age_groups: z.array(ageGroupEnum),
+    active: z.boolean(),
+});
+export type GameRound = z.infer<typeof gameRoundSchema>;

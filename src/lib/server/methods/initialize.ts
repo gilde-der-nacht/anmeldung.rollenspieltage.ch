@@ -10,7 +10,7 @@ type SuccessfullRegistration = {
 
 type FailedRegistration = {
 	success: false;
-	status: number;
+	status: string;
 };
 
 export async function initializeRegistration(
@@ -26,12 +26,12 @@ export async function initializeRegistration(
 	});
 
 	if (!resParticipant.ok) {
-		return { success: false, status: resParticipant.status };
+		return { success: false, status: "0041-" + resParticipant.status };
 	}
 	const parsed = itemSchema.safeParse((await resParticipant.json()) as unknown);
 
 	if (!parsed.success) {
-		return { success: false, status: resParticipant.status };
+		return { success: false, status: "0044-" + resParticipant.status };
 	}
 
 	const { id } = parsed.data.data;
@@ -43,7 +43,7 @@ export async function initializeRegistration(
 	});
 
 	if (!resRegistration.ok) {
-		return { success: false, status: resRegistration.status };
+		return { success: false, status: "0072-" + resRegistration.status };
 	}
 
 	return { success: true, id, secret };

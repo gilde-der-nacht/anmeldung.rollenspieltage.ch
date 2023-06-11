@@ -1,12 +1,28 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import type { Writable } from 'svelte/store';
+	import { writable, type Writable } from 'svelte/store';
 	import Alert from '../common/Alert.svelte';
 	import Checkbox from '../form/Checkbox.svelte';
 	import TimeTable from '../tables/TimeTable.svelte';
 	import RadioGroup from '../form/RadioGroup.svelte';
+	import type { Day } from '$lib/shared/schema/enums';
 
 	export let appState: Writable<AppState>;
+
+	const days = writable({
+		SATURDAY: $appState.days.includes('SATURDAY'),
+		SUNDAY: $appState.days.includes('SUNDAY'),
+	});
+	days.subscribe((d) => {
+		const ds: Day[] = [];
+		if (d.SATURDAY) {
+			ds.push('SATURDAY');
+		}
+		if (d.SUNDAY) {
+			ds.push('SUNDAY');
+		}
+		$appState.days = ds;
+	});
 </script>
 
 <div class="page">
@@ -18,20 +34,20 @@
 		</p>
 	</Alert>
 	<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-		<Checkbox bind:state={$appState.days.saturday}>Samstag</Checkbox>
-		<Checkbox bind:state={$appState.days.sunday}>Sonntag</Checkbox>
+		<Checkbox bind:state={$days.SATURDAY}>Samstag</Checkbox>
+		<Checkbox bind:state={$days.SUNDAY}>Sonntag</Checkbox>
 	</div>
-	{#if !$appState.days.saturday && !$appState.days.sunday}
+	{#if !$days.SATURDAY && !$days.SUNDAY}
 		<Alert type="danger">Du musst mindestens einen Tag auswählen.</Alert>
 	{/if}
 	<h4 style="margin-top: .5rem;">Samstag, 26. August 2023</h4>
-	{#if $appState.days.saturday}
+	{#if $days.SATURDAY}
 		<TimeTable day="SATURDAY" {appState} />
 	{:else}
 		<Alert>Samstag wurde nicht ausgewählt.</Alert>
 	{/if}
 	<h4 style="margin-top: .5rem;">Sonntag, 27. August 2023</h4>
-	{#if $appState.days.sunday}
+	{#if $days.SUNDAY}
 		<TimeTable day="SUNDAY" {appState} />
 	{:else}
 		<Alert>Sonntag wurde nicht ausgewählt.</Alert>

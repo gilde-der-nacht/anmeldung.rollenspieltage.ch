@@ -15,7 +15,7 @@
 	import MasterPage from '$lib/components/main/MasterPage.svelte';
 	import SummaryPage from '$lib/components/main/SummaryPage.svelte';
 	import NavFooter from '$lib/components/navigation/NavFooter.svelte';
-	import { pageEnum } from '$lib/shared/schema/ navigation';
+	import { pageEnumSchema } from '$lib/shared/schema/complex/navigation';
 
 	export let data: PageData;
 	const appState = initAppState(data.id, data.secret, 'kontaktperson', data.registration);
@@ -43,17 +43,17 @@
 		<Steps {appState} />
 	</aside>
 	<main id="main-box">
-		{#if $appState.page === pageEnum.Enum.kontaktperson}
+		{#if $appState.page === pageEnumSchema.Enum.kontaktperson}
 			<ContactPage {appState} />
-		{:else if $appState.page === pageEnum.Enum.gruppe}
+		{:else if $appState.page === pageEnumSchema.Enum.gruppe}
 			<GroupPage {appState} />
-		{:else if $appState.page === pageEnum.Enum.zeit}
+		{:else if $appState.page === pageEnumSchema.Enum.zeit}
 			<TimePage {appState} />
-		{:else if $appState.page === pageEnum.Enum.spielen}
+		{:else if $appState.page === pageEnumSchema.Enum.spielen}
 			<PlayPage {appState} />
-		{:else if $appState.page === pageEnum.Enum.leiten}
+		{:else if $appState.page === pageEnumSchema.Enum.leiten}
 			<MasterPage {appState} />
-		{:else if $appState.page === pageEnum.Enum.zusammenfassung}
+		{:else if $appState.page === pageEnumSchema.Enum.zusammenfassung}
 			<SummaryPage {appState} />
 		{/if}
 	</main>

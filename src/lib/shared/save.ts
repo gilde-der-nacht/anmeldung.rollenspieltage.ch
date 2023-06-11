@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { clientSaveState, type AppState, type ClientSaveState } from './schema/app';
 import { headerJSON } from './common';
 import { get, type Readable } from 'svelte/store';
-import { convertForClient } from './schema/typeUtils';
 import { serverDataSchema } from './schema/server';
 import _ from 'lodash';
 
@@ -36,7 +35,7 @@ export async function save(
 	return new Promise((resolve) => {
 		setTimeout(async () => {
 			eventListener?.('DIFFING_LIVE_STATE');
-			if (stateHasChangedReadonlyStore(newState, lastState)) {
+			if (stateHasChanged(newState, get(lastState))) {
 				eventListener?.('ABORTING');
 				return resolve({ success: false });
 			}
@@ -54,12 +53,12 @@ export async function save(
 				return resolve({ success: false });
 			}
 			eventListener?.('DIFFING_LAST_SAVE');
-			if (!stateHasChanged(newState, convertForClient(parsed.data.registration))) {
+			if (!stateHasChanged(newState, parsed.data.registration)) {
 				eventListener?.('NO_NEW_STATE');
 				return resolve({ success: false });
 			}
 			eventListener?.('DIFFING_LIVE_STATE');
-			if (stateHasChangedReadonlyStore(newState, lastState)) {
+			if (stateHasChanged(newState, get(lastState))) {
 				eventListener?.('ABORTING');
 				return resolve({ success: false });
 			}
@@ -84,12 +83,9 @@ export async function save(
 	});
 }
 
-function stateHasChangedReadonlyStore(n: AppState, l: Readable<AppState>): boolean {
-	return stateHasChanged(n, get(l));
-}
-
 function stateHasChanged(n: ClientSaveState, l: ClientSaveState): boolean {
-	const newState = clientSaveState.parse(n);
-	const lastState = clientSaveState.parse(l);
+	const compareSchema = clientSaveState.omit({ previous_registration_entry: true });
+	const newState = compareSchema.parse(n);
+	const lastState = compareSchema.parse(l);
 	return !_.isEqual(newState, lastState);
 }

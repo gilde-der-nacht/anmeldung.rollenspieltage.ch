@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { pageEnum } from './ navigation';
+import { pageEnumSchema } from './complex/navigation';
 import { ageGroupEnumSchema, eatPreferenceEnumSchema, gameLength2EnumSchema, genresSchema } from './enums';
 import { gameRoundsSchema } from './complex/gameRoundSchema';
+import { saveSchema } from './complex/saveSchema';
 
 const daysSchema = z.object({
 	saturday: z.boolean(),
@@ -20,32 +21,13 @@ const groupSchema = z.object({
 });
 export type Group = z.infer<typeof groupSchema>;
 
-export const clientSaveState = z.object({
-	registration_participant: z.string().uuid(),
-	name: z.string(),
-	email: z.string(),
-	age_group: ageGroupEnumSchema,
-	wants_to_help: z.boolean(),
-	group: groupSchema,
-	days: daysSchema,
-	saturday_starttime: z.nullable(z.number()),
-	saturday_endtime: z.nullable(z.number()),
-	sunday_starttime: z.nullable(z.number()),
-	sunday_endtime: z.nullable(z.number()),
-	eat_preference: eatPreferenceEnumSchema,
-	wants_to_play: z.boolean(),
-	preferred_game_length: gameLength2EnumSchema,
-	genres: genresSchema,
-	wants_to_master: z.boolean(),
-	game_rounds: gameRoundsSchema,
-});
+export const clientSaveState = saveSchema;
 
 export type ClientSaveState = z.infer<typeof clientSaveState>;
 
 export const appStateSchema = clientSaveState.extend({
 	id: z.string().uuid(),
 	secret: z.string().uuid(),
-	previous_registration_entry: z.string().uuid(),
-	page: pageEnum,
+	page: pageEnumSchema,
 });
 export type AppState = z.infer<typeof appStateSchema>;

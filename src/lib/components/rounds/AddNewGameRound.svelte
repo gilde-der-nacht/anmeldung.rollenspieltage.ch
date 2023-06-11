@@ -2,7 +2,7 @@
 	import { writable } from 'svelte/store';
 	import Button from '../form/Button.svelte';
 	import GameRoundEdit from './GameRoundEdit.svelte';
-	import type { GameRound } from '$lib/shared/schema/shared';
+	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 
 	const isEditing = writable(false);
 	export let saveNewRound: (gr: GameRound) => void;

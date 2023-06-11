@@ -8,5 +8,5 @@ export const groupSchema = z.array(
         age_group: ageGroupEnumSchema,
         days: daysSchema,
     }),
-);
+).length(2);
 export type ServerGroup = z.infer<typeof groupSchema>;

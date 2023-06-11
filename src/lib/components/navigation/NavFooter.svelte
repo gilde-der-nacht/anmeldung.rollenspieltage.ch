@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pageMap } from '$lib/shared/schema/ navigation';
+	import { pageMap } from '$lib/shared/schema/complex/navigation';
 	import type { AppState } from '$lib/shared/schema/app';
 	import Button from '../form/Button.svelte';
 	import type { Writable } from 'svelte/store';

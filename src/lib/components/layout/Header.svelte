@@ -4,7 +4,7 @@
 
 	onMount(() => {
 		const [bodyEl] = document.querySelectorAll('body');
-		bodyEl.setAttribute('color-scheme', $theme);
+		bodyEl?.setAttribute('color-scheme', $theme);
 	});
 
 	function toggleTheme() {

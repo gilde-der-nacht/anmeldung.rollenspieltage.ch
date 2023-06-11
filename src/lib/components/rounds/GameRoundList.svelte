@@ -23,7 +23,7 @@
 
 <!-- svelte-ignore a11y-no-redundant-roles -->
 <ul class="event-list" role="list">
-	{#each $appState.game_rounds as round}
+	{#each $appState.game_rounds ?? [] as round}
 		{#if round.active}
 			<li class="event-entry gray">
 				<h1 class="event-title">{round.title} <small>({round.system})</small></h1>

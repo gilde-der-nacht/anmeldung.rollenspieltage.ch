@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PAGES, pageMap } from '$lib/shared/schema/ navigation';
+	import { pageList, pageMap } from '$lib/shared/schema/complex/navigation';
 	import type { AppState } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
 
@@ -9,7 +9,7 @@
 
 <h4>Navigation</h4>
 <ul class="steps">
-	{#each PAGES as page}
+	{#each pageList as page}
 		{@const curr = pageMap[page]}
 		<li class={`steps-segment ${currentPage === curr.curr.page ? 'active' : ''}`}>
 			<span class="steps-marker" />

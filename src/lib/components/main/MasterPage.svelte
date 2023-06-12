@@ -10,7 +10,10 @@
 	export let appState: Writable<AppState>;
 
 	const saveNewRound = (gr: GameRound) => {
-		console.log('new saved');
+		appState.update((prev) => {
+			const game_rounds = prev.game_rounds ?? [];
+			return { ...prev, game_rounds: [...game_rounds, gr] };
+		});
 	};
 
 	const saveExistingRound = (gr: GameRound) => {

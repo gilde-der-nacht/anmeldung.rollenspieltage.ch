@@ -7,7 +7,8 @@
 	export let placeholder: string = '';
 	export let required: boolean = false;
 	export let disabled: boolean = false;
-	export let error: { condition: () => boolean; message: string } | undefined = undefined;
+	export let error: { condition: () => boolean; message: string | string[] } | undefined =
+		undefined;
 </script>
 
 <div>
@@ -16,6 +17,14 @@
 	</label>
 
 	{#if error !== undefined && error.condition()}
-		<FormFieldError>{error.message}</FormFieldError>
+		<FormFieldError>
+			{#if typeof error.message === 'string'}
+				{error.message}
+			{:else}
+				{#each error.message as e}
+					<p>{e}</p>
+				{/each}
+			{/if}
+		</FormFieldError>
 	{/if}
 </div>

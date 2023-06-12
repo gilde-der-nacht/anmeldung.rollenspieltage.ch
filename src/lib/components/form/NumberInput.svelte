@@ -12,7 +12,7 @@
 
 <div>
 	<label
-		>{label} <input type="number" bind:value {name} {placeholder} {required} {disabled} />
+		>{label} <input type="number" bind:value min="1" {name} {placeholder} {required} {disabled} />
 	</label>
 
 	{#if error !== undefined && error.condition()}

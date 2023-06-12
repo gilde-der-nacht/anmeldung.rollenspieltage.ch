@@ -3,6 +3,7 @@
 	import type { AppState } from '$lib/shared/schema/app';
 	import Button from '../form/Button.svelte';
 	import type { Writable } from 'svelte/store';
+	import { scrollUp } from '$lib/shared/scroll';
 
 	export let appState: Writable<AppState>;
 
@@ -19,7 +20,7 @@
 			kind="special"
 			on:click={() => {
 				appState.update((p) => ({ ...p, page: prev2.page }));
-				document.getElementById('main-title')?.scrollIntoView(true);
+				scrollUp();
 			}}
 		>
 			<div class="flex left">
@@ -41,7 +42,7 @@
 			kind="special"
 			on:click={() => {
 				appState.update((p) => ({ ...p, page: next2.page }));
-				document.getElementById('main-title')?.scrollIntoView(true);
+				scrollUp();
 			}}
 		>
 			<div class="flex right">

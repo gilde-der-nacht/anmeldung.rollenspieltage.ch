@@ -2,6 +2,7 @@
 	import { pageList, pageMap } from '$lib/shared/schema/complex/navigation';
 	import type { AppState } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
+	import { scrollUp } from '$lib/shared/scroll';
 
 	export let appState: Writable<AppState>;
 	$: currentPage = $appState.page;
@@ -18,7 +19,7 @@
 					class={`link ${currentPage === curr.curr.page ? 'active' : ''}`}
 					on:click={() => {
 						appState.update((prev) => ({ ...prev, page: curr.curr.page }));
-						document.getElementById('main-title')?.scrollIntoView(true);
+						scrollUp();
 					}}
 				>
 					{curr.curr.label}

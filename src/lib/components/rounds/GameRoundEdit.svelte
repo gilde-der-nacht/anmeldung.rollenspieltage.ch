@@ -18,7 +18,7 @@
 	const round = writable<GameRound>(_.clone(gameRound));
 
 	export let onSave: (gr: GameRound) => void;
-	export let onDelete: (() => void) | undefined = undefined;
+	export let onDelete: ((gr: GameRound) => void) | undefined = undefined;
 	export let onAbort: () => void;
 
 	$: isNew = onDelete === undefined;
@@ -158,7 +158,7 @@
 					<span style="padding-left: .5rem;"> Abbrechen </span>
 				</Button>
 				{#if onDelete !== undefined}
-					<Button type="button" kind="danger" on:click={() => onDelete?.()}>
+					<Button type="button" kind="danger" on:click={() => onDelete?.(_.clone($round))}>
 						<i class="fa-duotone fa-trash" />
 						<span style="padding-left: .5rem;"> Löschen </span>
 					</Button>

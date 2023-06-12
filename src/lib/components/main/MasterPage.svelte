@@ -17,7 +17,10 @@
 	};
 
 	const saveExistingRound = (gr: GameRound) => {
-		console.log('new saved');
+		appState.update((prev) => {
+			const game_rounds = prev.game_rounds ?? [];
+			return { ...prev, game_rounds: [...game_rounds.filter((g) => g.id !== gr.id), gr] };
+		});
 	};
 </script>
 

@@ -11,6 +11,7 @@ export const gameRoundSchema = z.object({
     age_groups: ageGroupsSchema,
     active: z.boolean(),
     id: z.string().uuid(),
+    date_created: z.string(),
 });
 export type GameRound = z.infer<typeof gameRoundSchema>;
 

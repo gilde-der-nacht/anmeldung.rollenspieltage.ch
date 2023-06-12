@@ -11,6 +11,7 @@ export function getDefaultGameRound(): GameRound {
         genres: [],
         age_groups: ['CHILD', 'TEEN', 'ADULT'],
         active: true,
+        date_created: (new Date()).toISOString(),
     }
 }
 

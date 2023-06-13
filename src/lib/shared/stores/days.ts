@@ -1,12 +1,9 @@
 import { get, writable, type Writable } from "svelte/store";
-import type { AppState } from "../schema/app";
-import type { Day } from "../schema/enums";
+import type { AppState } from "$lib/shared/schema/app";
+import type { Day } from "$lib/shared/schema/enums";
 
 export function createDaysStore(store: Writable<AppState>) {
-    const _days = writable({
-        SATURDAY: get(store).days.includes('SATURDAY'),
-        SUNDAY: get(store).days.includes('SUNDAY'),
-    });
+    const _days = writable(unpackDays(get(store)));
     _days.subscribe((d) => {
         const days: Day[] = [];
         if (d.SATURDAY) {
@@ -20,4 +17,11 @@ export function createDaysStore(store: Writable<AppState>) {
         })
     });
     return _days;
+}
+
+export function unpackDays(appState: AppState) {
+    return {
+        SATURDAY: appState.days.includes('SATURDAY'),
+        SUNDAY: appState.days.includes('SUNDAY'),
+    }
 }

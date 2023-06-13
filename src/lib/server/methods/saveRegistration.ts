@@ -1,6 +1,6 @@
 import { OLYMP } from '$lib/Constants';
 import { z } from 'zod';
-import { headerJSON } from '../../shared/common';
+import { headerJSON } from '$lib/shared/common';
 import { saveSchema, type SaveSchema } from '$lib/shared/schema/complex/saveSchema';
 
 const saveResponseSchema = z.object({

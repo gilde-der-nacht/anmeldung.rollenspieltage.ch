@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
-	import Alert from '../common/Alert.svelte';
-	import Checkbox from '../form/Checkbox.svelte';
-	import GameRoundList from '../rounds/GameRoundList.svelte';
-	import AddNewGameRound from '../rounds/AddNewGameRound.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import Checkbox from '$lib/components/form/Checkbox.svelte';
+	import GameRoundList from '$lib/components/rounds/GameRoundList.svelte';
+	import AddNewGameRound from '$lib/components/rounds/AddNewGameRound.svelte';
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 
 	export let appState: Writable<AppState>;

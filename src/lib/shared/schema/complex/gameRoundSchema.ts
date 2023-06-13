@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ageGroupsSchema, gameLength2EnumSchema, genresSchema } from "../enums";
+import { ageGroupsSchema, gameLength2EnumSchema, genresSchema } from "$lib/shared/schema/enums";
 
 export const gameRoundSchema = z.object({
     title: z.string(),

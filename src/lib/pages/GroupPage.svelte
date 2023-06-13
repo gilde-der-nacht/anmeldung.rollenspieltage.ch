@@ -1,17 +1,20 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import TextInput from '../form/TextInput.svelte';
-	import Alert from '../common/Alert.svelte';
-	import Checkbox from '../form/Checkbox.svelte';
-	import { isNonEmptyString } from '../form/Validation';
-	import RadioGroup from '../form/RadioGroup.svelte';
+	import TextInput from '$lib/components/form/TextInput.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import Checkbox from '$lib/components/form/Checkbox.svelte';
+	import { isNonEmptyString } from '$lib/components/form/Validation';
+	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
 	import { createDaysStore } from '$lib/shared/stores/days';
 	import { createGroupStore } from '$lib/shared/stores/group';
 	import type { Writable } from 'svelte/store';
+	import { ageGroupOptions } from '$lib/shared/stores/ageGroup';
+	import { validateState } from '$lib/shared/validation';
 
 	export let appState: Writable<AppState>;
 	const group = createGroupStore(appState);
 	const days = createDaysStore(appState);
+	$: v = validateState($appState);
 </script>
 
 <div class="page">
@@ -31,7 +34,7 @@
 		disabled={!$group.one.active}
 		bind:value={$group.one.name}
 		error={{
-			condition: () => !isNonEmptyString($group.one.name) && $group.one.active,
+			condition: () => v.friend01.name,
 			message: 'Begleitung #1 ist aktiv, aber "Name" ist leer.',
 		}}
 	/>
@@ -39,11 +42,7 @@
 		label="Altersgruppe Begleitung #1"
 		disabled={!$group.one.active}
 		bind:value={$group.one.age_group}
-		options={[
-			{ value: 'CHILD', label: '6 bis 9 Jahre' },
-			{ value: 'TEEN', label: '10 bis 15 Jahre' },
-			{ value: 'ADULT', label: '16+ Jahre' },
-		]}
+		options={ageGroupOptions}
 	/>
 
 	<fieldset>
@@ -55,7 +54,7 @@
 			<Checkbox bind:state={$group.one.days.SUNDAY} disabled={!$group.one.active}>Sonntag</Checkbox>
 		</div>
 		{#if $group.one.active && ($days.SATURDAY || $days.SUNDAY)}
-			{#if !$days.SATURDAY && $group.one.days.SATURDAY}
+			{#if v.friend01.days.SATURDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Samstag nicht teilnehmt. Begleitungen können nicht ohne
@@ -63,7 +62,7 @@
 					>
 				</div>
 			{/if}
-			{#if !$days.SUNDAY && $group.one.days.SUNDAY}
+			{#if v.friend01.days.SUNDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Sonntag nicht teilnehmt. Begleitungen können nicht ohne
@@ -71,7 +70,7 @@
 					>
 				</div>
 			{/if}
-			{#if !$group.one.days.SATURDAY && !$group.one.days.SUNDAY}
+			{#if v.friend01.days.EITHER}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Wähle mindestens einen Tag für deine Begleitung aus oder deaktivere Begleitung #1.</Alert
@@ -89,7 +88,7 @@
 		disabled={!$group.two.active}
 		bind:value={$group.two.name}
 		error={{
-			condition: () => !isNonEmptyString($group.two.name) && $group.two.active,
+			condition: () => v.friend02.name,
 			message: 'Begleitung #2 ist aktiv, aber "Name" ist leer.',
 		}}
 	/>
@@ -97,11 +96,7 @@
 		label="Altersgruppe Begleitung #2"
 		disabled={!$group.two.active}
 		bind:value={$group.two.age_group}
-		options={[
-			{ value: 'CHILD', label: '6 bis 9 Jahre' },
-			{ value: 'TEEN', label: '10 bis 15 Jahre' },
-			{ value: 'ADULT', label: '16+ Jahre' },
-		]}
+		options={ageGroupOptions}
 	/>
 
 	<fieldset>
@@ -113,7 +108,7 @@
 			<Checkbox bind:state={$group.two.days.SUNDAY} disabled={!$group.two.active}>Sonntag</Checkbox>
 		</div>
 		{#if $group.two.active && ($days.SATURDAY || $days.SUNDAY)}
-			{#if !$days.SATURDAY && $group.two.days.SATURDAY}
+			{#if v.friend02.days.SATURDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Samstag nicht teilnehmt. Begleitungen können nicht ohne
@@ -121,7 +116,7 @@
 					>
 				</div>
 			{/if}
-			{#if !$days.SUNDAY && $group.two.days.SUNDAY}
+			{#if v.friend02.days.SUNDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Sonntag nicht teilnehmt. Begleitungen können nicht ohne
@@ -129,7 +124,7 @@
 					>
 				</div>
 			{/if}
-			{#if !$group.two.days.SATURDAY && !$group.two.days.SUNDAY}
+			{#if v.friend02.days.EITHER}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Wähle mindestens einen Tag für deine Begleitung aus oder deaktivere Begleitung #2.</Alert

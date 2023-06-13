@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { pageMap } from '$lib/shared/schema/complex/navigation';
 	import type { AppState } from '$lib/shared/schema/app';
-	import Button from '../form/Button.svelte';
+	import Button from '$lib/components/form/Button.svelte';
 	import type { Writable } from 'svelte/store';
 	import { scrollUp } from '$lib/shared/scroll';
 

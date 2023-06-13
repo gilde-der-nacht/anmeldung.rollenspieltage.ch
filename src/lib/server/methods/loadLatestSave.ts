@@ -1,5 +1,5 @@
 import type { ServerData } from '$lib/shared/schema/server';
-import { loadBySecret } from './loadBySecret';
+import { loadBySecret } from '$lib/server/methods/loadBySecret';
 
 type SuccessfullLoad = {
 	success: true;

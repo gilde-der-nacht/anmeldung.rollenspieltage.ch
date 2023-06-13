@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { get, writable } from 'svelte/store';
-	import Button from '../form/Button.svelte';
-	import TextInput from '../form/TextInput.svelte';
-	import RadioGroup from '../form/RadioGroup.svelte';
-	import NumberInput from '../form/NumberInput.svelte';
-	import Checkbox from '../form/Checkbox.svelte';
+	import Button from '$lib/components/form/Button.svelte';
+	import TextInput from '$lib/components/form/TextInput.svelte';
+	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
+	import NumberInput from '$lib/components/form/NumberInput.svelte';
+	import Checkbox from '$lib/components/form/Checkbox.svelte';
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
-	import { getDefaultGameRound, notEmpty } from './roundUtil';
+	import { getDefaultGameRound } from './roundUtil';
 	import _ from 'lodash';
 	import { createGenresStore } from '$lib/shared/stores/genres';
 	import { createAgeGroupStore } from '$lib/shared/stores/ageGroup';
-	import { isNonEmptyString } from '../form/Validation';
-	import Alert from '../common/Alert.svelte';
-	import FormFieldError from '../form/FormFieldError.svelte';
+	import { isNonEmptyString } from '$lib/components/form/Validation';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import FormFieldError from '$lib/components/form/FormFieldError.svelte';
 
 	export let gameRound: GameRound = getDefaultGameRound();
 	const round = writable<GameRound>(_.clone(gameRound));

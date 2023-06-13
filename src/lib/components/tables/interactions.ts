@@ -1,6 +1,6 @@
 import type { AppState } from "$lib/shared/schema/app";
 import { get, writable, type Writable } from "svelte/store";
-import { getDayInfos, getFieldBlock } from "./times";
+import { getDayInfos, getFieldBlock } from "$lib/components/tables/times";
 import { toRange, type Range } from "$lib/shared/rangeUtil";
 import type { Day } from "$lib/shared/schema/enums";
 
@@ -17,7 +17,10 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
     const getActiveHours = (): ActiveHours => {
         const start = day === "SATURDAY" ? get(appState).saturday_starttime : get(appState).sunday_starttime;
         const end = day === "SATURDAY" ? get(appState).saturday_endtime : get(appState).sunday_endtime;
-        if (start === null || end === null) {
+        if (start === null
+            || end === null
+            || start === undefined
+            || end === undefined) {
             return null;
         }
         return toRange(start, end)

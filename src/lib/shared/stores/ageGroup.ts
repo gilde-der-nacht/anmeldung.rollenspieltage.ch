@@ -1,6 +1,6 @@
 import { get, writable, type Writable } from "svelte/store";
-import type { GameRound } from "../schema/complex/gameRoundSchema";
-import type { AgeGroup } from "../schema/enums";
+import type { GameRound } from "$lib/shared/schema/complex/gameRoundSchema";
+import { ageGroupList, type AgeGroup } from "$lib/shared/schema/enums";
 
 export function createAgeGroupStore(store: Writable<GameRound>) {
     const _age_groups = writable({
@@ -25,3 +25,11 @@ export function createAgeGroupStore(store: Writable<GameRound>) {
     });
     return _age_groups;
 }
+
+export const localizeAgeGroup: { [Key in AgeGroup]: string } = {
+    CHILD: "6 bis 9 Jahre",
+    TEEN: "10 bis 15 Jahre",
+    ADULT: "16+ Jahre",
+}
+
+export const ageGroupOptions: { value: AgeGroup, label: string }[] = ageGroupList.map(ag => ({ value: ag, label: localizeAgeGroup[ag] }))

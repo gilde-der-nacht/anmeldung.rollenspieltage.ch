@@ -1,9 +1,9 @@
-import { headerJSON } from './common';
+import { headerJSON } from '$lib/shared/common';
 import { get, type Readable } from 'svelte/store';
-import { serverDataSchema } from './schema/server';
+import { serverDataSchema } from '$lib/shared/schema/server';
 import _ from 'lodash';
-import { saveSchema, type SaveSchema } from './schema/complex/saveSchema';
-import type { AppState } from './schema/app';
+import { saveSchema, type SaveSchema } from '$lib/shared/schema/complex/saveSchema';
+import type { AppState } from '$lib/shared/schema/app';
 import { z } from 'zod';
 
 type SuccessfullSave = {

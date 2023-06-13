@@ -2,7 +2,7 @@
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 	import type { AgeGroup, Genre } from '$lib/shared/schema/enums';
 	import { writable } from 'svelte/store';
-	import GameRoundEdit from './GameRoundEdit.svelte';
+	import GameRoundEdit from '$lib/components/rounds/GameRoundEdit.svelte';
 	import _ from 'lodash';
 	import { scrollUp } from '$lib/shared/scroll';
 

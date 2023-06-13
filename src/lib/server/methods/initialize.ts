@@ -1,6 +1,6 @@
 import { OLYMP } from '$lib/Constants';
 import { z } from 'zod';
-import { headerJSON } from '../../shared/common';
+import { headerJSON } from '$lib/shared/common';
 import { uuidSchema } from '$lib/shared/schema/server';
 
 type SuccessfullRegistration = {

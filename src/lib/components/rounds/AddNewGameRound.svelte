@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
-	import Button from '../form/Button.svelte';
+	import Button from '$lib/components/form/Button.svelte';
 	import GameRoundEdit from './GameRoundEdit.svelte';
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 	import { scrollUp } from '$lib/shared/scroll';

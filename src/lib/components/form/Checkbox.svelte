@@ -1,5 +1,5 @@
 <script lang="ts">
-	import FormFieldError from './FormFieldError.svelte';
+	import FormFieldError from '$lib/components/form/FormFieldError.svelte';
 
 	export let state: boolean;
 	export let disabled: boolean = false;

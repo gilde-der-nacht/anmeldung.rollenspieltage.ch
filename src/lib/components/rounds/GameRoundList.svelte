@@ -2,7 +2,7 @@
 	import type { AppState } from '$lib/shared/schema/app';
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 	import type { Writable } from 'svelte/store';
-	import GameRoundListEntry from './GameRoundListEntry.svelte';
+	import GameRoundListEntry from '$lib/components/rounds/GameRoundListEntry.svelte';
 
 	export let appState: Writable<AppState>;
 

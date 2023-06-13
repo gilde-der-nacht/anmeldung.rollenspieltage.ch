@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { saveSchema } from './complex/saveSchema';
+import { saveSchema } from '$lib/shared/schema/complex/saveSchema';
 
 export const uuidSchema = z.string().uuid();
 export const nameSchema = z.string().trim().min(1);

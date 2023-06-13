@@ -8,12 +8,12 @@
 	import { saveOnUpdate } from './saveUtil';
 	import type { SaveState } from '$lib/shared/save';
 	import Steps from '$lib/components/navigation/Steps.svelte';
-	import ContactPage from '$lib/components/main/ContactPage.svelte';
-	import GroupPage from '$lib/components/main/GroupPage.svelte';
-	import TimePage from '$lib/components/main/TimePage.svelte';
-	import PlayPage from '$lib/components/main/PlayPage.svelte';
-	import MasterPage from '$lib/components/main/MasterPage.svelte';
-	import SummaryPage from '$lib/components/main/SummaryPage.svelte';
+	import ContactPage from '$lib/pages/ContactPage.svelte';
+	import GroupPage from '$lib/pages/GroupPage.svelte';
+	import TimePage from '$lib/pages/TimePage.svelte';
+	import PlayPage from '$lib/pages/PlayPage.svelte';
+	import MasterPage from '$lib/pages/MasterPage.svelte';
+	import SummaryPage from '$lib/pages/SummaryPage.svelte';
 	import NavFooter from '$lib/components/navigation/NavFooter.svelte';
 	import { pageEnumSchema } from '$lib/shared/schema/complex/navigation';
 

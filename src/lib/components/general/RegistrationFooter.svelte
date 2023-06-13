@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SaveState } from '$lib/shared/save';
-	import Alert from '../common/Alert.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
 
 	export let saveState: SaveState | 'WAITING';
 	let aggregatedState: SaveState | 'WAITING' = 'WAITING';

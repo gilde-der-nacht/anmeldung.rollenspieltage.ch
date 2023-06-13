@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
-	import Alert from '../common/Alert.svelte';
-	import Checkbox from '../form/Checkbox.svelte';
-	import RadioGroup from '../form/RadioGroup.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import Checkbox from '$lib/components/form/Checkbox.svelte';
+	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
 	import { createGenresStore } from '$lib/shared/stores/genres';
 	import type { Writable } from 'svelte/store';
 

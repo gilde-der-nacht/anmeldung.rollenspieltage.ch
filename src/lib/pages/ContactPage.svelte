@@ -1,13 +1,15 @@
 <script lang="ts">
 	import type { AppState } from '$lib/shared/schema/app';
 	import type { Writable } from 'svelte/store';
-	import TextInput from '../form/TextInput.svelte';
-	import { isNonEmptyString } from '../form/Validation';
-	import Checkbox from '../form/Checkbox.svelte';
-	import RadioGroup from '../form/RadioGroup.svelte';
-	import Alert from '../common/Alert.svelte';
+	import TextInput from '$lib/components/form/TextInput.svelte';
+	import Checkbox from '$lib/components/form/Checkbox.svelte';
+	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
+	import { ageGroupOptions } from '$lib/shared/stores/ageGroup';
+	import { validateState } from '$lib/shared/validation';
 
 	export let appState: Writable<AppState>;
+	$: v = validateState($appState);
 </script>
 
 <div class="page">
@@ -19,7 +21,7 @@
 		name="name"
 		required
 		error={{
-			condition: () => !isNonEmptyString($appState.name),
+			condition: () => v.name,
 			message: '"Name" darf nicht leer sein.',
 		}}
 	/>
@@ -30,20 +32,12 @@
 		name="email"
 		required
 		error={{
-			condition: () => !isNonEmptyString($appState.email),
+			condition: () => v.email,
 			message: '"E-Mail" darf nicht leer sein.',
 		}}
 	/>
 
-	<RadioGroup
-		label="Altersgruppe"
-		bind:value={$appState.age_group}
-		options={[
-			{ value: 'CHILD', label: '6 bis 9 Jahre' },
-			{ value: 'TEEN', label: '10 bis 15 Jahre' },
-			{ value: 'ADULT', label: '16+ Jahre' },
-		]}
-	/>
+	<RadioGroup label="Altersgruppe" bind:value={$appState.age_group} options={ageGroupOptions} />
 
 	<h4 style="margin-top: 1.5rem;">Helfen</h4>
 	<Checkbox bind:state={$appState.wants_to_help}>

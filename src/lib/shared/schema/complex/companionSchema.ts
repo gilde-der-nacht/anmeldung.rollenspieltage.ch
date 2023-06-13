@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ageGroupEnumSchema, daysSchema } from "../enums";
+import { ageGroupEnumSchema, daysSchema } from "$lib/shared/schema/enums";
 
 export const groupSchema = z.array(
     z.object({

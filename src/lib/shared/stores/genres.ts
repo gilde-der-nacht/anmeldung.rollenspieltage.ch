@@ -1,7 +1,7 @@
-import type { AppState } from "../schema/app";
+import type { AppState } from "$lib/shared/schema/app";
 import { get, writable, type Writable } from "svelte/store";
-import type { Genre } from "../schema/enums";
-import type { GameRound } from "../schema/complex/gameRoundSchema";
+import type { Genre } from "$lib/shared/schema/enums";
+import type { GameRound } from "$lib/shared/schema/complex/gameRoundSchema";
 
 export function createGenresStore(store: Writable<GameRound | AppState>) {
     const _genres = writable({

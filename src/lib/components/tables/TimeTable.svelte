@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
-	import { getDayInfos, labelMap } from './times';
+	import { getDayInfos, labelMap } from '$lib/components/tables/times';
 	import type { AppState } from '$lib/shared/schema/app';
-	import { getInteractions } from './interactions';
-	import InteractionSymbol from './InteractionSymbol.svelte';
-	import Alert from '../common/Alert.svelte';
+	import { getInteractions } from '$lib/components/tables/interactions';
+	import InteractionSymbol from '$lib/components/tables/InteractionSymbol.svelte';
+	import Alert from '$lib/components/common/Alert.svelte';
 	import type { Day } from '$lib/shared/schema/enums';
 
 	export let day: Day;

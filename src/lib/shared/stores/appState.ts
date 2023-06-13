@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
 import { z } from 'zod';
-import type { AppState } from '../schema/app';
-import type { ServerData } from '../schema/server';
-import type { Page } from '../schema/complex/navigation';
+import type { AppState } from '$lib/shared/schema/app';
+import type { ServerData } from '$lib/shared/schema/server';
+import type { Page } from '$lib/shared/schema/complex/navigation';
 
 export function initAppState(id: string, secret: string, page: Page, serverData: ServerData) {
 

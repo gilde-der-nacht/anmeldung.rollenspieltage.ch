@@ -25,16 +25,18 @@ export function validateState(appState: AppState) {
             EITHER: !two.days.SATURDAY && !two.days.SUNDAY,
         }
     }
-    const group = (friend01.active
-        && (friend01.name
-            || friend01.days.SATURDAY
-            || friend01.days.SUNDAY
-            || friend01.days.EITHER))
-        || (friend02.active
-            && (friend02.name
-                || friend02.days.SATURDAY
-                || friend02.days.SUNDAY
-                || friend02.days.EITHER))
+
+    const group = (SATURDAY || SUNDAY)
+        && ((friend01.active
+            && (friend01.name
+                || friend01.days.SATURDAY
+                || friend01.days.SUNDAY
+                || friend01.days.EITHER))
+            || (friend02.active
+                && (friend02.name
+                    || friend02.days.SATURDAY
+                    || friend02.days.SUNDAY
+                    || friend02.days.EITHER)))
 
     return {
         name: !isNonEmptyString(appState.name),
@@ -44,9 +46,14 @@ export function validateState(appState: AppState) {
         group,
         time: {
             EITHER: !SATURDAY && !SUNDAY,
-            SATURDAY: appState.saturday_starttime === null || appState.saturday_endtime === null,
-            SUNDAY: appState.sunday_starttime === null || appState.sunday_endtime === null,
+            SATURDAY: appState.saturday_starttime === null
+                || appState.saturday_endtime === null,
+            SUNDAY: appState.sunday_starttime === null
+                || appState.sunday_endtime === null,
         },
-        genres: appState.genres.length === 0
+        genres: appState.genres.length === 0,
+        generel: !(appState.wants_to_help
+            || appState.wants_to_master
+            || appState.wants_to_play)
     }
 }

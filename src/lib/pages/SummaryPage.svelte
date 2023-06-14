@@ -4,6 +4,8 @@
 	import People from '$lib/components/summary/People.svelte';
 	import Alert from '$lib/components/common/Alert.svelte';
 	import Time from '$lib/components/summary/Time.svelte';
+	import Play from '$lib/components/summary/Play.svelte';
+	import General from '$lib/components/summary/General.svelte';
 
 	export let appState: Writable<AppState>;
 </script>
@@ -16,6 +18,8 @@
 	</Alert>
 	<People {appState} />
 	<Time {appState} />
+	<Play {appState} />
+	<General {appState} />
 </div>
 
 <style>

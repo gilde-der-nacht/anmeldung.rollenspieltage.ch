@@ -5,9 +5,12 @@
 	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
 	import { createGenresStore } from '$lib/shared/stores/genres';
 	import type { Writable } from 'svelte/store';
+	import { validateState } from '$lib/shared/validation';
 
 	export let appState: Writable<AppState>;
 	const genres = createGenresStore(appState);
+
+	$: v = validateState($appState);
 </script>
 
 <div class="page">
@@ -61,7 +64,7 @@
 			<Checkbox bind:state={$genres.modern} disabled={!$appState.wants_to_play}>Modern</Checkbox>
 		</div>
 	</fieldset>
-	{#if $appState.genres.length === 0}
+	{#if v.genres}
 		<Alert type="danger">Wähle bitte mindestens ein Genre aus.</Alert>
 	{/if}
 </div>

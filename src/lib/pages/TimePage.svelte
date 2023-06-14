@@ -6,10 +6,12 @@
 	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
 	import { createDaysStore } from '$lib/shared/stores/days';
 	import type { Writable } from 'svelte/store';
+	import { validateState } from '$lib/shared/validation';
 
 	export let appState: Writable<AppState>;
 
 	const days = createDaysStore(appState);
+	$: v = validateState($appState);
 </script>
 
 <div class="page">
@@ -24,7 +26,7 @@
 		<Checkbox bind:state={$days.SATURDAY}>Samstag</Checkbox>
 		<Checkbox bind:state={$days.SUNDAY}>Sonntag</Checkbox>
 	</div>
-	{#if !$days.SATURDAY && !$days.SUNDAY}
+	{#if v.time}
 		<Alert type="danger">Du musst mindestens einen Tag auswählen.</Alert>
 	{/if}
 	<h4 style="margin-top: .5rem;">Samstag, 26. August 2023</h4>

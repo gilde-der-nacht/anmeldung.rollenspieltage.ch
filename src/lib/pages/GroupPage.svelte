@@ -3,7 +3,6 @@
 	import TextInput from '$lib/components/form/TextInput.svelte';
 	import Alert from '$lib/components/common/Alert.svelte';
 	import Checkbox from '$lib/components/form/Checkbox.svelte';
-	import { isNonEmptyString } from '$lib/components/form/Validation';
 	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
 	import { createDaysStore } from '$lib/shared/stores/days';
 	import { createGroupStore } from '$lib/shared/stores/group';

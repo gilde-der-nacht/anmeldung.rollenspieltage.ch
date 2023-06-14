@@ -1,6 +1,6 @@
 import type { AppState } from "$lib/shared/schema/app";
 import { get, writable, type Writable } from "svelte/store";
-import type { Genre } from "$lib/shared/schema/enums";
+import { genreList, type Genre } from "$lib/shared/schema/enums";
 import type { GameRound } from "$lib/shared/schema/complex/gameRoundSchema";
 
 export function createGenresStore(store: Writable<GameRound | AppState>) {
@@ -35,3 +35,13 @@ export function createGenresStore(store: Writable<GameRound | AppState>) {
     });
     return _genres;
 }
+
+export const localizeGenre: { [Key in Genre]: string } = {
+    fantasy: "Fantasy",
+    science_fiction: "Science Fiction",
+    horror: "Horror",
+    crime: "Krimi",
+    modern: "Modern",
+}
+
+export const genreOptions: { value: Genre, label: string }[] = genreList.map(g => ({ value: g, label: localizeGenre[g] }))

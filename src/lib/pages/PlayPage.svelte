@@ -3,9 +3,10 @@
 	import Alert from '$lib/components/common/Alert.svelte';
 	import Checkbox from '$lib/components/form/Checkbox.svelte';
 	import RadioGroup from '$lib/components/form/RadioGroup.svelte';
-	import { createGenresStore } from '$lib/shared/stores/genres';
+	import { createGenresStore, localizeGenre } from '$lib/shared/stores/genres';
 	import type { Writable } from 'svelte/store';
 	import { validateState } from '$lib/shared/validation';
+	import { gameLength2Options } from '$lib/shared/stores/misc';
 
 	export let appState: Writable<AppState>;
 	const genres = createGenresStore(appState);
@@ -31,20 +32,7 @@
 		label="Bevorzugst du eher kurze oder lange Spielrunden?"
 		bind:value={$appState.preferred_game_length}
 		disabled={!$appState.wants_to_play}
-		options={[
-			{
-				value: 'short_rounds',
-				label: 'Ich bevorzuge kürzere Spielrunden (ca. 2 Stunden).',
-			},
-			{
-				value: 'long_rounds',
-				label: 'Ich bevorzuge längere Spielrunden (ca. 4 Stunden).',
-			},
-			{
-				value: 'nothing_selected',
-				label: 'Keine Angabe',
-			},
-		]}
+		options={gameLength2Options}
 	/>
 	<fieldset>
 		<legend>Genres</legend>
@@ -55,13 +43,21 @@
 			</em>
 		</p>
 		<div class="checkbox-list">
-			<Checkbox bind:state={$genres.fantasy} disabled={!$appState.wants_to_play}>Fantasy</Checkbox>
-			<Checkbox bind:state={$genres.science_fiction} disabled={!$appState.wants_to_play}>
-				Science Fiction
-			</Checkbox>
-			<Checkbox bind:state={$genres.horror} disabled={!$appState.wants_to_play}>Horror</Checkbox>
-			<Checkbox bind:state={$genres.crime} disabled={!$appState.wants_to_play}>Krimi</Checkbox>
-			<Checkbox bind:state={$genres.modern} disabled={!$appState.wants_to_play}>Modern</Checkbox>
+			<Checkbox bind:state={$genres.fantasy} disabled={!$appState.wants_to_play}
+				>{localizeGenre['fantasy']}</Checkbox
+			>
+			<Checkbox bind:state={$genres.science_fiction} disabled={!$appState.wants_to_play}
+				>{localizeGenre['science_fiction']}</Checkbox
+			>
+			<Checkbox bind:state={$genres.horror} disabled={!$appState.wants_to_play}
+				>{localizeGenre['horror']}</Checkbox
+			>
+			<Checkbox bind:state={$genres.crime} disabled={!$appState.wants_to_play}
+				>{localizeGenre['crime']}</Checkbox
+			>
+			<Checkbox bind:state={$genres.modern} disabled={!$appState.wants_to_play}
+				>{localizeGenre['modern']}</Checkbox
+			>
 		</div>
 	</fieldset>
 	{#if v.genres}

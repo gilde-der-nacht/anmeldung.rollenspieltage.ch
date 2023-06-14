@@ -4,6 +4,7 @@
 	import type { Writable } from 'svelte/store';
 	import Alert from '$lib/components/common/Alert.svelte';
 	import { validateState } from '$lib/shared/validation';
+	import InteractionSymbol from '../tables/InteractionSymbol.svelte';
 
 	export let appState: Writable<AppState>;
 	$: v = validateState($appState);
@@ -37,3 +38,26 @@
 		</li>
 	{/if}
 </ul>
+
+{#if $appState.wants_to_help}
+	<div class="check">
+		<span class="success">
+			<InteractionSymbol type="CHECKED" />
+		</span>
+		<span>
+			Ich bin bereit bei einer Spiellücke maximal 2 Stunden an der Kiosk-Kasse auszuhelfen.
+		</span>
+	</div>
+{/if}
+
+<style>
+	.check {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.success {
+		color: var(--clr-success-11);
+	}
+</style>

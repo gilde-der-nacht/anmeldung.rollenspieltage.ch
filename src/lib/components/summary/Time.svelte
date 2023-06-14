@@ -74,7 +74,7 @@
 				{#each timeRangeSo.range.range as block}
 					{@const type = timeRangeSo.details[block] ?? 'GAME_BLOCK_CONT'}
 					<tr class={type.toLowerCase()}>
-						<td>
+						<td class="success">
 							{#if h.showTick('SUNDAY', block)}
 								<InteractionSymbol type="CHECKED" />
 							{/if}
@@ -93,5 +93,9 @@
 	.dinner {
 		background-color: var(--clr-11);
 		color: var(--clr-2);
+	}
+
+	.success {
+		color: var(--clr-success-11);
 	}
 </style>

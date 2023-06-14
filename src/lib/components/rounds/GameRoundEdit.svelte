@@ -8,11 +8,12 @@
 	import type { GameRound } from '$lib/shared/schema/complex/gameRoundSchema';
 	import { getDefaultGameRound } from './roundUtil';
 	import _ from 'lodash';
-	import { createGenresStore } from '$lib/shared/stores/genres';
-	import { createAgeGroupStore } from '$lib/shared/stores/ageGroup';
+	import { createGenresStore, localizeGenre } from '$lib/shared/stores/genres';
+	import { createAgeGroupStore, localizeAgeGroup } from '$lib/shared/stores/ageGroup';
 	import { isNonEmptyString } from '$lib/components/form/Validation';
 	import Alert from '$lib/components/common/Alert.svelte';
 	import FormFieldError from '$lib/components/form/FormFieldError.svelte';
+	import { gameLengthOptions } from '$lib/shared/stores/misc';
 
 	export let gameRound: GameRound = getDefaultGameRound();
 	const round = writable<GameRound>(_.clone(gameRound));
@@ -85,16 +86,7 @@
 			<RadioGroup
 				label="Dauer der Spielrunde"
 				bind:value={$round.duration}
-				options={[
-					{
-						value: 'short_rounds',
-						label: 'Kurz (max. 2 Stunden)',
-					},
-					{
-						value: 'long_rounds',
-						label: 'Lang (max. 4 Stunden)',
-					},
-				]}
+				options={gameLengthOptions}
 			/>
 
 			<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
@@ -118,11 +110,13 @@
 			<fieldset>
 				<legend>Genres</legend>
 				<div class="checkbox-list">
-					<Checkbox bind:state={$genres.fantasy}>Fantasy</Checkbox>
-					<Checkbox bind:state={$genres.science_fiction}>Science Fiction</Checkbox>
-					<Checkbox bind:state={$genres.horror}>Horror</Checkbox>
-					<Checkbox bind:state={$genres.crime}>Krimi</Checkbox>
-					<Checkbox bind:state={$genres.modern}>Modern</Checkbox>
+					<Checkbox bind:state={$genres.fantasy}>{localizeGenre['fantasy']}</Checkbox>
+					<Checkbox bind:state={$genres.science_fiction}
+						>{localizeGenre['science_fiction']}</Checkbox
+					>
+					<Checkbox bind:state={$genres.horror}>{localizeGenre['horror']}</Checkbox>
+					<Checkbox bind:state={$genres.crime}>{localizeGenre['crime']}</Checkbox>
+					<Checkbox bind:state={$genres.modern}>{localizeGenre['modern']}</Checkbox>
 				</div>
 			</fieldset>
 			{#if $isValidated && errors.GENRES !== null}
@@ -134,9 +128,9 @@
 			<fieldset>
 				<legend>Altersgruppen</legend>
 				<div class="checkbox-list">
-					<Checkbox bind:state={$age_groups.child}>6 bis 9 Jahre</Checkbox>
-					<Checkbox bind:state={$age_groups.teen}>10 bis 15 Jahre</Checkbox>
-					<Checkbox bind:state={$age_groups.adult}>16+ Jahre</Checkbox>
+					<Checkbox bind:state={$age_groups.child}>{localizeAgeGroup['CHILD']}</Checkbox>
+					<Checkbox bind:state={$age_groups.teen}>{localizeAgeGroup['TEEN']}</Checkbox>
+					<Checkbox bind:state={$age_groups.adult}>{localizeAgeGroup['ADULT']}</Checkbox>
 				</div>
 			</fieldset>
 			{#if $isValidated && errors.AGE_GROUP !== null}

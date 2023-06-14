@@ -5,23 +5,13 @@
 	import GameRoundEdit from '$lib/components/rounds/GameRoundEdit.svelte';
 	import _ from 'lodash';
 	import { scrollUp } from '$lib/shared/scroll';
+	import { localizeGenre } from '$lib/shared/stores/genres';
+	import { localizeAgeGroup } from '$lib/shared/stores/ageGroup';
 
 	export let round: GameRound;
 	export let saveExistingRound: (gr: GameRound) => void;
 	const isEditing = writable(false);
 
-	const genreMap: { [Key in Genre]: string } = {
-		fantasy: 'Fantasy',
-		science_fiction: 'Science Fiction',
-		horror: 'Horror',
-		crime: 'Krimi',
-		modern: 'Modern',
-	};
-	const ageGroupMap: { [Key in AgeGroup]: string } = {
-		CHILD: '6 bis 9 Jahre',
-		TEEN: '10 bis 15 Jahre',
-		ADULT: '16+ Jahre',
-	};
 	const gameRound = _.clone(round);
 
 	const onAbort = () => {
@@ -65,13 +55,13 @@
 				<div class="event-icon">
 					<i class="fa-duotone fa-tags" />
 				</div>
-				<span>{round.genres.map((g) => genreMap[g]).join(', ')}</span>
+				<span>{round.genres.map((g) => localizeGenre[g]).join(', ')}</span>
 			</div>
 			<div class="event-date" title="Geeignet für Altergruppen">
 				<div class="event-icon">
 					<i class="fa-duotone fa-baby-carriage" />
 				</div>
-				<span>{round.age_groups.map((ag) => ageGroupMap[ag]).join(', ')}</span>
+				<span>{round.age_groups.map((ag) => localizeAgeGroup[ag]).join(', ')}</span>
 			</div>
 		</div>
 		<div class="event-description content" />

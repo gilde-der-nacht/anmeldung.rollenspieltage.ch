@@ -51,7 +51,8 @@ export function validateState(appState: AppState) {
             SUNDAY: appState.sunday_starttime === null
                 || appState.sunday_endtime === null,
         },
-        genres: appState.genres.length === 0,
+        genres: appState.wants_to_play && appState.genres.length === 0,
+        gameRounds: appState.wants_to_master && (appState.game_rounds ?? []).filter(r => r.active).length === 0,
         generel: !(appState.wants_to_help
             || appState.wants_to_master
             || appState.wants_to_play)

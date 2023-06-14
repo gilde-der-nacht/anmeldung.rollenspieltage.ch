@@ -6,6 +6,7 @@
 	import Time from '$lib/components/summary/Time.svelte';
 	import Play from '$lib/components/summary/Play.svelte';
 	import General from '$lib/components/summary/General.svelte';
+	import Master from '$lib/components/summary/Master.svelte';
 
 	export let appState: Writable<AppState>;
 </script>
@@ -19,6 +20,7 @@
 	<People {appState} />
 	<Time {appState} />
 	<Play {appState} />
+	<Master {appState} />
 	<General {appState} />
 </div>
 

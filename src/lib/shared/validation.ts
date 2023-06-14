@@ -42,7 +42,11 @@ export function validateState(appState: AppState) {
         friend01,
         friend02,
         group,
-        time: !SATURDAY && !SUNDAY,
+        time: {
+            EITHER: !SATURDAY && !SUNDAY,
+            SATURDAY: appState.saturday_starttime === null || appState.saturday_endtime === null,
+            SUNDAY: appState.sunday_starttime === null || appState.sunday_endtime === null,
+        },
         genres: appState.genres.length === 0
     }
 }

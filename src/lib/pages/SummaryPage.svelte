@@ -3,6 +3,7 @@
 	import type { Writable } from 'svelte/store';
 	import People from '$lib/components/summary/People.svelte';
 	import Alert from '$lib/components/common/Alert.svelte';
+	import Time from '$lib/components/summary/Time.svelte';
 
 	export let appState: Writable<AppState>;
 </script>
@@ -14,6 +15,7 @@
 		aufgeführt, die noch zu erledigen sind.
 	</Alert>
 	<People {appState} />
+	<Time {appState} />
 </div>
 
 <style>

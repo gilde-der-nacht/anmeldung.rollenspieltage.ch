@@ -8,6 +8,7 @@
 	import ServerErrorAlert from '$lib/components/common/ServerErrorAlert.svelte';
 	import Loader from '$lib/components/common/Loader.svelte';
 	import { goto } from '$app/navigation';
+	import type { ActionResult } from '@sveltejs/kit';
 
 	export let form: ActionData;
 
@@ -16,6 +17,21 @@
 
 	let loading: boolean = false;
 	let initSuccess: boolean = false;
+
+	const formSubmitEnhanced = () => {
+		loading = true;
+		return async ({ result }: { result: ActionResult }) => {
+			if (result.type !== 'success') {
+				if ('data' in result && result.data !== undefined) {
+					form = result.data as ActionData;
+				}
+				loading = false;
+			} else {
+				initSuccess = true;
+				goto(`/${result.data?.id}?secret=${result.data?.secret}&created=true`);
+			}
+		};
+	};
 </script>
 
 <h1>Anmeldung 2023</h1>
@@ -25,21 +41,7 @@
 	<ServerErrorAlert />
 {/if}
 
-<form
-	method="POST"
-	use:enhance={() => {
-		loading = true;
-		return async ({ result }) => {
-			if (result.type !== 'success') {
-				loading = false;
-			} else {
-				initSuccess = true;
-				goto(`/${result.data?.id}?secret=${result.data?.secret}&created=true`);
-			}
-		};
-	}}
-	novalidate
->
+<form method="POST" use:enhance={formSubmitEnhanced} novalidate>
 	<TextInput
 		value={typeof form?.name === 'string' ? form.name : ''}
 		label="Name"

@@ -26,3 +26,8 @@ export const genreList = ['fantasy', 'science_fiction', "horror", "crime", "mode
 export const genreEnumSchema = z.enum(genreList);
 export type Genre = z.infer<typeof genreEnumSchema>;
 export const genresSchema = z.array(genreEnumSchema);
+
+export const visitedPageList = ['CONTACT', 'GROUP', "TIME", "PLAY", "MASTER", "SUMMARY"] as const;
+export const visitedPageEnumSchema = z.enum(visitedPageList);
+export type VisitedPage = z.infer<typeof visitedPageEnumSchema>;
+export const visitedPagesSchema = z.array(visitedPageEnumSchema);

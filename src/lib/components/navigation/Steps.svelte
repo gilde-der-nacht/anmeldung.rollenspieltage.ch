@@ -1,28 +1,70 @@
 <script lang="ts">
-	import { pageList, pageMap } from '$lib/shared/schema/complex/navigation';
+	import {
+		goToPage,
+		pageList,
+		pageMap,
+		type PageState,
+	} from '$lib/shared/schema/complex/navigation';
 	import type { AppState } from '$lib/shared/schema/app';
-	import type { Writable } from 'svelte/store';
-	import { scrollUp } from '$lib/shared/scroll';
+	import { get, type Writable } from 'svelte/store';
+	import StepIcon from './StepIcon.svelte';
+	import { validateState } from '$lib/shared/validation';
 
 	export let appState: Writable<AppState>;
 	$: currentPage = $appState.page;
+	$: v = validateState($appState);
+	$: contactPageState = (
+		!get(appState).visited_pages.includes('CONTACT')
+			? 'TODO'
+			: v.name || v.email
+			? 'ERRORS'
+			: 'DONE'
+	) as PageState;
+	$: groupPageState = (
+		!get(appState).visited_pages.includes('GROUP') ? 'TODO' : v.group ? 'ERRORS' : 'DONE'
+	) as PageState;
+	$: timePageState = (
+		!get(appState).visited_pages.includes('TIME') ? 'TODO' : v.time.GENERAL ? 'ERRORS' : 'DONE'
+	) as PageState;
+	$: playPageState = (
+		!get(appState).visited_pages.includes('PLAY') ? 'TODO' : v.genres ? 'ERRORS' : 'DONE'
+	) as PageState;
+	$: masterPageState = (
+		!get(appState).visited_pages.includes('MASTER') ? 'TODO' : v.gameRounds ? 'ERRORS' : 'DONE'
+	) as PageState;
+	$: summaryPageState = !get(appState).visited_pages.includes('SUMMARY')
+		? 'TODO'
+		: v.generel
+		? 'ERRORS'
+		: ('DONE' as PageState);
 </script>
 
 <h4>Navigation</h4>
 <ul class="steps">
 	{#each pageList as page}
-		{@const curr = pageMap[page]}
-		<li class={`steps-segment ${currentPage === curr.curr.page ? 'active' : ''}`}>
-			<span class="steps-marker" />
+		{@const curr = pageMap[page].curr}
+		{@const state =
+			page === 'kontaktperson'
+				? contactPageState
+				: page === 'gruppe'
+				? groupPageState
+				: page === 'zeit'
+				? timePageState
+				: page === 'spielen'
+				? playPageState
+				: page === 'leiten'
+				? masterPageState
+				: summaryPageState}
+		<li class={`steps-segment ${currentPage === curr.page ? 'active' : ''} ${state}`}>
+			<span class="steps-marker">
+				<StepIcon type={state} />
+			</span>
 			<div class="steps-content">
 				<button
-					class={`link ${currentPage === curr.curr.page ? 'active' : ''}`}
-					on:click={() => {
-						appState.update((prev) => ({ ...prev, page: curr.curr.page }));
-						scrollUp();
-					}}
+					class={`link ${currentPage === curr.page ? 'active' : ''}`}
+					on:click={() => goToPage(curr.page, appState)}
 				>
-					{curr.curr.label}
+					{curr.label}
 				</button>
 			</div>
 		</li>
@@ -105,5 +147,20 @@
 	.active {
 		border-bottom-color: var(--clr-accent-1);
 		color: var(--clr-accent-2);
+	}
+
+	.TODO .steps-marker,
+	.TODO.steps-segment::after {
+		background-color: var(--clr-gray-10);
+	}
+
+	.DONE .steps-marker,
+	.DONE.steps-segment::after {
+		background-color: var(--clr-success-10);
+	}
+
+	.ERRORS .steps-marker,
+	.ERRORS.steps-segment::after {
+		background-color: var(--clr-danger-8);
 	}
 </style>

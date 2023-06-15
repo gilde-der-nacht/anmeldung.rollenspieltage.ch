@@ -7,9 +7,14 @@
 	import Alert from '$lib/components/common/Alert.svelte';
 	import { ageGroupOptions } from '$lib/shared/stores/ageGroup';
 	import { validateState } from '$lib/shared/validation';
+	import type { VisitedPage } from '$lib/shared/schema/enums';
 
 	export let appState: Writable<AppState>;
 	$: v = validateState($appState);
+	appState.update((prev) => ({
+		...prev,
+		visited_pages: [...new Set<VisitedPage>([...prev.visited_pages, 'CONTACT'])],
+	}));
 </script>
 
 <div class="page">

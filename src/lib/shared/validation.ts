@@ -38,6 +38,12 @@ export function validateState(appState: AppState) {
                     || friend02.days.SUNDAY
                     || friend02.days.EITHER)))
 
+    const T_EITHER = !SATURDAY && !SUNDAY;
+    const T_SATURDAY = appState.saturday_starttime === null
+        || appState.saturday_endtime === null;
+    const T_SUNDAY = appState.sunday_starttime === null
+        || appState.sunday_endtime === null;
+
     return {
         name: !isNonEmptyString(appState.name),
         email: !isNonEmptyString(appState.email),
@@ -45,11 +51,10 @@ export function validateState(appState: AppState) {
         friend02,
         group,
         time: {
-            EITHER: !SATURDAY && !SUNDAY,
-            SATURDAY: appState.saturday_starttime === null
-                || appState.saturday_endtime === null,
-            SUNDAY: appState.sunday_starttime === null
-                || appState.sunday_endtime === null,
+            EITHER: T_EITHER,
+            SATURDAY: T_SATURDAY,
+            SUNDAY: T_SUNDAY,
+            GENERAL: T_EITHER || T_SATURDAY || T_SUNDAY
         },
         genres: appState.wants_to_play && appState.genres.length === 0,
         gameRounds: appState.wants_to_master && (appState.game_rounds ?? []).filter(r => r.active).length === 0,

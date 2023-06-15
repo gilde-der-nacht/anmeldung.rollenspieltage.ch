@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ageGroupEnumSchema, daysSchema, eatPreferenceEnumSchema, gameLength2EnumSchema, genresSchema } from '$lib/shared/schema/enums';
+import { ageGroupEnumSchema, daysSchema, eatPreferenceEnumSchema, gameLength2EnumSchema, genresSchema, visitedPagesSchema } from '$lib/shared/schema/enums';
 import { gameRoundsSchema } from '$lib/shared/schema/complex/gameRoundSchema';
 import { groupSchema } from '$lib/shared/schema/complex/companionSchema';
 
@@ -8,6 +8,7 @@ export const saveSchema = z.object({
     previous_registration_entry: z.nullable(z.string()),
     name: z.string(),
     email: z.string(),
+    visited_pages: visitedPagesSchema,
     age_group: ageGroupEnumSchema,
     wants_to_help: z.boolean(),
     group: groupSchema,

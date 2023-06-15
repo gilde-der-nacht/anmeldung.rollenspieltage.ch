@@ -1,5 +1,10 @@
+import type { Writable } from "svelte/store";
 import { z } from "zod";
+import type { AppState } from "../app";
+import { scrollUp } from "$lib/shared/scroll";
+import type { VisitedPage } from "../enums";
 
+export type PageState = 'DONE' | 'ERRORS' | 'TODO';
 export const pageList = [
     'kontaktperson',
     'gruppe',
@@ -47,3 +52,21 @@ export const pageMap: {
         curr: { page: pageEnumSchema.Enum.zusammenfassung, label: 'Zusammenfassung' },
     },
 };
+
+const page2page: { [Key in Page]: VisitedPage } = {
+    kontaktperson: "CONTACT",
+    gruppe: "GROUP",
+    zeit: "TIME",
+    spielen: "PLAY",
+    leiten: "MASTER",
+    zusammenfassung: "SUMMARY",
+}
+
+export function goToPage(page: Page, appState: Writable<AppState>): void {
+    appState.update((prev) => ({
+        ...prev, page, visited_pages: [...new Set<VisitedPage>(
+            [...prev.visited_pages, page2page[page]]
+        )]
+    }));
+    scrollUp();
+}

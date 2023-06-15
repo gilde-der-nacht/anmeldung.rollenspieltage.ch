@@ -126,7 +126,7 @@
 			{/if}
 
 			<fieldset>
-				<legend>Altersgruppen</legend>
+				<legend>Geeignet für folgende Altersgruppen</legend>
 				<div class="checkbox-list">
 					<Checkbox bind:state={$age_groups.child}>{localizeAgeGroup['CHILD']}</Checkbox>
 					<Checkbox bind:state={$age_groups.teen}>{localizeAgeGroup['TEEN']}</Checkbox>

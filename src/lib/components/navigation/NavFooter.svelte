@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { pageMap } from '$lib/shared/schema/complex/navigation';
+	import { goToPage, pageMap } from '$lib/shared/schema/complex/navigation';
 	import type { AppState } from '$lib/shared/schema/app';
 	import Button from '$lib/components/form/Button.svelte';
 	import type { Writable } from 'svelte/store';
-	import { scrollUp } from '$lib/shared/scroll';
 
 	export let appState: Writable<AppState>;
 
@@ -15,14 +14,7 @@
 <footer class="nav-footer">
 	{#if prev !== undefined}
 		{@const prev2 = prev}
-		<Button
-			type="button"
-			kind="special"
-			on:click={() => {
-				appState.update((p) => ({ ...p, page: prev2.page }));
-				scrollUp();
-			}}
-		>
+		<Button type="button" kind="special" on:click={() => goToPage(prev2.page, appState)}>
 			<div class="flex left">
 				<i class="fa-duotone fa-arrow-left" />
 				<div style="text-align: left;">
@@ -37,14 +29,7 @@
 	{/if}
 	{#if next !== undefined}
 		{@const next2 = next}
-		<Button
-			type="button"
-			kind="special"
-			on:click={() => {
-				appState.update((p) => ({ ...p, page: next2.page }));
-				scrollUp();
-			}}
-		>
+		<Button type="button" kind="special" on:click={() => goToPage(next2.page, appState)}>
 			<div class="flex right">
 				<div style="text-align: right;">
 					<small>Nächste Seite</small>

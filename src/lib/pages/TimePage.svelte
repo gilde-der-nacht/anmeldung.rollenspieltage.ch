@@ -7,6 +7,7 @@
 	import { createDaysStore } from '$lib/shared/stores/days';
 	import type { Writable } from 'svelte/store';
 	import { validateState } from '$lib/shared/validation';
+	import { EatPreferenceOptions } from '$lib/shared/stores/misc';
 
 	export let appState: Writable<AppState>;
 
@@ -51,20 +52,7 @@
 	<RadioGroup
 		label="Planst du vor Ort zu Essen?"
 		bind:value={$appState.eat_preference}
-		options={[
-			{
-				value: 'plans_to_eat',
-				label: 'Ich werde vermutlich von eure Essensangebot gebrauch machen.',
-			},
-			{
-				value: 'plans_not_to_eat',
-				label: 'Ich werde mich voraussichtlich selber um meine Verpflegung kümmern.',
-			},
-			{
-				value: 'nothing_selected',
-				label: 'Keine Angabe',
-			},
-		]}
+		options={EatPreferenceOptions}
 	/>
 </div>
 

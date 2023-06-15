@@ -6,6 +6,7 @@
 	import InteractionSymbol from '$lib/components/tables/InteractionSymbol.svelte';
 	import { summaryHelper } from '$lib/components/summary/summaryHelper';
 	import Alert from '../common/Alert.svelte';
+	import { localizeEatPreference } from '$lib/shared/stores/misc';
 
 	export let appState: Writable<AppState>;
 	$: v = validateState($appState);
@@ -85,6 +86,17 @@
 				{/each}
 			</tbody>
 		</table>
+	</div>
+{/if}
+
+{#if $appState.eat_preference !== 'nothing_selected'}
+	<h5 style="margin-top: .5rem; margin-bottom: 0">Verpflegung</h5>
+
+	<div class="check">
+		<span class="success">
+			<InteractionSymbol type="CHECKED" />
+		</span>
+		<span>{localizeEatPreference[$appState.eat_preference]}</span>
 	</div>
 {/if}
 

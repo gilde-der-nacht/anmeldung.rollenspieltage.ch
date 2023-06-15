@@ -10,7 +10,7 @@ export const dayEnumSchema = z.enum(dayList);
 export type Day = z.infer<typeof dayEnumSchema>;
 export const daysSchema = z.array(dayEnumSchema);
 
-export const eatPreferenceList = ['nothing_selected', 'plans_to_eat', "plans_not_to_eat"] as const;
+export const eatPreferenceList = ['plans_to_eat', "plans_not_to_eat", 'nothing_selected'] as const;
 export const eatPreferenceEnumSchema = z.enum(eatPreferenceList);
 export type EatPreference = z.infer<typeof eatPreferenceEnumSchema>;
 
@@ -18,7 +18,7 @@ export const gameLengthList = ["short_rounds", "long_rounds"] as const;
 export const gameLengthEnumSchema = z.enum(gameLengthList);
 export type GameLength = z.infer<typeof gameLengthEnumSchema>;
 
-export const gameLength2List = ["nothing_selected", ...gameLengthList] as const;
+export const gameLength2List = [...gameLengthList, "nothing_selected"] as const;
 export const gameLength2EnumSchema = z.enum(gameLength2List);
 export type GameLength2 = z.infer<typeof gameLength2EnumSchema>;
 

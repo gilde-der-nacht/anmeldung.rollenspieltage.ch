@@ -14,14 +14,10 @@
 	$: currentPage = $appState.page;
 	$: v = validateState($appState);
 	$: contactPageState = (
-		!get(appState).visited_pages.includes('CONTACT')
-			? 'TODO'
-			: v.name || v.email
-			? 'ERRORS'
-			: 'DONE'
+		!get(appState).visited_pages.includes('CONTACT') ? 'TODO' : v.contact.all ? 'ERRORS' : 'DONE'
 	) as PageState;
 	$: groupPageState = (
-		!get(appState).visited_pages.includes('GROUP') ? 'TODO' : v.group ? 'ERRORS' : 'DONE'
+		!get(appState).visited_pages.includes('GROUP') ? 'TODO' : v.group.all ? 'ERRORS' : 'DONE'
 	) as PageState;
 	$: timePageState = (
 		!get(appState).visited_pages.includes('TIME') ? 'TODO' : v.time.GENERAL ? 'ERRORS' : 'DONE'

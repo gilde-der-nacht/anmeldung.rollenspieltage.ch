@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ageGroupEnumSchema, daysSchema, eatPreferenceEnumSchema, gameLength2EnumSchema, genresSchema, visitedPagesSchema } from '$lib/shared/schema/enums';
+import { ageGroupEnumSchema, daysSchema, eatPreferenceEnumSchema, gameLength2EnumSchema, genresSchema, progressEnumSchema, visitedPagesSchema } from '$lib/shared/schema/enums';
 import { gameRoundsSchema } from '$lib/shared/schema/complex/gameRoundSchema';
 import { groupSchema } from '$lib/shared/schema/complex/companionSchema';
 
@@ -23,5 +23,7 @@ export const saveSchema = z.object({
     genres: genresSchema,
     wants_to_master: z.boolean(),
     game_rounds: z.nullable(gameRoundsSchema),
+    valid_by_client: z.boolean(),
+    progress: progressEnumSchema,
 });
 export type SaveSchema = z.infer<typeof saveSchema>;

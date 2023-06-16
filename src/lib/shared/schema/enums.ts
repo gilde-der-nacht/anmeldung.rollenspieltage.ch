@@ -31,3 +31,8 @@ export const visitedPageList = ['CONTACT', 'GROUP', "TIME", "PLAY", "MASTER", "S
 export const visitedPageEnumSchema = z.enum(visitedPageList);
 export type VisitedPage = z.infer<typeof visitedPageEnumSchema>;
 export const visitedPagesSchema = z.array(visitedPageEnumSchema);
+
+export const progressList = ['INITIALIZED', 'IN_PROGRESS', "CONFIRMED", "CONFIRMED_W_INVALID_CHANGES", "CONFIRMED_W_VALID_CHANGES", "RECONFIRMED"] as const;
+export const progressEnumSchema = z.enum(progressList);
+export type Progress = z.infer<typeof progressEnumSchema>;
+export const progresssSchema = z.array(progressEnumSchema);

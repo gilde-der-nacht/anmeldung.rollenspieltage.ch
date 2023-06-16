@@ -26,7 +26,7 @@
 		name="name"
 		required
 		error={{
-			condition: () => v.name,
+			condition: () => v.contact.name,
 			message: '"Name" darf nicht leer sein.',
 		}}
 	/>
@@ -37,7 +37,7 @@
 		name="email"
 		required
 		error={{
-			condition: () => v.email,
+			condition: () => v.contact.email,
 			message: '"E-Mail" darf nicht leer sein.',
 		}}
 	/>

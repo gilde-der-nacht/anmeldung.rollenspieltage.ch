@@ -7,6 +7,13 @@ export function validateState(appState: AppState) {
     const { one, two } = unpackGroups(appState);
     const { SATURDAY, SUNDAY } = unpackDays(appState);
 
+    const name = !isNonEmptyString(appState.name);
+    const email = !isNonEmptyString(appState.email);
+
+    const contact = {
+        name, email, all: name || email
+    }
+
     const friend01 = {
         active: one.active,
         name: !isNonEmptyString(one.name) && one.active,
@@ -44,22 +51,26 @@ export function validateState(appState: AppState) {
     const T_SUNDAY = appState.sunday_starttime === null
         || appState.sunday_endtime === null;
 
+    const genres = appState.wants_to_play && appState.genres.length === 0;
+    const gameRounds = appState.wants_to_master && (appState.game_rounds ?? []).filter(r => r.active).length === 0;
+    const generel = !(appState.wants_to_help
+        || appState.wants_to_master
+        || appState.wants_to_play);
+
     return {
-        name: !isNonEmptyString(appState.name),
-        email: !isNonEmptyString(appState.email),
-        friend01,
-        friend02,
-        group,
+        contact,
+        group: {
+            friend01, friend02, all: group
+        },
         time: {
             EITHER: T_EITHER,
             SATURDAY: T_SATURDAY,
             SUNDAY: T_SUNDAY,
             GENERAL: T_EITHER || T_SATURDAY || T_SUNDAY
         },
-        genres: appState.wants_to_play && appState.genres.length === 0,
-        gameRounds: appState.wants_to_master && (appState.game_rounds ?? []).filter(r => r.active).length === 0,
-        generel: !(appState.wants_to_help
-            || appState.wants_to_master
-            || appState.wants_to_play)
+        genres,
+        gameRounds,
+        generel,
+        all: contact.all || group || T_EITHER || T_SATURDAY || T_SUNDAY || genres || gameRounds || generel
     }
 }

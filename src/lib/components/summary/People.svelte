@@ -11,21 +11,21 @@
 </script>
 
 <h4>Personen</h4>
-{#if v.name}
+{#if v.contact.name}
 	<Alert type="danger">Dein Name fehlt auf der Seite "Kontaktperson".</Alert>
 {/if}
-{#if v.email}
+{#if v.contact.email}
 	<Alert type="danger">Deine E-Mail-Adresse fehlt auf der Seite "Kontaktperson".</Alert>
 {/if}
-{#if v.group}
+{#if v.group.all}
 	<Alert type="danger">Bitte korrigiere die Fehler auf der Seite "Gruppe".</Alert>
 {/if}
 <ul style="margin: 0;">
 	<li>
-		<strong>{v.name ? '[Name fehlt]' : $appState.name}</strong> ({localizeAgeGroup[
+		<strong>{v.contact.name ? '[Name fehlt]' : $appState.name}</strong> ({localizeAgeGroup[
 			$appState.age_group
 		]})<br />
-		<small>Kontakt: {v.email ? '[E-Mail-Adresse fehlt]' : $appState.email}</small>
+		<small>Kontakt: {v.contact.email ? '[E-Mail-Adresse fehlt]' : $appState.email}</small>
 	</li>
 	{#if $appState.group[0]?.active}
 		<li>

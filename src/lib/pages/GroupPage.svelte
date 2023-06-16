@@ -33,7 +33,7 @@
 		disabled={!$group.one.active}
 		bind:value={$group.one.name}
 		error={{
-			condition: () => v.friend01.name,
+			condition: () => v.group.friend01.name,
 			message: 'Begleitung #1 ist aktiv, aber "Name" ist leer.',
 		}}
 	/>
@@ -53,7 +53,7 @@
 			<Checkbox bind:state={$group.one.days.SUNDAY} disabled={!$group.one.active}>Sonntag</Checkbox>
 		</div>
 		{#if $group.one.active && ($days.SATURDAY || $days.SUNDAY)}
-			{#if v.friend01.days.SATURDAY}
+			{#if v.group.friend01.days.SATURDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Samstag nicht teilnehmt. Begleitungen können nicht ohne
@@ -61,7 +61,7 @@
 					>
 				</div>
 			{/if}
-			{#if v.friend01.days.SUNDAY}
+			{#if v.group.friend01.days.SUNDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Sonntag nicht teilnehmt. Begleitungen können nicht ohne
@@ -69,7 +69,7 @@
 					>
 				</div>
 			{/if}
-			{#if v.friend01.days.EITHER}
+			{#if v.group.friend01.days.EITHER}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Wähle mindestens einen Tag für deine Begleitung aus oder deaktivere Begleitung #1.</Alert
@@ -87,7 +87,7 @@
 		disabled={!$group.two.active}
 		bind:value={$group.two.name}
 		error={{
-			condition: () => v.friend02.name,
+			condition: () => v.group.friend02.name,
 			message: 'Begleitung #2 ist aktiv, aber "Name" ist leer.',
 		}}
 	/>
@@ -107,7 +107,7 @@
 			<Checkbox bind:state={$group.two.days.SUNDAY} disabled={!$group.two.active}>Sonntag</Checkbox>
 		</div>
 		{#if $group.two.active && ($days.SATURDAY || $days.SUNDAY)}
-			{#if v.friend02.days.SATURDAY}
+			{#if v.group.friend02.days.SATURDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Samstag nicht teilnehmt. Begleitungen können nicht ohne
@@ -115,7 +115,7 @@
 					>
 				</div>
 			{/if}
-			{#if v.friend02.days.SUNDAY}
+			{#if v.group.friend02.days.SUNDAY}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Du hast ausgewählt, dass ihr am Sonntag nicht teilnehmt. Begleitungen können nicht ohne
@@ -123,7 +123,7 @@
 					>
 				</div>
 			{/if}
-			{#if v.friend02.days.EITHER}
+			{#if v.group.friend02.days.EITHER}
 				<div style="margin-top: .5rem;">
 					<Alert type="danger"
 						>Wähle mindestens einen Tag für deine Begleitung aus oder deaktivere Begleitung #2.</Alert

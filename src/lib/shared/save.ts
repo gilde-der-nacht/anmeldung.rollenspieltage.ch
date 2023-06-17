@@ -1,10 +1,12 @@
 import { headerJSON } from '$lib/shared/common';
-import { get, type Readable } from 'svelte/store';
+import { get, type Readable, type Writable } from 'svelte/store';
 import { serverDataSchema } from '$lib/shared/schema/server';
 import _ from 'lodash';
 import { saveSchema, type SaveSchema } from '$lib/shared/schema/complex/saveSchema';
 import type { AppState } from '$lib/shared/schema/app';
 import { z } from 'zod';
+import type { Progress } from './schema/enums';
+import { validateState } from './validation';
 
 type SuccessfullSave = {
 	success: true;
@@ -63,10 +65,11 @@ export async function save(
 				eventListener?.('ABORTING');
 				return resolve({ success: false });
 			}
+			const updatedState = updateMeta(newState, parsed.data.registration.progress);
 			eventListener?.('SAVING');
 			const resSave = await fetch('/api/save', {
 				method: 'POST',
-				body: JSON.stringify(newState),
+				body: JSON.stringify(updatedState),
 				headers: headerJSON,
 			});
 			if (!resSave.ok) {
@@ -85,8 +88,26 @@ export async function save(
 }
 
 function stateHasChanged(n: SaveSchema, l: SaveSchema): boolean {
-	const compareSchema = saveSchema.omit({ previous_registration_entry: true });
+	const compareSchema = saveSchema.omit({ previous_registration_entry: true, progress: true, valid_by_client: true });
 	const newState = compareSchema.parse(n);
 	const lastState = compareSchema.parse(l);
 	return !_.isEqual(newState, lastState);
+}
+
+const nextProgress = (valid: boolean, progress: Progress): Progress => {
+	const alreadyOnceConfirmed: Progress[] = ["CONFIRMED", "CONFIRMED_W_INVALID_CHANGES", "CONFIRMED_W_VALID_CHANGES", "RECONFIRMED"];
+	if (alreadyOnceConfirmed.includes(progress)) {
+		if (valid) {
+			return "CONFIRMED_W_VALID_CHANGES";
+		}
+		return "CONFIRMED_W_INVALID_CHANGES";
+	}
+	return "IN_PROGRESS";
+}
+
+const updateMeta = (appState: AppState, prevProgress: Progress): AppState => {
+	const v = validateState(appState);
+	const valid_by_client = !v.all;
+	const progress = nextProgress(valid_by_client, prevProgress);
+	return { ..._.clone(appState), valid_by_client, progress };
 }

@@ -18,11 +18,11 @@
 
 <div class="page">
 	<h3>Zusammenfassung</h3>
+	<Finalize {progressState} disabled={v.all} appState={$appState} />
 	<Alert
 		>Auf dieser Seite findest du die Übersicht über alle deine Angaben. Ausserdem werden alle Punkte
 		aufgeführt, die noch zu erledigen sind.
 	</Alert>
-	<Finalize {progressState} disabled={v.all} appState={$appState} />
 	<People {appState} />
 	<Time {appState} />
 	<Play {appState} />

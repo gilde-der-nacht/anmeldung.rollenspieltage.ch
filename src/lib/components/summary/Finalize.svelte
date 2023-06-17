@@ -47,6 +47,16 @@
 			Daten werden übertragen ...
 		</span>
 	{:else}
+		{#if $f.hasError}
+			<span style="color: var(--clr-danger-11);">
+				Leider ist ein unerwarteter Fehler aufgetreten. Bitte versuche erneut die Anmeldung
+				abzuschicken. Sollte dies erneut passieren, kontaktiere uns bitte umgehend per <a
+					href="https://rollenspieltage.ch/kontakt/">Kontaktformular</a
+				>
+				oder
+				<a href="https://rollenspieltage.ch/chat/">Discord (Chat)</a>.
+			</span>
+		{/if}
 		<div class="flex">
 			<span style={`color: var(--clr-${semanticState}-11)`}
 				>Status: <br /> <strong>{progressText}</strong></span

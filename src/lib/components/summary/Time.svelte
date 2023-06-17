@@ -40,9 +40,10 @@
 			<tbody>
 				{#each timeRangeSa.range.range as block}
 					{@const type = timeRangeSa.details[block] ?? 'GAME_BLOCK_CONT'}
-					<tr class={type.toLowerCase()}>
-						<td>
-							{#if h.showTick('SATURDAY', block)}
+					{@const checked = h.showTick('SATURDAY', block)}
+					<tr class={type.toLowerCase() + (checked ? ' checked' : '')}>
+						<td class={checked ? 'checked' : ''}>
+							{#if checked}
 								<InteractionSymbol type="CHECKED" />
 							{/if}
 						</td>
@@ -74,9 +75,10 @@
 			<tbody>
 				{#each timeRangeSo.range.range as block}
 					{@const type = timeRangeSo.details[block] ?? 'GAME_BLOCK_CONT'}
-					<tr class={type.toLowerCase()}>
-						<td class="success">
-							{#if h.showTick('SUNDAY', block)}
+					{@const checked = h.showTick('SUNDAY', block)}
+					<tr class={type.toLowerCase() + (checked ? ' checked' : '')}>
+						<td class={checked ? 'checked' : ''}>
+							{#if checked}
 								<InteractionSymbol type="CHECKED" />
 							{/if}
 						</td>
@@ -105,9 +107,18 @@
 	.dinner {
 		background-color: var(--clr-11);
 		color: var(--clr-2);
+		--row-bg: var(--clr-11);
 	}
 
 	.success {
 		color: var(--clr-success-11);
+	}
+
+	td.checked {
+		color: var(--clr-success-10);
+	}
+
+	tr.checked {
+		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 35%);
 	}
 </style>

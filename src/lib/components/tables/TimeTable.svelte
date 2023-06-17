@@ -41,7 +41,7 @@
 			{#each timeRange.range.range as block}
 				{@const type = timeRange.details[block] ?? 'GAME_BLOCK_CONT'}
 				<tr
-					class={type.toLowerCase() + ' pointer'}
+					class={type.toLowerCase() + ' pointer ' + $interactionDetails[block]?.toLowerCase()}
 					on:mouseenter={() => i.onMouseEnter(block)}
 					on:mouseleave={i.onMouseLeave}
 					on:click={() => i.onClick(block)}
@@ -73,28 +73,19 @@
 	.dinner {
 		background-color: var(--clr-11);
 		color: var(--clr-2);
+		--row-bg: var(--clr-11);
 	}
 
 	.pointer:hover {
 		cursor: pointer;
 	}
 
-	.checked {
+	td.checked {
 		color: var(--clr-success-10);
 	}
 
-	.lunch .checked,
-	.dinner .checked {
-		color: var(--clr-success-6);
-	}
-
-	.delete {
+	td.delete {
 		color: var(--clr-danger-10);
-	}
-
-	.lunch .delete,
-	.dinner .delete {
-		color: var(--clr-danger-6);
 	}
 
 	.reset.active:hover {
@@ -104,5 +95,21 @@
 	.reset.disabled {
 		color: var(--clr-gray-8);
 		cursor: not-allowed;
+	}
+
+	tr.checked {
+		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 35%);
+	}
+
+	tr.delete {
+		background: linear-gradient(90deg, var(--clr-danger-5), var(--row-bg, transparent) 35%);
+	}
+
+	tr.pre_checked {
+		background: linear-gradient(90deg, var(--clr-gray-5), var(--row-bg, transparent) 35%);
+	}
+
+	tr.pre_checked .pre_checked {
+		color: white;
 	}
 </style>

@@ -66,9 +66,9 @@
 
 <NavFooter {appState} />
 
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
-
 <RegistrationFooter {saveState} {progressState} />
+
+<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
 
 <style>
 	.with-sidebar {

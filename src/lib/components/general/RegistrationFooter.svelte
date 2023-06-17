@@ -22,6 +22,10 @@
 			? 'SUCCESS'
 			: $progressState === 'RECONFIRMED'
 			? 'SUCCESS'
+			: $progressState === 'INITIALIZED'
+			? 'ERROR'
+			: $progressState === 'IN_PROGRESS'
+			? 'ERROR'
 			: 'WARNING';
 
 	$: progressText = progressMap[$progressState] ?? 'Unerwarteter Fehler';
@@ -29,7 +33,13 @@
 
 <div class="registration-footer-wrapper">
 	<footer class={'registration-footer'}>
-		<Alert type={rightSemanticState === 'SUCCESS' ? 'success' : 'warning'}>
+		<Alert
+			type={rightSemanticState === 'SUCCESS'
+				? 'success'
+				: rightSemanticState === 'ERROR'
+				? 'danger'
+				: 'warning'}
+		>
 			<div class="flex">
 				{#if aggregatedState === 'SAVING'}
 					<span style="color:var(--clr-warning-11)"> Wird gespeichert... </span>

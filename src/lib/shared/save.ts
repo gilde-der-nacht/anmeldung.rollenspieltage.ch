@@ -11,6 +11,7 @@ import { validateState } from './validation';
 type SuccessfullSave = {
 	success: true;
 	id: string;
+	newProgress: Progress;
 };
 
 type FailedSave = {
@@ -82,7 +83,7 @@ export async function save(
 				return resolve({ success: false });
 			}
 			eventListener?.('SAVED');
-			resolve({ success: true, id: body.data.id });
+			resolve({ success: true, id: body.data.id, newProgress: updatedState.progress });
 		}, 1000);
 	});
 }

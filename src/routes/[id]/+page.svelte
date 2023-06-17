@@ -28,7 +28,7 @@
 	let saveState: SaveState = 'WAITING';
 
 	onMount(
-		saveOnUpdate(appState, (newState) => {
+		saveOnUpdate(appState, progressState, (newState) => {
 			saveState = newState;
 		}),
 	);
@@ -59,7 +59,7 @@
 		{:else if $appState.page === pageEnumSchema.Enum.leiten}
 			<MasterPage {appState} />
 		{:else if $appState.page === pageEnumSchema.Enum.zusammenfassung}
-			<SummaryPage {appState} />
+			<SummaryPage {appState} {progressState} />
 		{/if}
 	</main>
 </section>

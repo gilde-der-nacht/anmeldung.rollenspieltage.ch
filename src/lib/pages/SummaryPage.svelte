@@ -7,8 +7,13 @@
 	import Play from '$lib/components/summary/Play.svelte';
 	import General from '$lib/components/summary/General.svelte';
 	import Master from '$lib/components/summary/Master.svelte';
+	import Finalize from '$lib/components/summary/Finalize.svelte';
+	import type { Progress } from '$lib/shared/schema/enums';
+	import { validateState } from '$lib/shared/validation';
 
 	export let appState: Writable<AppState>;
+	export let progressState: Writable<Progress>;
+	$: v = validateState($appState);
 </script>
 
 <div class="page">
@@ -17,11 +22,13 @@
 		>Auf dieser Seite findest du die Übersicht über alle deine Angaben. Ausserdem werden alle Punkte
 		aufgeführt, die noch zu erledigen sind.
 	</Alert>
+	<Finalize {progressState} disabled={v.all} appState={$appState} />
 	<People {appState} />
 	<Time {appState} />
 	<Play {appState} />
 	<Master {appState} />
 	<General {appState} />
+	<Finalize {progressState} disabled={v.all} appState={$appState} />
 </div>
 
 <style>

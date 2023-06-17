@@ -18,7 +18,12 @@
 	import { pageEnumSchema } from '$lib/shared/schema/complex/navigation';
 
 	export let data: PageData;
-	const appState = initAppState(data.id, data.secret, 'kontaktperson', data.registration);
+	const { appState, progressState } = initAppState(
+		data.id,
+		data.secret,
+		'kontaktperson',
+		data.registration,
+	);
 
 	let saveState: SaveState = 'WAITING';
 
@@ -63,7 +68,7 @@
 
 <pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
 
-<RegistrationFooter {saveState} />
+<RegistrationFooter {saveState} {progressState} />
 
 <style>
 	.with-sidebar {

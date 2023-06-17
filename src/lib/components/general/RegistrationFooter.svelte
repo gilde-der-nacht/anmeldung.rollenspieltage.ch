@@ -1,7 +1,11 @@
 <script lang="ts">
-	import type { SaveState } from '$lib/shared/save';
 	import Alert from '$lib/components/common/Alert.svelte';
+	import type { SaveState } from '$lib/shared/save';
+	import type { Progress } from '$lib/shared/schema/enums';
+	import { progressMap } from '$lib/shared/stores/misc';
+	import type { Writable } from 'svelte/store';
 
+	export let progressState: Writable<Progress>;
 	export let saveState: SaveState | 'WAITING';
 	let aggregatedState: SaveState | 'WAITING' = 'WAITING';
 	$: {
@@ -12,28 +16,32 @@
 			}
 		}, 5_000);
 	}
+
+	$: rightSemanticState =
+		$progressState === 'CONFIRMED'
+			? 'SUCCESS'
+			: $progressState === 'RECONFIRMED'
+			? 'SUCCESS'
+			: 'WARNING';
+
+	$: progressText = progressMap[$progressState] ?? 'Unerwarteter Fehler';
 </script>
 
 <div class="registration-footer-wrapper">
-	<footer class="registration-footer">
-		<Alert
-			type={aggregatedState === 'SAVED'
-				? 'success'
-				: aggregatedState === 'ERROR'
-				? 'danger'
-				: 'gray'}
-		>
-			<span class="center">
+	<footer class={'registration-footer'}>
+		<Alert type={rightSemanticState === 'SUCCESS' ? 'success' : 'warning'}>
+			<div class="flex">
 				{#if aggregatedState === 'SAVING'}
-					Wird gespeichert...
+					<span style="color:var(--clr-warning-11)"> Wird gespeichert... </span>
 				{:else if aggregatedState === 'SAVED'}
-					Erfolgreich gespeichert.
+					<span style="color:var(--clr-success-11)"> Erfolgreich gespeichert. </span>
 				{:else if aggregatedState === 'ERROR'}
-					Fehler beim Speichern
+					<span style="color:var(--clr-danger-11)"> Fehler beim Speichern </span>
 				{:else}
-					Gespeichert.
+					<span />
 				{/if}
-			</span>
+				<span>Status: <strong>{progressText}</strong></span>
+			</div>
 		</Alert>
 	</footer>
 </div>
@@ -57,5 +65,11 @@
 		.registration-footer {
 			background-color: var(--clr-2);
 		}
+	}
+
+	.flex {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 </style>

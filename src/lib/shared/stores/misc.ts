@@ -1,4 +1,4 @@
-import { gameLength2List, type GameLength2, gameLengthList, type GameLength, type EatPreference, eatPreferenceList } from "../schema/enums"
+import { gameLength2List, type GameLength2, gameLengthList, type GameLength, type EatPreference, eatPreferenceList, type Progress } from "../schema/enums"
 
 export const localizeGameLength: { [Key in GameLength]: string } = {
     short_rounds: 'Kurz (max. 2 Stunden)',
@@ -24,3 +24,12 @@ export const localizeEatPreference: { [Key in EatPreference]: string } = {
 }
 
 export const EatPreferenceOptions: { value: EatPreference, label: string }[] = eatPreferenceList.map(g => ({ value: g, label: localizeEatPreference[g] }))
+
+export const progressMap: { [Key in Progress]: string } = {
+    INITIALIZED: 'noch nicht abgeschickt',
+    IN_PROGRESS: 'noch nicht abgeschickt',
+    CONFIRMED: 'Abgeschickt',
+    CONFIRMED_W_INVALID_CHANGES: 'Abgeschickt (mit Änderungen)',
+    CONFIRMED_W_VALID_CHANGES: 'Abgeschickt (mit Änderungen)',
+    RECONFIRMED: 'Abgeschickt',
+};

@@ -32,6 +32,20 @@
 	<link rel="preload" as="font" crossorigin="anonymous"
 		href="https://rollenspieltage.ch/fonts/dm-sans-normal-400.woff2" type="font/woff2">
 	%sveltekit.head%
+	<style>
+		p {
+			max-inline-size: unset;
+		}
+
+		.box,
+		.box-gray,
+		.box-danger,
+		.box-success,
+		.box-warning,
+		.box-special {
+			display: block
+		}
+	</style>
 </head>
 
 <body data-sveltekit-preload-data="hover" class="rst" color-scheme="dark">

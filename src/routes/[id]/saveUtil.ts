@@ -9,6 +9,10 @@ export const saveOnUpdate =
 		progressState: Writable<Progress>,
 		pushState: (newState: SaveState) => void) => () => {
 			appState.subscribe(async (state) => {
+				const currProgress = state.progress;
+				if (currProgress !== "IN_PROGRESS" && currProgress !== "INITIALIZED") {
+					progressState.set("CONFIRMED_W_INVALID_CHANGES");
+				}
 				const res = await save(_.clone(state), readonly(appState), async (state) => {
 					switch (state) {
 						case 'SAVING':
@@ -22,6 +26,9 @@ export const saveOnUpdate =
 						case 'SAVED':
 							pushState('SAVED');
 							break;
+
+						case "NO_NEW_STATE":
+							progressState.set(currProgress);
 
 						default:
 							break;

@@ -1,4 +1,5 @@
-import { TARTAROS } from '$lib/Constants';
+import { env } from "$env/dynamic/private";
+import { OLYMP } from '$lib/Constants';
 import { uuidSchema, type ServerData, serverDataSchema } from '$lib/shared/schema/server';
 import { z } from 'zod';
 
@@ -23,9 +24,13 @@ const responseSchema = z.object({
 });
 
 export async function loadBySecret(secret: string): Promise<SuccessfullLoad | FailedLoad> {
-	const base = TARTAROS + '/webhook/26bda799-cc26-40b0-b0f5-9167738c4896';
+	const base = OLYMP + '/flows/trigger/bca00e9a-0e24-4eba-a4fc-90321af45289';
 	const url = new URL(base);
 	url.searchParams.set('secret', secret);
+	if (env.OLYMP_TOKEN === undefined) {
+		return { success: false, status: "0140" };
+	}
+	url.searchParams.set('access_token', env.OLYMP_TOKEN);
 
 	const res = await fetch(url);
 	if (!res.ok) {

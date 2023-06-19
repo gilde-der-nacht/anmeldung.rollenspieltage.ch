@@ -86,11 +86,20 @@ export const getInteractions = (day: Day, appState: Writable<AppState>) => {
 
     const onMouseEnter = (field: number) => {
         mouseIsHovering.set(true)
+        const activeHours = getActiveHours();
         if (field === 0) {
+            if (activeHours !== null) {
+                interactionDetails.update(prev => {
+                    const next = { ...prev };
+                    activeHours.range.forEach(h => {
+                        next[h] = "DELETE";
+                    })
+                    return next;
+                })
+            }
             return;
         }
         const fieldBlock = getFieldBlock(day, field);
-        const activeHours = getActiveHours();
 
         if (activeHours === null) {
             interactionDetails.update(prev => {

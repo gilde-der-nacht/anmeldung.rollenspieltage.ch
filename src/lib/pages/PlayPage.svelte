@@ -27,39 +27,45 @@
 			Ich möchte gerne als Spieler:in teilnehmen.
 		</Checkbox>
 	</div>
-	<h4 style="margin-top: .5rem;">Vorlieben</h4>
-	<RadioGroup
-		label="Bevorzugst du eher kurze oder lange Spielrunden?"
-		bind:value={$appState.preferred_game_length}
-		disabled={!$appState.wants_to_play}
-		options={gameLength2Options}
-	/>
-	<fieldset>
-		<legend>Genres</legend>
-		<p style="margin-bottom: .5rem;">
-			<em>
-				Bitte wähle die Genres ab, die du gar nicht magst. Wir versuchen dies bei der
-				Programmerstellung so gut es geht zu berücksichtigen.
-			</em>
-		</p>
-		<div class="checkbox-list">
-			<Checkbox bind:state={$genres.fantasy} disabled={!$appState.wants_to_play}
-				>{localizeGenre['fantasy']}</Checkbox
-			>
-			<Checkbox bind:state={$genres.science_fiction} disabled={!$appState.wants_to_play}
-				>{localizeGenre['science_fiction']}</Checkbox
-			>
-			<Checkbox bind:state={$genres.horror} disabled={!$appState.wants_to_play}
-				>{localizeGenre['horror']}</Checkbox
-			>
-			<Checkbox bind:state={$genres.crime} disabled={!$appState.wants_to_play}
-				>{localizeGenre['crime']}</Checkbox
-			>
-			<Checkbox bind:state={$genres.modern} disabled={!$appState.wants_to_play}
-				>{localizeGenre['modern']}</Checkbox
-			>
-		</div>
-	</fieldset>
+	{#if $appState.wants_to_play}
+		<h4 style="margin-top: .5rem;">Vorlieben</h4>
+		<RadioGroup
+			label="Bevorzugst du eher kurze oder lange Spielrunden?"
+			bind:value={$appState.preferred_game_length}
+			disabled={!$appState.wants_to_play}
+			options={gameLength2Options}
+		/>
+		<fieldset>
+			<legend>Genres</legend>
+			<p style="margin-bottom: .5rem;">
+				<em>
+					Bitte wähle die Genres aus, die du magst.
+					<br />
+					Wir versuchen dies bei der Programmerstellung so gut es geht zu berücksichtigen.
+				</em>
+			</p>
+			<div class="checkbox-list">
+				<Checkbox bind:state={$genres.fantasy} disabled={!$appState.wants_to_play}
+					>{localizeGenre['fantasy']}</Checkbox
+				>
+				<Checkbox bind:state={$genres.science_fiction} disabled={!$appState.wants_to_play}
+					>{localizeGenre['science_fiction']}</Checkbox
+				>
+				<Checkbox bind:state={$genres.horror} disabled={!$appState.wants_to_play}
+					>{localizeGenre['horror']}</Checkbox
+				>
+				<Checkbox bind:state={$genres.crime} disabled={!$appState.wants_to_play}
+					>{localizeGenre['crime']}</Checkbox
+				>
+				<Checkbox bind:state={$genres.modern} disabled={!$appState.wants_to_play}
+					>{localizeGenre['modern']}</Checkbox
+				>
+			</div>
+		</fieldset>
+	{:else}
+		<Alert>'Spielen' wurde nicht ausgewählt.</Alert>
+	{/if}
+
 	{#if v.genres}
 		<Alert type="danger">Wähle bitte mindestens ein Genre aus.</Alert>
 	{/if}

@@ -26,6 +26,8 @@
 				<th
 					class={`pointer ${$dayHasActiveHours ? 'active' : 'disabled'} reset`}
 					on:click={i.resetDay}
+					on:mouseenter={() => i.onMouseEnter(0)}
+					on:mouseleave={i.onMouseLeave}
 				>
 					<i
 						class="fa-duotone fa-trash-can-check"
@@ -50,7 +52,11 @@
 						<InteractionSymbol type={$interactionDetails[block]} />
 					</td>
 					<td>{block} Uhr</td>
-					<td>{labelMap[type]}</td>
+					{#if type === 'GAME_BLOCK_START'}
+						<td rowspan="2" style="vertical-align: middle;">{labelMap[type]}</td>
+					{:else if type !== 'GAME_BLOCK_CONT'}
+						<td>{labelMap[type]}</td>
+					{/if}
 					<td>Flohmarkt offen</td>
 				</tr>
 			{/each}

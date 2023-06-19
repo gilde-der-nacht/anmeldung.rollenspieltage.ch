@@ -160,10 +160,10 @@
 				<Button type="submit" kind="success">
 					{#if isNew}
 						<i class="fa-duotone fa-square-plus" />
-						<span style="padding-left: .5rem;">Erstellen</span>
+						<span style="padding-left: .5rem;">Runde speichern</span>
 					{:else}
 						<i class="fa-duotone fa-floppy-disk" />
-						<span style="padding-left: .5rem;">Speichern</span>
+						<span style="padding-left: .5rem;">Runde speichern</span>
 					{/if}
 				</Button>
 			</div>

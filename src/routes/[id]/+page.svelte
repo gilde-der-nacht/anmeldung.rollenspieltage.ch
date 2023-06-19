@@ -68,8 +68,6 @@
 
 <RegistrationFooter {saveState} {progressState} />
 
-<pre><code>{JSON.stringify($appState, null, 2)}</code></pre>
-
 <style>
 	.with-sidebar {
 		display: grid;

@@ -46,10 +46,10 @@ export function validateState(appState: AppState) {
                     || friend02.days.EITHER)))
 
     const T_EITHER = !SATURDAY && !SUNDAY;
-    const T_SATURDAY = appState.saturday_starttime === null
-        || appState.saturday_endtime === null;
-    const T_SUNDAY = appState.sunday_starttime === null
-        || appState.sunday_endtime === null;
+    const T_SATURDAY = SATURDAY && (appState.saturday_starttime === null
+        || appState.saturday_endtime === null);
+    const T_SUNDAY = SUNDAY && (appState.sunday_starttime === null
+        || appState.sunday_endtime === null);
 
     const genres = appState.wants_to_play && appState.genres.length === 0;
     const gameRounds = appState.wants_to_master && (appState.game_rounds ?? []).filter(r => r.active).length === 0;

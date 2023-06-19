@@ -63,7 +63,7 @@ export const getDayInfos = (day: Day) => {
 
 type LabelMap = { [K in EntryType]: string }
 export const labelMap: LabelMap = {
-    GAME_BLOCK_START: "Start Spielblock",
+    GAME_BLOCK_START: "Spielblock",
     GAME_BLOCK_CONT: "",
     LUNCH: "Mittagessen",
     DINNER: "Nachtessen",

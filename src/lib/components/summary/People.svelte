@@ -5,6 +5,7 @@
 	import Alert from '$lib/components/common/Alert.svelte';
 	import { validateState } from '$lib/shared/validation';
 	import InteractionSymbol from '../tables/InteractionSymbol.svelte';
+	import { isNonEmptyString } from '../form/Validation';
 
 	export let appState: Writable<AppState>;
 	$: v = validateState($appState);
@@ -48,6 +49,11 @@
 			Ich bin bereit bei einer Spiellücke maximal 2 Stunden an der Kiosk-Kasse auszuhelfen.
 		</span>
 	</div>
+{/if}
+
+{#if isNonEmptyString($appState.workshop_ideas)}
+	<h5 style="margin: 0;">Ideen für Workshops und Diskussionsrunden</h5>
+	<p>{$appState.workshop_ideas}</p>
 {/if}
 
 <style>

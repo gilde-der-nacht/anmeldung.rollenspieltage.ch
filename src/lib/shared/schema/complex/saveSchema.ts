@@ -25,5 +25,6 @@ export const saveSchema = z.object({
     game_rounds: z.nullable(gameRoundsSchema),
     valid_by_client: z.boolean(),
     progress: progressEnumSchema,
+    workshop_ideas: z.nullable(z.string())
 });
 export type SaveSchema = z.infer<typeof saveSchema>;

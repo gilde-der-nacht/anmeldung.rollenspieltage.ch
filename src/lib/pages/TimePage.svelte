@@ -17,7 +17,7 @@
 
 <div class="page">
 	<h3>Zeit</h3>
-	<Alert>
+	<Alert type="special">
 		<p>
 			Auf dieser Seite kannst du auswählen, an welchen Tagen und welchen Zeiten du gerne teilnehmen
 			möchtest.
@@ -44,7 +44,7 @@
 	{/if}
 
 	<h4 style="margin-top: 1rem;">Verpflegung</h4>
-	<Alert>
+	<Alert type="special">
 		Wir werden wie oben im Programm markiert drei warme Malzeiten kochen. Falls du an einem oder
 		mehreren Mittag-/Abendessen vor Ort sein wirst, würden wir uns vorab freuen, eine ungefähre
 		Einschätzung zu erhalten, wie viele Malzeiten wir vorbereiten dürfen.

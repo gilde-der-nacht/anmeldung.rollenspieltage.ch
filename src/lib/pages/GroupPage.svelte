@@ -18,7 +18,7 @@
 
 <div class="page">
 	<h3>Gruppe</h3>
-	<Alert>
+	<Alert type="special">
 		<p>
 			Auf dieser Seite hast du die Möglichkeit bis zu zwei weitere Personen anzumelden, die dasselbe
 			Programm erhalten werden wie du.
@@ -146,7 +146,7 @@
 	{/if}
 
 	<div style="margin-top: 1.5rem;">
-		<Alert>
+		<Alert type="special">
 			<p>Seid ihr mehr als drei Personen, dann teilt euch bitte in mehrere kleinere Gruppen auf.</p>
 		</Alert>
 	</div>

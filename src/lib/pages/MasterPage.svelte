@@ -26,7 +26,7 @@
 
 <div class="page">
 	<h3>Spiel Leiten</h3>
-	<Alert>
+	<Alert type="special">
 		<p>
 			Auf dieser Seite kannst du auswählen, ob du als Spielleiter:in teilnehmen möchtest und deine
 			Spielrunden erfassen.

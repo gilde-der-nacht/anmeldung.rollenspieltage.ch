@@ -40,7 +40,7 @@
 	};
 </script>
 
-<Alert>
+<Alert type="special">
 	{#if $f.isLoading}
 		<span>
 			<Loader />

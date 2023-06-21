@@ -16,7 +16,7 @@
 
 <div class="page">
 	<h3>Spielen</h3>
-	<Alert>
+	<Alert type="special">
 		<p>
 			Auf dieser Seite kannst du auswählen, ob du als Spieler:in teilnehmen möchtest und einige
 			Einstellungen vornehmen.

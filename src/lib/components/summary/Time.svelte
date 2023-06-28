@@ -57,7 +57,7 @@
 {/if}
 
 {#if $appState.days.includes('SUNDAY')}
-	<h5 style="margin-top: .5rem; margin-bottom: 0">Samstag, 26. August 2023</h5>
+	<h5 style="margin-top: .5rem; margin-bottom: 0">Sonntag, 27. August 2023</h5>
 
 	<em>
 		Anwesend: {h.names.SUNDAY}

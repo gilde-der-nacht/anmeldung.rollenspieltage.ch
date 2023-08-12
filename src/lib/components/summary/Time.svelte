@@ -69,24 +69,3 @@
 		</tbody>
 	</table>
 </div>
-
-<style>
-	.lunch,
-	.dinner {
-		background-color: var(--clr-11);
-		color: var(--clr-2);
-		--row-bg: var(--clr-11);
-	}
-
-	.success {
-		color: var(--clr-success-11);
-	}
-
-	td.checked {
-		color: var(--clr-success-10);
-	}
-
-	tr.checked {
-		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 35%);
-	}
-</style>

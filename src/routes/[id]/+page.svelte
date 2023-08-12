@@ -3,7 +3,6 @@
 	import Alert from '$lib/components/common/Alert.svelte';
 	import Saturday from '$lib/components/tables/Saturday.svelte';
 	import Sunday from '$lib/components/tables/Sunday.svelte';
-	import Table from '$lib/components/tables/Table.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -17,18 +16,20 @@
 {/if}
 <h2 class="mt-0">Luzerner Rollenspieltage 2023</h2>
 
-<p>
+<p class="mt-3">
 	Es folgt das persönliche Programm für{' '}
 	<strong>{renderNamesList([data.program.people.main, ...data.program.people.group])}</strong>.
 </p>
 
-<Alert>
-	{single ? 'Kommst du' : 'Kommt ihr'} verspätet oder{' '}
-	{single ? 'kannst du' : 'könnt ihr'} gar nicht teilnehmen (Krankheit, Stau etc.), sendet uns doch bitte
-	eine Nachricht{' '}
-	<a href="https://rollenspieltage.ch/kontakt/"> per Kontaktformular </a>
-	.
-</Alert>
+<div class="mb-5">
+	<Alert>
+		{single ? 'Kommst du' : 'Kommt ihr'} verspätet oder{' '}
+		{single ? 'kannst du' : 'könnt ihr'} gar nicht teilnehmen (Krankheit, Stau etc.), sendet uns doch
+		bitte eine Nachricht{' '}
+		<a href="https://rollenspieltage.ch/kontakt/"> per Kontaktformular </a>
+		.
+	</Alert>
+</div>
 
 <h4 class="mt-3">Samstag, 26. August 2023</h4>
 
@@ -46,7 +47,7 @@
 	<Sunday sundayData={data.program.sonntag} />
 {/if}
 
-<p>Wir freuen uns auf {single ? 'dich' : 'euch'}.</p>
+<p class="mt-5">Wir freuen uns auf {single ? 'dich' : 'euch'}.</p>
 <p>
 	Lieben Gruss
 	<br />
@@ -62,5 +63,13 @@
 
 	.mt-3 {
 		margin-block-start: 1.5rem;
+	}
+
+	.mt-5 {
+		margin-block-start: 3rem;
+	}
+
+	.mb-5 {
+		margin-block-end: 3rem;
 	}
 </style>

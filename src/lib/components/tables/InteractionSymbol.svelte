@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { InteractionType } from '$lib/components/tables/interactions';
+	type InteractionType = 'NONE' | 'DELETE' | 'PRE_CHECKED' | 'CHECKED';
 
 	export let type: InteractionType = 'NONE';
 </script>

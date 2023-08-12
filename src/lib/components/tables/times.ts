@@ -1,5 +1,5 @@
 import { toRange, type Range } from "$lib/shared/rangeUtil";
-import type { Day } from "$lib/shared/schema/enums";
+
 
 type DayConfig = {
     start: number,
@@ -57,7 +57,7 @@ const constructDayInfos = (day: DayConfig) => {
     }
 }
 
-export const getDayInfos = (day: Day) => {
+export const getDayInfos = (day: any) => {
     return constructDayInfos(day === "SATURDAY" ? saturday : sunday);
 }
 
@@ -69,7 +69,7 @@ export const labelMap: LabelMap = {
     DINNER: "Nachtessen",
 }
 
-export function getFieldType(day: Day, field: number): EntryType | "OUT_OF_BOUNDS" {
+export function getFieldType(day: any, field: number): EntryType | "OUT_OF_BOUNDS" {
     const config = day === "SATURDAY" ? saturday : sunday;
     if (field < config.start || field >= config.end) {
         return "OUT_OF_BOUNDS";
@@ -96,7 +96,7 @@ type FieldBlock = {
     type: "LUNCH" | "DINNER" | "GAME",
 }
 
-export function getFieldBlock(day: Day, field: number): FieldBlock {
+export function getFieldBlock(day: any, field: number): FieldBlock {
     const affectedFields: number[] = [field];
     const currentType = getFieldType(day, field);
 

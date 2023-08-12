@@ -10,7 +10,7 @@
 
 <h5 style="margin-top: .5rem; margin-bottom: 0">Samstag, 26. August 2023</h5>
 
-<em> Anwesend: </em>
+<em>Anwesend: </em>
 
 <div class="table-container">
 	<table style="min-width: 100%;">

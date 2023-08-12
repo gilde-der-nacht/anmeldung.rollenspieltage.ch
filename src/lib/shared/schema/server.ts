@@ -40,9 +40,9 @@ const dinnerSchema = z.object({
 	type: z.enum(["DINNER"]),
 })
 
-const hourSchema = z.nullable(gamingSchema.or(masteringSchema).or(nothingSchema).or(welcomeSchema).or(helpingSchema).or(lunchSchema).or(dinnerSchema))
+export const hourSchema = z.nullable(gamingSchema.or(masteringSchema).or(nothingSchema).or(welcomeSchema).or(helpingSchema).or(lunchSchema).or(dinnerSchema))
 
-const daySchemaSunday = z.object({
+export const daySchemaSunday = z.object({
 	10: hourSchema,
 	12: hourSchema,
 	13: hourSchema,
@@ -50,11 +50,13 @@ const daySchemaSunday = z.object({
 	17: hourSchema,
 });
 
-const daySchemaSaturday = daySchemaSunday.merge(z.object({
+export const daySchemaSaturday = daySchemaSunday.merge(z.object({
 	18: hourSchema,
 	20: hourSchema,
 	22: hourSchema,
 }));
+
+export const daySchemaGeneral = z.map(z.number(), hourSchema);
 
 export const serverDataSchema = z.object({
 	id: z.string().uuid(),

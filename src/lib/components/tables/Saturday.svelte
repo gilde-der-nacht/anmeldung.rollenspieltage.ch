@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { z } from 'zod';
+	import { convertToTableView } from '$lib/client/utils';
+	import type { DayProgramWebData } from '$lib/shared/schema/web.types';
 	import Table from './Table.svelte';
-	import { prepareForView, type TableView } from './util';
-	import { toRange } from '$lib/shared/rangeUtil';
 
-	export let saturdayData: z.infer<typeof daySchemaSaturday>;
-	const data: TableView[] = prepareForView(toRange(10, 24), saturdayData);
+	export let data: DayProgramWebData;
+	export let name: string;
+	const tableData = convertToTableView(data, 'sa', name);
 </script>
 
-<Table {data} />
+<Table data={tableData} />

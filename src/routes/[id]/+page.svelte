@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { renderNamesList } from '$lib/client/utils';
 	import Alert from '$lib/components/common/Alert.svelte';
+	import Saturday from '$lib/components/tables/Saturday.svelte';
+	import Sunday from '$lib/components/tables/Sunday.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -32,23 +34,21 @@
 	</Alert>
 </div>
 
-<pre><code>{JSON.stringify(data.webData.program, null, 2)}</code></pre>
-
 <h4 class="mt-3">Samstag, 26. August 2023</h4>
 
-<!-- {#if data.program.samstag === null}
+{#if data.webData.program.sa === null}
 	<Alert>Samstag wurde nicht ausgewählt.</Alert>
 {:else}
-	<Saturday saturdayData={data.program.samstag} />
-{/if} -->
+	<Saturday data={data.webData.program.sa} name={data.webData.name} />
+{/if}
 
 <h4 class="mt-3">Sonntag, 27. August 2023</h4>
 
-<!-- {#if data.program.sonntag === null}
+{#if data.webData.program.so === null}
 	<Alert>Sonntag wurde nicht ausgewählt.</Alert>
 {:else}
-	<Sunday sundayData={data.program.sonntag} />
-{/if} -->
+	<Sunday data={data.webData.program.so} name={data.webData.name} />
+{/if}
 
 <p class="mt-5">Wir freuen uns auf {single ? 'dich' : 'euch'}.</p>
 <p>

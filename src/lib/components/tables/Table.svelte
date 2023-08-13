@@ -1,11 +1,9 @@
 <script lang="ts">
-	import type { daySchemaGeneral } from '$lib/shared/schema/server.types';
-	import type { z } from 'zod';
+	import type { TableData } from '$lib/shared/schema/table.types';
 	import InteractionSymbol from './InteractionSymbol.svelte';
-	import type { TableView } from './util';
 
-	export let data: TableView[];
-	const numberOfRows = data.length;
+	export let data: TableData;
+	const numberOfRows = Object.entries(data).length;
 </script>
 
 <div class="table-container">
@@ -19,16 +17,54 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each Array.from(data) as block, index}
-				{@const available = block.type !== 'NOTHING'}
-				<tr class={entry.type.toLowerCase() + (available ? ' checked' : '')}>
-					<td class={available ? ' checked' : ''}>
-						{#if available}
+			{#each Object.entries(data) as block, index}
+				{@const [hour, entry] = block}
+				{@const type = entry.label.type}
+				<tr class:food-time={entry.isFoodTime} class:checked={entry.isParticipating}>
+					<td class:checked={entry.isParticipating}>
+						{#if entry.isParticipating}
 							<InteractionSymbol type="CHECKED" />
 						{/if}
 					</td>
 					<td>{hour} Uhr</td>
-					<td>{entry.type}</td>
+
+					{#if type === 'EMPTY'}
+						<td>
+							{#if hour === '12'}
+								Mittagessen
+							{:else if hour === '19'}
+								Nachtessen
+							{/if}
+						</td>
+					{:else if type === 'SIMPLE'}
+						<td rowspan={entry.rowspan}>
+							<em>
+								{entry.label.simple}
+							</em>
+						</td>
+					{:else if type === 'COMPLEX'}
+						<td rowspan={entry.rowspan}>
+							<p>
+								<strong>{entry.label.title}</strong>
+								{#if entry.label.system !== null}
+									<em>({entry.label.system})</em>
+								{/if}
+							</p>
+							<p>
+								<small>
+									Spielleiter:in &mdash; {entry.label.game_master}
+								</small>
+							</p>
+							<p>
+								<small>
+									Spieler:innen &mdash; {entry.label.players}
+								</small>
+							</p>
+						</td>
+					{:else if type === 'DOUBLE'}
+						<td>TODO</td>
+					{/if}
+
 					{#if index === 0}
 						<td rowspan={numberOfRows}>Flohmarkt offen</td>
 					{/if}
@@ -39,8 +75,7 @@
 </div>
 
 <style>
-	.lunch,
-	.dinner {
+	.food-time {
 		background-color: var(--clr-11);
 		color: var(--clr-2);
 		--row-bg: var(--clr-11);
@@ -55,6 +90,6 @@
 	}
 
 	tr.checked {
-		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 35%);
+		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 10%);
 	}
 </style>

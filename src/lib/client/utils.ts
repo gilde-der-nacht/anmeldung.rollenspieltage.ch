@@ -114,6 +114,9 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     if (!nextHourEntry.kiosk) {
                         break;
                     }
+                    if (isItFoodTime(nextHour)) {
+                        break;
+                    }
                     rowspan++;
                     nextHour++;
                 }
@@ -165,6 +168,9 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                         break;
                     }
                     if (!nextHourEntry.ok) {
+                        break;
+                    }
+                    if (isItFoodTime(nextHour)) {
                         break;
                     }
                     rowspan++;
@@ -220,6 +226,9 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     if (!nextHourEntry.kueche) {
                         break;
                     }
+                    if (isItFoodTime(nextHour)) {
+                        break;
+                    }
                     rowspan++;
                     nextHour++;
                 }
@@ -251,6 +260,9 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                             break;
                         }
                         if (nextHourEntry.player.id !== entry.player.id) {
+                            break;
+                        }
+                        if (isItFoodTime(nextHour)) {
                             break;
                         }
                         rowspan++;
@@ -295,6 +307,9 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                         break;
                     }
                     if (nextHourEntry.player.id !== entry.player.id) {
+                        break;
+                    }
+                    if (isItFoodTime(nextHour)) {
                         break;
                     }
                     rowspan++;

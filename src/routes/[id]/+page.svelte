@@ -1,17 +1,11 @@
 <script lang="ts">
 	import { renderNamesList } from '$lib/client/utils';
 	import Alert from '$lib/components/common/Alert.svelte';
-	import Saturday from '$lib/components/tables/Saturday.svelte';
-	import Sunday from '$lib/components/tables/Sunday.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	const people = Array.from(
-		new Set([
-			data.personalData.name,
-			...data.personalData.companions_sa,
-			...data.personalData.companions_so,
-		]),
+		new Set([data.webData.name, ...data.webData.companions_sa, ...data.webData.companions_so]),
 	);
 	const single = people.length === 1;
 </script>
@@ -38,7 +32,7 @@
 	</Alert>
 </div>
 
-<pre><code>{JSON.stringify(data.personalData, null, 2)}</code></pre>
+<pre><code>{JSON.stringify(data.webData.program, null, 2)}</code></pre>
 
 <h4 class="mt-3">Samstag, 26. August 2023</h4>
 

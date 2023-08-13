@@ -3,6 +3,7 @@
 	import Alert from '$lib/components/common/Alert.svelte';
 	import Saturday from '$lib/components/tables/Saturday.svelte';
 	import Sunday from '$lib/components/tables/Sunday.svelte';
+	import { toRange } from '$lib/shared/rangeUtil';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -39,7 +40,11 @@
 {#if data.webData.program.sa === null}
 	<Alert>Samstag wurde nicht ausgewählt.</Alert>
 {:else}
-	<Saturday data={data.webData.program.sa} name={data.webData.name} />
+	<Saturday
+		data={data.webData.program.sa}
+		name={data.webData.name}
+		range={toRange(data.timeData.saturday_starttime ?? 10, data.timeData.saturday_endtime ?? 24)}
+	/>
 {/if}
 
 <h4 class="mt-3">Sonntag, 27. August 2023</h4>
@@ -47,7 +52,11 @@
 {#if data.webData.program.so === null}
 	<Alert>Sonntag wurde nicht ausgewählt.</Alert>
 {:else}
-	<Sunday data={data.webData.program.so} name={data.webData.name} />
+	<Sunday
+		data={data.webData.program.so}
+		name={data.webData.name}
+		range={toRange(data.timeData.sunday_starttime ?? 10, data.timeData.sunday_endtime ?? 24)}
+	/>
 {/if}
 
 <p class="mt-5">Wir freuen uns auf {single ? 'dich' : 'euch'}.</p>

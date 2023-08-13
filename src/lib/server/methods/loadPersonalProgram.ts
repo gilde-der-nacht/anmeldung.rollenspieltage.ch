@@ -29,8 +29,6 @@ export async function loadPersonalProgram(id: string): Promise<SuccessfullLoad |
     // const parsed = responseSchema.safeParse(json);
 
     // if (!parsed.success) {
-    // console.log(parsed.error);
-
     // return { success: false, status: "0142-" + res.status };
     // }
 

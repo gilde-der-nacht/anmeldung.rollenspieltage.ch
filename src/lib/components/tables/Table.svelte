@@ -43,7 +43,7 @@
 							</em>
 						</td>
 					{:else if type === 'COMPLEX'}
-						<td rowspan={entry.rowspan}>
+						<td rowspan={entry.rowspan} id={entry.label.id}>
 							<p>
 								<strong>{entry.label.title}</strong>
 								{#if entry.label.system !== null}
@@ -79,10 +79,6 @@
 		background-color: var(--clr-11);
 		color: var(--clr-2);
 		--row-bg: var(--clr-11);
-	}
-
-	.success {
-		color: var(--clr-success-11);
 	}
 
 	td.checked {

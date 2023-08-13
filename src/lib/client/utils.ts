@@ -1,4 +1,4 @@
-import { isWithinRangeInclusive, toRange } from "$lib/shared/rangeUtil";
+import { isWithinRangeInclusive, toRange, type Range } from "$lib/shared/rangeUtil";
 import type { EntryData } from "$lib/shared/schema/server.types";
 import type { TableData } from "$lib/shared/schema/table.types";
 import type { DayProgramWebData } from "$lib/shared/schema/web.types";
@@ -22,11 +22,7 @@ function isItFoodTime(hour: number): boolean {
     return hour === 12 || hour === 19;
 }
 
-export function convertToTableView(dayData: DayProgramWebData, day: "sa" | "so", name: string): TableData {
-    const hours = Object.keys(dayData).map(h => Number(h)).sort();
-    const { from, to } = z.object({ from: z.number(), to: z.number() }).parse({ from: hours.at(0), to: hours.at(-1) });
-
-    const personRange = toRange(from, to);
+export function convertToTableView(dayData: DayProgramWebData, personRange: Range, day: "sa" | "so", name: string): TableData {
     const dayRange = toRange(TIMES[day].start, TIMES[day].end);
 
     const tableData: TableData = {};
@@ -244,10 +240,26 @@ export function convertToTableView(dayData: DayProgramWebData, day: "sa" | "so",
         if (entry.player !== null) {
             if (programIds.has(entry.player.id)) {
                 if (isItFoodTime(hour - 1)) {
+                    let rowspan = 1;
+                    let nextHour = hour + 1;
+                    while (nextHour < dayRange.end) {
+                        const nextHourEntry = dayData[nextHour];
+                        if (nextHourEntry === undefined) {
+                            break;
+                        }
+                        if (nextHourEntry.player === null) {
+                            break;
+                        }
+                        if (nextHourEntry.player.id !== entry.player.id) {
+                            break;
+                        }
+                        rowspan++;
+                        nextHour++;
+                    }
                     tableData[hour] = {
                         isFoodTime,
                         isParticipating,
-                        rowspan: 2,
+                        rowspan,
                         label: {
                             type: "COMPLEX",
                             id: entry.player.id,
@@ -310,10 +322,26 @@ export function convertToTableView(dayData: DayProgramWebData, day: "sa" | "so",
         if (entry.gamemaster !== null) {
             if (programIds.has(entry.gamemaster.id)) {
                 if (isItFoodTime(hour - 1)) {
+                    let rowspan = 1;
+                    let nextHour = hour + 1;
+                    while (nextHour < dayRange.end) {
+                        const nextHourEntry = dayData[nextHour];
+                        if (nextHourEntry === undefined) {
+                            break;
+                        }
+                        if (nextHourEntry.gamemaster === null) {
+                            break;
+                        }
+                        if (nextHourEntry.gamemaster.id !== entry.gamemaster.id) {
+                            break;
+                        }
+                        rowspan++;
+                        nextHour++;
+                    }
                     tableData[hour] = {
                         isFoodTime,
                         isParticipating,
-                        rowspan: 2,
+                        rowspan,
                         label: {
                             type: "COMPLEX",
                             id: entry.gamemaster.id,

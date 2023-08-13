@@ -6,7 +6,14 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const single = data.program.people.group.length === 0;
+	const people = Array.from(
+		new Set([
+			data.personalData.name,
+			...data.personalData.companions_sa,
+			...data.personalData.companions_so,
+		]),
+	);
+	const single = people.length === 1;
 </script>
 
 {#if single}
@@ -18,7 +25,7 @@
 
 <p class="mt-3">
 	Es folgt das persönliche Programm für{' '}
-	<strong>{renderNamesList([data.program.people.main, ...data.program.people.group])}</strong>.
+	<strong>{renderNamesList(people)}</strong>.
 </p>
 
 <div class="mb-5">
@@ -31,21 +38,23 @@
 	</Alert>
 </div>
 
+<pre><code>{JSON.stringify(data.personalData, null, 2)}</code></pre>
+
 <h4 class="mt-3">Samstag, 26. August 2023</h4>
 
-{#if data.program.samstag === null}
+<!-- {#if data.program.samstag === null}
 	<Alert>Samstag wurde nicht ausgewählt.</Alert>
 {:else}
 	<Saturday saturdayData={data.program.samstag} />
-{/if}
+{/if} -->
 
 <h4 class="mt-3">Sonntag, 27. August 2023</h4>
 
-{#if data.program.sonntag === null}
+<!-- {#if data.program.sonntag === null}
 	<Alert>Sonntag wurde nicht ausgewählt.</Alert>
 {:else}
 	<Sunday sundayData={data.program.sonntag} />
-{/if}
+{/if} -->
 
 <p class="mt-5">Wir freuen uns auf {single ? 'dich' : 'euch'}.</p>
 <p>

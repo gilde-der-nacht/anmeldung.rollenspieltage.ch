@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { daySchemaGeneral } from '$lib/shared/schema/server';
+	import type { daySchemaGeneral } from '$lib/shared/schema/server.types';
 	import type { z } from 'zod';
 	import InteractionSymbol from './InteractionSymbol.svelte';
 	import type { TableView } from './util';

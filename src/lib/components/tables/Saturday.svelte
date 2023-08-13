@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { daySchemaGeneral, daySchemaSaturday, hourSchema } from '$lib/shared/schema/server';
 	import type { z } from 'zod';
 	import Table from './Table.svelte';
 	import { prepareForView, type TableView } from './util';

@@ -1,4 +1,4 @@
-import { isWithinRangeInclusive, toRange, type Range } from "$lib/shared/rangeUtil";
+import { isWithinRange, toRange, type Range } from "$lib/shared/rangeUtil";
 import type { EntryData } from "$lib/shared/schema/server.types";
 import type { TableData } from "$lib/shared/schema/table.types";
 import type { DayProgramWebData } from "$lib/shared/schema/web.types";
@@ -31,7 +31,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
 
     dayRange.range.forEach(hour => {
         const isFoodTime = isItFoodTime(hour);
-        const isParticipating = isWithinRangeInclusive(personRange, hour);
+        const isParticipating = isWithinRange(personRange, hour);
 
         const entry = dayData[hour];
         if (entry === undefined) {

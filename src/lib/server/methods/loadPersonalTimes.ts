@@ -25,7 +25,7 @@ type FailedLoad = {
 };
 
 export async function loadPersonalTimes(id: string): Promise<SuccessfullLoad | FailedLoad> {
-    if (true || id.length !== 36) {
+    if (id.length !== 36) {
         return { success: true, timeData: { saturday_starttime: 10, saturday_endtime: 24, sunday_starttime: 10, sunday_endtime: 19 } }
     }
 

@@ -1,4 +1,4 @@
-import type { PersonalData, ServerData } from "$lib/shared/schema/server";
+import type { PersonalData, ServerData } from "$lib/shared/schema/server.types";
 
 export function generateSpecialCases(data: ServerData): Map<string, string> {
     const specialCases = new Map<string, string>();

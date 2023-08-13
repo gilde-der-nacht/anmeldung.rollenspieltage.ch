@@ -2,7 +2,6 @@ import { isWithinRangeInclusive, toRange, type Range } from "$lib/shared/rangeUt
 import type { EntryData } from "$lib/shared/schema/server.types";
 import type { TableData } from "$lib/shared/schema/table.types";
 import type { DayProgramWebData } from "$lib/shared/schema/web.types";
-import { z } from "zod";
 
 export const renderNamesList = (names: string[]): string =>
     names.join(", ").replace(/, ([^,]*)$/, " und $1");

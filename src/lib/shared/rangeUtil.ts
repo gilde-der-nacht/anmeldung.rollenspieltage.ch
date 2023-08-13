@@ -4,6 +4,10 @@ export type Range = {
     end: number;
 }
 
+export function isWithinRangeInclusive(range: Range, target: number): boolean {
+    return target >= range.start && target <= range.end;
+}
+
 export const toRange = (from: number, to: number): Range => {
     const _toRange = (from: number, to: number): number[] => {
         return Array(to - from).fill(0).map((_, i) => i + from);

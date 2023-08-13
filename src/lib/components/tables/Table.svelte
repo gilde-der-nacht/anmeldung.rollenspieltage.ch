@@ -66,7 +66,15 @@
 					{/if}
 
 					{#if index === 0}
-						<td rowspan={numberOfRows}>Flohmarkt offen</td>
+						<td rowspan={numberOfRows} style="max-inline-size: 20ch;">
+							<p>
+								<strong>Flohmarkt offen</strong>
+							</p>
+							<small>
+								Neben den Rollenspielrunden wird es auch die Möglichkeit geben Spiele und
+								Spielzubehör auf dem Flohmarkt zu kaufen und zu verkaufen.
+							</small>
+						</td>
 					{/if}
 				</tr>
 			{/each}

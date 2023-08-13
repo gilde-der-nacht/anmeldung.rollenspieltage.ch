@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { TableData } from '$lib/shared/schema/table.types';
+	import Button from '../form/Button.svelte';
 	import InteractionSymbol from './InteractionSymbol.svelte';
 
 	export let data: TableData;
@@ -10,7 +11,7 @@
 	<table style="min-width: 100%;">
 		<thead>
 			<tr>
-				<th />
+				<th style="min-inline-size: 3rem;" />
 				<th>Startzeit</th>
 				<th>Programm</th>
 				<th>Bemerkung</th>
@@ -61,12 +62,33 @@
 								</small>
 							</p>
 						</td>
+					{:else if type === 'AD'}
+						<td rowspan={entry.rowspan}>
+							<p><strong>Blood on the Clocktower</strong></p>
+							<p>
+								<small>
+									"Blood on the Clocktower" ist ein Spiel voller Intrigen und Rätsel, Lügen und
+									Logik, Deduktion und Täuschung. Blood on the Clocktower ist eine einzigartige
+									Spielerfahrung, bei der jeder Spieler einen individuellen guten oder bösen
+									Charakter erhält.
+								</small>
+							</p>
+							<p class="my-3">
+								<small>
+									"Blood on the Clocktower" ist <em>kein</em> klassisches Rollenspiel. Teilnehmeranzahl
+									ist auf 12 Spieler:innen begrenzt. Sichere dir einen Platz:
+								</small>
+							</p>
+							<a href="https://rollenspieltage.ch/kontakt/" target="_blank" style="border: 0">
+								<Button kind="success" type="button">zum Kontaktformular</Button>
+							</a>
+						</td>
 					{:else if type === 'DOUBLE'}
 						<td>TODO</td>
 					{/if}
 
 					{#if index === 0}
-						<td rowspan={numberOfRows} style="max-inline-size: 10ch;">
+						<td rowspan={numberOfRows} style="max-inline-size: 15ch;">
 							<p>
 								<strong>Flohmarkt offen</strong>
 							</p>
@@ -95,5 +117,8 @@
 
 	tr.checked {
 		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 10%);
+	}
+	.my-3 {
+		margin-block: 1rem;
 	}
 </style>

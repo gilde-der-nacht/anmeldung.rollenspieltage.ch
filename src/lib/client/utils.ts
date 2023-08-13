@@ -417,6 +417,44 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
 
     })
 
+    if (day === "sa") {
+        if (
+            tableData[20]?.label.type === "EMPTY"
+            && tableData[21]?.label.type === "EMPTY"
+            && tableData[22]?.label.type === "EMPTY"
+            && tableData[23]?.label.type === "EMPTY"
+        ) {
+            tableData[20] = {
+                ...tableData[20],
+                rowspan: 4,
+                label: {
+                    type: "AD",
+                }
+            }
+            tableData[21] = {
+                ...tableData[21],
+                rowspan: 0,
+                label: {
+                    type: "NONE"
+                }
+            }
+            tableData[22] = {
+                ...tableData[22],
+                rowspan: 0,
+                label: {
+                    type: "NONE"
+                }
+            }
+            tableData[23] = {
+                ...tableData[23],
+                rowspan: 0,
+                label: {
+                    type: "NONE"
+                }
+            }
+        }
+    }
+
 
     return tableData;
 }

@@ -31,5 +31,7 @@ export type TableData = Record<string, {
             players: string;
             id: string;
         }
+    } | {
+        type: "AD"
     };
 }>;

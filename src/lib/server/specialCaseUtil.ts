@@ -14,7 +14,7 @@ export function generateSpecialCases(data: ServerData): Map<string, string> {
     return specialCases;
 }
 
-export function applySpeicalCases(data: PersonalData, specialCases: Map<string, string>): PersonalData {
+export function applySpecialCases(data: PersonalData, specialCases: Map<string, string>): PersonalData {
     return {
         ...data, timetable: [...data.timetable.map((tt) => {
             const player = tt.ts.entry.player;

@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { loadPersonalProgram } from '$lib/server/methods/loadPersonalProgram';
-import { convertToWeb } from '$lib/server/methods/converter';
+import { convertToWeb } from '$lib/server/converter';
 import { loadPersonalTimes } from '$lib/server/methods/loadPersonalTimes';
 
 export const load = (async ({ params }) => {

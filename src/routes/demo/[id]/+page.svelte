@@ -38,7 +38,7 @@
 <h4 class="mt-3">Samstag, 26. August 2023</h4>
 
 {#if data.webData.program.sa === null}
-	<Alert>Samstag wurde nicht ausgewählt.</Alert>
+	<Alert>Samstag wurde nicht ausgewählt oder es konnte kein Programm erstellt werden.</Alert>
 {:else}
 	<Saturday
 		data={data.webData.program.sa}
@@ -50,7 +50,7 @@
 <h4 class="mt-3">Sonntag, 27. August 2023</h4>
 
 {#if data.webData.program.so === null}
-	<Alert>Sonntag wurde nicht ausgewählt.</Alert>
+	<Alert>Sonntag wurde nicht ausgewählt oder es konnte kein Programm erstellt werden.</Alert>
 {:else}
 	<Sunday
 		data={data.webData.program.so}

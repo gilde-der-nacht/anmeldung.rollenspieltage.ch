@@ -67,7 +67,11 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: false,
                     label: {
                         type: "DOUBLE",
-                        first: { title: "Helfen", name },
+                        first: {
+                            title: "Helfen an der Kioskkasse",
+                            description: "(bitte beim Willkommenstisch melden)",
+                            name
+                        },
                         second: {
                             id: entry.player.id,
                             game_master: entry.player.game_master,

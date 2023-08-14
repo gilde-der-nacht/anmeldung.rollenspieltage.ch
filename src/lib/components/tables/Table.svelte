@@ -21,7 +21,11 @@
 			{#each Object.entries(data) as block, index}
 				{@const [hour, entry] = block}
 				{@const type = entry.label.type}
-				<tr class:food-time={entry.isFoodTime} class:checked={entry.isParticipating}>
+				<tr
+					class:food-time={entry.isFoodTime}
+					class:checked={entry.isParticipating}
+					class:no-border={!entry.border}
+				>
 					<td class:checked={entry.isParticipating}>
 						{#if entry.isParticipating}
 							<InteractionSymbol type="CHECKED" />
@@ -120,5 +124,13 @@
 	}
 	.my-3 {
 		margin-block: 1rem;
+	}
+	.no-border td:first-child,
+	.no-border td:nth-child(2) {
+		border-bottom: 0;
+	}
+
+	tr:last-child {
+		border-bottom: 1px solid var(--clr-6);
 	}
 </style>

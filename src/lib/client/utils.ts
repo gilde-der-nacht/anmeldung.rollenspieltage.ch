@@ -34,11 +34,13 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
         const isParticipating = isWithinRange(personRange, hour);
 
         const entry = dayData[hour];
+        const next = dayData[hour + 1];
         if (entry === undefined) {
             tableData[hour] = {
                 isFoodTime,
                 isParticipating,
                 rowspan: 1,
+                border: true,
                 label: { type: "EMPTY" }
             }
             last = null;
@@ -51,6 +53,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 0,
+                    border: next === undefined ? true : next.player?.id === entry.player.id ? false : true,
                     label: { type: "NONE" }
                 }
                 last = entry;
@@ -60,6 +63,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 2,
+                    border: false,
                     label: {
                         type: "DOUBLE",
                         first: { title: "Helfen", name },
@@ -83,6 +87,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 1,
+                    border: true,
                     label: {
                         type: "SIMPLE",
                         simple: "Helfen"
@@ -96,6 +101,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 0,
+                    border: next === undefined ? true : next.kiosk ? false : true,
                     label: {
                         type: "NONE"
                     }
@@ -123,6 +129,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan,
+                    border: rowspan === 1 ? true : false,
                     label: {
                         type: "SIMPLE",
                         simple: "Helfen"
@@ -139,6 +146,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 1,
+                    border: true,
                     label: {
                         type: "SIMPLE",
                         simple: "OK/Willkommenstisch"
@@ -152,6 +160,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 0,
+                    border: next === undefined ? true : next.ok ? false : true,
                     label: {
                         type: "NONE"
                     }
@@ -179,6 +188,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan,
+                    border: rowspan === 1 ? true : false,
                     label: {
                         type: "SIMPLE",
                         simple: "OK/Willkommenstisch"
@@ -195,6 +205,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 1,
+                    border: true,
                     label: {
                         type: "SIMPLE",
                         simple: "Küche"
@@ -208,6 +219,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan: 0,
+                    border: next === undefined ? true : next.kueche ? false : true,
                     label: {
                         type: "NONE"
                     }
@@ -235,6 +247,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan,
+                    border: rowspan === 1 ? true : false,
                     label: {
                         type: "SIMPLE",
                         simple: "Küche"
@@ -271,6 +284,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                         isFoodTime,
                         isParticipating,
                         rowspan,
+                        border: rowspan === 1 ? true : false,
                         label: {
                             type: "COMPLEX",
                             id: entry.player.id,
@@ -287,6 +301,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                         isFoodTime,
                         isParticipating,
                         rowspan: 0,
+                        border: next === undefined ? true : next.player?.id === entry.player.id ? false : true,
                         label: {
                             type: "NONE"
                         }
@@ -318,6 +333,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan,
+                    border: rowspan === 1 ? true : false,
                     label: {
                         type: "COMPLEX",
                         id: entry.player.id,
@@ -356,6 +372,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                         isFoodTime,
                         isParticipating,
                         rowspan,
+                        border: rowspan === 1 ? true : false,
                         label: {
                             type: "COMPLEX",
                             id: entry.gamemaster.id,
@@ -372,6 +389,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                         isFoodTime,
                         isParticipating,
                         rowspan: 0,
+                        border: next === undefined ? true : next.gamemaster?.id === entry.gamemaster.id ? false : true,
                         label: {
                             type: "NONE"
                         }
@@ -400,6 +418,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     isFoodTime,
                     isParticipating,
                     rowspan,
+                    border: rowspan === 1 ? true : false,
                     label: {
                         type: "COMPLEX",
                         id: entry.gamemaster.id,
@@ -427,6 +446,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
             tableData[20] = {
                 ...tableData[20],
                 rowspan: 4,
+                border: false,
                 label: {
                     type: "AD",
                 }
@@ -434,6 +454,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
             tableData[21] = {
                 ...tableData[21],
                 rowspan: 0,
+                border: false,
                 label: {
                     type: "NONE"
                 }
@@ -441,6 +462,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
             tableData[22] = {
                 ...tableData[22],
                 rowspan: 0,
+                border: false,
                 label: {
                     type: "NONE"
                 }
@@ -448,6 +470,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
             tableData[23] = {
                 ...tableData[23],
                 rowspan: 0,
+                border: true,
                 label: {
                     type: "NONE"
                 }

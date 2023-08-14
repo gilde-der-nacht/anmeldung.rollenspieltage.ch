@@ -4,6 +4,7 @@ export type TableData = Record<string, {
     isParticipating: boolean;
     isFoodTime: boolean;
     rowspan: number;
+    border: boolean;
     label: {
         type: "EMPTY";
     } | {

@@ -46,8 +46,15 @@
 					{:else if type === 'SIMPLE'}
 						<td rowspan={entry.rowspan} colspan="2">
 							<em>
-								{entry.label.simple.trim()}
+								{entry.label.title.trim()}
 							</em>
+							{#if entry.label.description !== undefined}
+								<p>
+									<small>
+										{entry.label.description.trim()}
+									</small>
+								</p>
+							{/if}
 						</td>
 					{:else if type === 'COMPLEX'}
 						<td rowspan={entry.rowspan} id={entry.label.id} colspan="2">
@@ -95,6 +102,13 @@
 							<em>
 								{entry.label.first.title.trim()}
 							</em>
+							{#if entry.label.first.description !== undefined}
+								<p>
+									<small>
+										{entry.label.first.description.trim()}
+									</small>
+								</p>
+							{/if}
 							<p><small>{entry.label.first.name.trim()}</small></p>
 						</td>
 						<td rowspan={entry.rowspan} id={entry.label.second.id} class="double">
@@ -118,12 +132,16 @@
 					{/if}
 
 					{#if index === 0}
-						<td rowspan={numberOfRows} style="max-inline-size: 10ch;" class="fleemarket">
+						<td
+							rowspan={numberOfRows}
+							style="min-inline-size: 9ch; max-inline-size: 12ch;"
+							class="fleemarket"
+						>
 							<p>
 								<strong>Flohmarkt offen</strong>
 							</p>
 							<small>
-								Neben den Rollenspielrunden wird es auch die Möglichkeit geben Spiele und
+								Neben den Rollen&shy;spiel&shy;runden wird es auch die Möglichkeit geben Spiele und
 								Spielzubehör auf dem Flohmarkt zu kaufen und zu verkaufen.
 							</small>
 						</td>

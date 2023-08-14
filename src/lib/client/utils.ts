@@ -91,7 +91,8 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: true,
                     label: {
                         type: "SIMPLE",
-                        simple: "Helfen"
+                        title: "Helfen an der Kioskkasse",
+                        description: "(bitte beim Willkommenstisch melden)"
                     }
                 }
                 last = null;
@@ -133,7 +134,8 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: rowspan === 1 ? true : false,
                     label: {
                         type: "SIMPLE",
-                        simple: "Helfen"
+                        title: "Helfen an der Kioskkasse",
+                        description: "(bitte beim Willkommenstisch melden)"
                     }
                 }
                 last = entry;
@@ -150,7 +152,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: true,
                     label: {
                         type: "SIMPLE",
-                        simple: "OK/Willkommenstisch"
+                        title: "OK/Willkommenstisch"
                     }
                 }
                 last = null;
@@ -192,7 +194,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: rowspan === 1 ? true : false,
                     label: {
                         type: "SIMPLE",
-                        simple: "OK/Willkommenstisch"
+                        title: "OK/Willkommenstisch"
                     }
                 }
                 last = entry;
@@ -209,7 +211,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: true,
                     label: {
                         type: "SIMPLE",
-                        simple: "Küche"
+                        title: "Küche"
                     }
                 }
                 last = null;
@@ -251,7 +253,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                     border: rowspan === 1 ? true : false,
                     label: {
                         type: "SIMPLE",
-                        simple: "Küche"
+                        title: "Küche"
                     }
                 }
                 last = entry;

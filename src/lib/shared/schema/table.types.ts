@@ -11,7 +11,8 @@ export type TableData = Record<string, {
         type: "NONE";
     } | {
         type: "SIMPLE";
-        simple: string;
+        title: string;
+        description?: string;
     } | {
         type: "COMPLEX";
         title: string;
@@ -23,6 +24,7 @@ export type TableData = Record<string, {
         type: "DOUBLE";
         first: {
             title: string;
+            description?: string;
             name: string;
         };
         second: {

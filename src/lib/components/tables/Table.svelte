@@ -129,8 +129,10 @@
 	.no-border td:nth-child(2) {
 		border-bottom: 0;
 	}
-
 	tr:last-child {
 		border-bottom: 1px solid var(--clr-6);
+	}
+	tr:hover {
+		background-color: inherit !important;
 	}
 </style>

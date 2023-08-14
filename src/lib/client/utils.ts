@@ -13,7 +13,7 @@ const TIMES = {
     },
     so: {
         start: 10,
-        end: 19,
+        end: 17,
     }
 }
 

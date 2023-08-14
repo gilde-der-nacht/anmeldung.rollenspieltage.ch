@@ -47,7 +47,7 @@
 						<td rowspan={entry.rowspan} id={entry.label.id}>
 							<p>
 								<strong>{entry.label.title}</strong>
-								{#if entry.label.system !== null}
+								{#if entry.label.system !== null && entry.label.system !== entry.label.title}
 									<em>({entry.label.system})</em>
 								{/if}
 							</p>

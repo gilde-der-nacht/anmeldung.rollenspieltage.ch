@@ -13,7 +13,7 @@
 			<tr>
 				<th style="min-inline-size: 3rem;" />
 				<th>Startzeit</th>
-				<th>Programm</th>
+				<th colspan="2">Programm</th>
 				<th>Bemerkung</th>
 			</tr>
 		</thead>
@@ -21,20 +21,22 @@
 			{#each Object.entries(data) as block, index}
 				{@const [hour, entry] = block}
 				{@const type = entry.label.type}
+				{@const checked = entry.isParticipating && type !== 'AD' && type !== 'NONE_AD'}
 				<tr
 					class:food-time={entry.isFoodTime}
-					class:checked={entry.isParticipating}
+					class:checked
 					class:no-border={!entry.border}
+					class:nothing={type === 'EMPTY' || type === 'AD' || type === 'NONE_AD'}
 				>
-					<td class:checked={entry.isParticipating}>
-						{#if entry.isParticipating}
+					<td class:checked>
+						{#if checked}
 							<InteractionSymbol type="CHECKED" />
 						{/if}
 					</td>
 					<td>{hour} Uhr</td>
 
 					{#if type === 'EMPTY'}
-						<td>
+						<td colspan="2">
 							{#if hour === '12'}
 								Mittagessen
 							{:else if hour === '19'}
@@ -42,22 +44,22 @@
 							{/if}
 						</td>
 					{:else if type === 'SIMPLE'}
-						<td rowspan={entry.rowspan}>
+						<td rowspan={entry.rowspan} colspan="2">
 							<em>
-								{entry.label.simple}
+								{entry.label.simple.trim()}
 							</em>
 						</td>
 					{:else if type === 'COMPLEX'}
-						<td rowspan={entry.rowspan} id={entry.label.id}>
+						<td rowspan={entry.rowspan} id={entry.label.id} colspan="2">
 							<p>
-								<strong>{entry.label.title}</strong>
-								{#if entry.label.system !== null && entry.label.system !== entry.label.title}
-									<em>({entry.label.system})</em>
+								<strong>{entry.label.title.trim()}</strong>
+								{#if entry.label.system !== null && entry.label.system.trim() !== entry.label.title.trim()}
+									<em>({entry.label.system.trim()})</em>
 								{/if}
 							</p>
 							<p>
 								<small>
-									Spielleiter:in &mdash; {entry.label.game_master}
+									Spielleiter:in &mdash; {entry.label.game_master.trim()}
 								</small>
 							</p>
 							<p>
@@ -67,9 +69,10 @@
 							</p>
 						</td>
 					{:else if type === 'AD'}
-						<td rowspan={entry.rowspan}>
+						<td rowspan={entry.rowspan} colspan="2">
+							<small><em>Noch Plätze frei:</em></small>
 							<p><strong>Blood on the Clocktower</strong></p>
-							<p>
+							<p class="my-3">
 								<small>
 									"Blood on the Clocktower" ist ein Spiel voller Intrigen und Rätsel, Lügen und
 									Logik, Deduktion und Täuschung. Blood on the Clocktower ist eine einzigartige
@@ -88,11 +91,34 @@
 							</a>
 						</td>
 					{:else if type === 'DOUBLE'}
-						<td>TODO</td>
+						<td rowspan={entry.rowspan}>
+							<em>
+								{entry.label.first.title.trim()}
+							</em>
+							<p><small>{entry.label.first.name.trim()}</small></p>
+						</td>
+						<td rowspan={entry.rowspan} id={entry.label.second.id} class="double">
+							<p>
+								<strong>{entry.label.second.title.trim()}</strong>
+								{#if entry.label.second.system !== null && entry.label.second.system.trim() !== entry.label.second.title.trim()}
+									<em>({entry.label.second.system.trim()})</em>
+								{/if}
+							</p>
+							<p>
+								<small>
+									Spielleiter:in &mdash; {entry.label.second.game_master.trim()}
+								</small>
+							</p>
+							<p>
+								<small>
+									Spieler:innen &mdash; {entry.label.second.players}
+								</small>
+							</p>
+						</td>
 					{/if}
 
 					{#if index === 0}
-						<td rowspan={numberOfRows} style="max-inline-size: 15ch;">
+						<td rowspan={numberOfRows} style="max-inline-size: 15ch;" class="fleemarket">
 							<p>
 								<strong>Flohmarkt offen</strong>
 							</p>
@@ -132,7 +158,17 @@
 	tr:last-child {
 		border-bottom: 1px solid var(--clr-6);
 	}
-	tr:hover {
-		background-color: inherit !important;
+	tr.nothing:not(.food-time):hover {
+		background-color: var(--clr-2) !important;
+	}
+	.fleemarket {
+		background-color: var(--clr-11);
+		color: var(--clr-2);
+	}
+	.nothing:not(.food-time) {
+		background-color: var(--clr-2);
+	}
+	.double {
+		border-left: 3px dotted var(--clr-6);
 	}
 </style>

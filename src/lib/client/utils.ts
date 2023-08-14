@@ -4,7 +4,7 @@ import type { TableData } from "$lib/shared/schema/table.types";
 import type { DayProgramWebData } from "$lib/shared/schema/web.types";
 
 export const renderNamesList = (names: string[]): string =>
-    names.join(", ").replace(/, ([^,]*)$/, " und $1");
+    names.map(s => s.trim()).join(", ").replace(/, ([^,]*)$/, " und $1");
 
 const TIMES = {
     sa: {
@@ -59,6 +59,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                 last = entry;
                 return;
             } else {
+                programIds.add(entry.player.id);
                 tableData[hour] = {
                     isFoodTime,
                     isParticipating,
@@ -456,7 +457,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                 rowspan: 0,
                 border: false,
                 label: {
-                    type: "NONE"
+                    type: "NONE_AD"
                 }
             }
             tableData[22] = {
@@ -464,7 +465,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                 rowspan: 0,
                 border: false,
                 label: {
-                    type: "NONE"
+                    type: "NONE_AD"
                 }
             }
             tableData[23] = {
@@ -472,7 +473,7 @@ export function convertToTableView(dayData: DayProgramWebData, personRange: Rang
                 rowspan: 0,
                 border: true,
                 label: {
-                    type: "NONE"
+                    type: "NONE_AD"
                 }
             }
         }

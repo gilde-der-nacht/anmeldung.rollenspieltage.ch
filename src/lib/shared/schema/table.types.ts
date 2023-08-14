@@ -33,6 +33,6 @@ export type TableData = Record<string, {
             id: string;
         }
     } | {
-        type: "AD"
+        type: "AD" | "NONE_AD"
     };
 }>;

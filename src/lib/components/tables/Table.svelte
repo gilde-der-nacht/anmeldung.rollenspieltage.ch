@@ -118,7 +118,7 @@
 					{/if}
 
 					{#if index === 0}
-						<td rowspan={numberOfRows} style="max-inline-size: 15ch;" class="fleemarket">
+						<td rowspan={numberOfRows} style="max-inline-size: 10ch;" class="fleemarket">
 							<p>
 								<strong>Flohmarkt offen</strong>
 							</p>

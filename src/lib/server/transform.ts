@@ -16,6 +16,20 @@ function and(fn1: ChainFn, fn2: ChainFn): ChainFn {
   };
 }
 
+function removePlayer(name: string): ChainFn {
+  return (entry) => {
+    return {
+      ...entry,
+      gamemaster: entry.gamemaster === null ? null : {
+        ...entry.gamemaster, players: entry.gamemaster.players.filter(p => p !== name)
+      },
+      player: entry.player === null ? null : {
+        ...entry.player, players: entry.player.players.filter(p => p !== name)
+      },
+    };
+  };
+}
+
 function changeJobs({ ok, kiosk, kueche }: { ok?: boolean, kiosk?: boolean, kueche?: boolean; }): ChainFn {
   return (entry) => {
     return {
@@ -164,16 +178,14 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       ],
       hours: [15, 16],
       days: ["sa"]
-    }),
-      putRound({
-        id: "N-1",
-        name: "Næandis",
-        game_master: "Andrea",
-        players: ["Astrid Breitenmoser", "Beatrice Breitenmoser", "Michael Bayer", "Simon Breitenmoser", "Sophia Bayer"],
-        max_players: 0,
-        system: null,
-      })
-    )
+    }), putRound({
+      id: "N-1",
+      name: "Næandis",
+      game_master: "Andrea",
+      players: ["Astrid Breitenmoser", "Beatrice Breitenmoser", "Michael Bayer", "Simon Breitenmoser", "Sophia Bayer"],
+      max_players: 0,
+      system: null,
+    }))
     .change(pos({
       ids: ["OK_Thomas"],
       hours: [20, 21],
@@ -201,6 +213,28 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       days: ["sa"],
       hours: [20, 21, 22, 23]
     }), joinBloodClocktower())
+    .change(pos({
+      ids: [],
+      hours: [15, 16],
+      days: ["sa"]
+    }), removePlayer("Alejandro Jimenez"))
+    .change(pos({
+      ids: ["f3f4286c-1fa9-4c0d-a118-e912d64ede0c"],
+      hours: [15, 16],
+      days: ["sa"]
+    }), removeEverything())
+    .change(pos({
+      ids: ["f3f4286c-1fa9-4c0d-a118-e912d64ede0c"],
+      days: ["sa"],
+      hours: [17, 18]
+    }), putRound({
+      id: "cthulhu",
+      game_master: "Alejandro Jimenez",
+      max_players: 4,
+      name: "Cthulhu",
+      players: ["..."],
+      system: null
+    }))
     .unpack();
 }
 

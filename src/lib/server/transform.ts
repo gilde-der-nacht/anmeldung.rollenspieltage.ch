@@ -10,6 +10,12 @@ type ChainObj = {
   unpack: () => EntryData;
 };
 
+function and(fn1: ChainFn, fn2: ChainFn): ChainFn {
+  return (entry) => {
+    return fn1(fn2(entry));
+  };
+}
+
 function changeJobs({ ok, kiosk, kueche }: { ok?: boolean, kiosk?: boolean, kueche?: boolean; }): ChainFn {
   return (entry) => {
     return {
@@ -45,7 +51,31 @@ function changeTitle(titleOld: string, titleNew: string): ChainFn {
   };
 }
 
-function addRound(round: RoundData): ChainFn {
+function changeSystem(systemOld: string | null, systemNew: string | null, id: string): ChainFn {
+  return (entry) => {
+    if (entry.gamemaster?.system === systemOld && entry.gamemaster?.id === id) {
+      return { ...entry, gamemaster: { ...entry.gamemaster, system: systemNew } };
+    }
+    if (entry.player?.system === systemOld, entry.player?.id === id) {
+      return { ...entry, player: { ...entry.player, system: systemNew } };
+    }
+    return entry;
+  };
+}
+
+function changeMaster(masterOld: string, masterNew: string): ChainFn {
+  return (entry) => {
+    if (entry.gamemaster?.game_master === masterOld) {
+      return { ...entry, gamemaster: { ...entry.gamemaster, game_master: masterNew } };
+    }
+    if (entry.player?.game_master === masterOld) {
+      return { ...entry, player: { ...entry.player, game_master: masterNew } };
+    }
+    return entry;
+  };
+}
+
+function putRound(round: RoundData): ChainFn {
   return (_) => {
     return {
       ok: false,
@@ -98,6 +128,31 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
     .change(true, changeTitle("Fiasko", "Untold"))
     .change(pos({
       ids: [],
+      days: ["sa"],
+      hours: [15, 16]
+    }), and(and(
+      changeTitle("Untold", "Der Countdown"),
+      changeMaster("Thomas Stauffer", "Michelle")
+    ), changeSystem(null, "How to be a hero", "20")))
+    .change(pos({
+      ids: ["OK_Thomas"],
+      days: ["sa"],
+      hours: [15, 16]
+    }), removeEverything())
+    .change(pos({
+      ids: ["OK_Michelle"],
+      days: ["sa"],
+      hours: [15, 16]
+    }), putRound({
+      id: "how",
+      game_master: "Michelle",
+      system: "How to be a hero",
+      max_players: 0,
+      name: "Der Countdown",
+      players: ["Carla Rauchenstein", "Geneviève Hannes", "Paul Schlauri", " Renato Carlotti"]
+    }))
+    .change(pos({
+      ids: [],
       hours: [17, 18],
       days: ["sa"]
     }), changeTitle("Næandis", "Beak, Feather, Bones"))
@@ -110,7 +165,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       hours: [15, 16],
       days: ["sa"]
     }),
-      addRound({
+      putRound({
         id: "N-1",
         name: "Næandis",
         game_master: "Andrea",
@@ -133,7 +188,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       ids: ["OK_Thomas", "295b18a9-8d03-4355-a543-d5796d2c011b", "40a7d68b-16c6-4807-8337-df3b757958ea"],
       hours: [15, 16],
       days: ["so"]
-    }), addRound({
+    }), putRound({
       id: "EN-1",
       name: "Follow",
       game_master: "Thomas",

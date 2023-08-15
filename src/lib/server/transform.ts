@@ -10,21 +10,21 @@ type ChainObj = {
   unpack: () => EntryData;
 };
 
-function and(fn1: ChainFn, fn2: ChainFn): ChainFn {
+function and(...fns: ChainFn[]): ChainFn {
   return (entry) => {
-    return fn1(fn2(entry));
+    return fns.reduce((acc, curr) => curr(acc), entry);
   };
 }
 
-function removePlayer(name: string): ChainFn {
+function removePlayer(names: string[]): ChainFn {
   return (entry) => {
     return {
       ...entry,
       gamemaster: entry.gamemaster === null ? null : {
-        ...entry.gamemaster, players: entry.gamemaster.players.filter(p => p !== name)
+        ...entry.gamemaster, players: entry.gamemaster.players.filter(p => !names.includes(p))
       },
       player: entry.player === null ? null : {
-        ...entry.player, players: entry.player.players.filter(p => p !== name)
+        ...entry.player, players: entry.player.players.filter(p => !names.includes(p))
       },
     };
   };
@@ -144,10 +144,11 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       ids: [],
       days: ["sa"],
       hours: [15, 16]
-    }), and(and(
+    }), and(
       changeTitle("Untold", "Der Countdown"),
-      changeMaster("Thomas Stauffer", "Michelle")
-    ), changeSystem(null, "How to be a hero", "20")))
+      changeMaster("Thomas Stauffer", "Michelle"),
+      changeSystem(null, "How to be a hero", "20")
+    ))
     .change(pos({
       ids: ["OK_Thomas"],
       days: ["sa"],
@@ -217,14 +218,18 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       ids: [],
       hours: [15, 16],
       days: ["sa"]
-    }), removePlayer("Alejandro Jimenez"))
+    }), removePlayer(["Alejandro Jimenez", "Marina Bühlmann"]))
     .change(pos({
       ids: ["f3f4286c-1fa9-4c0d-a118-e912d64ede0c"],
       hours: [15, 16],
       days: ["sa"]
     }), removeEverything())
     .change(pos({
-      ids: ["f3f4286c-1fa9-4c0d-a118-e912d64ede0c"],
+      ids: [
+        "f3f4286c-1fa9-4c0d-a118-e912d64ede0c",
+        "6db9a6c4-9b8c-4ad0-b662-820d1b769998",
+        "aec28e93-d7ae-485c-b689-a0c01a8f9b00",
+      ],
       days: ["sa"],
       hours: [17, 18]
     }), putRound({
@@ -232,7 +237,13 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       game_master: "Alejandro Jimenez",
       max_players: 4,
       name: "Cthulhu",
-      players: ["..."],
+      players: [
+        "Marina Bühlmann", 
+        "Patrick Häusler", 
+        "Kevin Kurinjirappalli",
+        "Lena Brunner",
+        "Ronnie Krämer"
+      ],
       system: null
     }))
     .unpack();

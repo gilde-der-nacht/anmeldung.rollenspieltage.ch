@@ -1,4 +1,5 @@
 import type { EntryData, PersonalData, RoundData, ServerData, TimetableData } from "$lib/shared/schema/server.types";
+import { getBCIds, getBCPlayerNames } from "./bloodClocktower";
 
 type Day = "sa" | "so";
 
@@ -55,6 +56,25 @@ function addRound(round: RoundData): ChainFn {
     };
   };
 };
+
+function joinBloodClocktower(): ChainFn {
+  return (_) => {
+    return {
+      ok: false,
+      gamemaster: null,
+      kiosk: false,
+      kueche: false,
+      player: {
+        id: "clocktower",
+        name: "Blood on the Clocktower",
+        system: "Blood on the Clocktower",
+        game_master: "Gawain (Christian Hauk)",
+        players: getBCPlayerNames(),
+        max_players: 12
+      }
+    };
+  };
+}
 
 function getPos(id: string, hour: number, day: Day): ({ ids, hours, days }: { ids: string[], hours: number[], days: Day[]; }) => boolean {
   return ({ ids, hours, days }) => {
@@ -113,15 +133,19 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       ids: ["OK_Thomas", "295b18a9-8d03-4355-a543-d5796d2c011b", "40a7d68b-16c6-4807-8337-df3b757958ea"],
       hours: [15, 16],
       days: ["so"]
-    }),
-      addRound({
-        id: "EN-1",
-        name: "Follow",
-        game_master: "Thomas",
-        players: ["Niels Richters", "Eva", "Anna", "Anton"],
-        max_players: 0,
-        system: "English",
-      }))
+    }), addRound({
+      id: "EN-1",
+      name: "Follow",
+      game_master: "Thomas",
+      players: ["Niels Richters", "Eva", "Anna", "Anton"],
+      max_players: 0,
+      system: "English",
+    }))
+    .change(pos({
+      ids: getBCIds(),
+      days: ["sa"],
+      hours: [20, 21, 22, 23]
+    }), joinBloodClocktower())
     .unpack();
 }
 

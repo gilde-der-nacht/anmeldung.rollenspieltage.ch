@@ -3,9 +3,14 @@ import type { PageServerLoad } from './$types';
 import { loadPersonalProgram } from '$lib/server/methods/loadPersonalProgram';
 import { convertToWeb } from '$lib/server/converter';
 import { loadPersonalTimes } from '$lib/server/methods/loadPersonalTimes';
+import { loadGlobal } from '$lib/server/methods/loadGlobal';
 
 export const load = (async ({ params }) => {
-	const res = await loadPersonalProgram(params.id);
+	const global = await loadGlobal();
+	if (global === null) {
+		throw error(401, "couldn't load Global");
+	}
+	const res = await loadPersonalProgram(params.id, global);
 	if (!res.success) {
 		throw error(401, res.status);
 	}

@@ -306,18 +306,18 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
     .change(isRound("19") || isRound("7") || isRound("21"), removePlayerOnce("Tasha"))
     .change(true, removePlayers(["Michael Bayer", "Sophia Bayer"]))
     .change(true, removePlayers(["Anna Salamashvili", "Nicolas Scheidegger", ""]))
+    .change(isRound("5"), addPlayer("Nikola Micic"))
     .change(pos({
-      ids: ["c25077b3-fb6a-4202-8a43-efbc9f62578b"],
+      ids: ["c25077b3-fb6a-4202-8a43-efbc9f62578b", "97ccdf4a-6df6-49a0-aa8b-b9ff13f730bd"],
       days: ["so"],
-      hours: [10,11,13,14]
+      hours: [10, 11, 13, 14]
     }), putRound({
       id: "5",
       game_master: "Dimitri Dünki",
       max_players: 0,
       name: "Home is where the heart is",
       system: "City of Mist",
-      players: ["Gawain (Christian Hauk)", "Jelica Sterjoska"]
-
+      players: ["Gawain (Christian Hauk)", "Jelica Sterjoska", "Nikola Micic"]
     }))
     .unpack();
 }

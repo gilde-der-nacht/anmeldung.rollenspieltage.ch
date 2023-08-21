@@ -6,6 +6,7 @@ const registered = {
     "5bf8ea05-e450-4024-9cc7-cea512159139",
     "97ccdf4a-6df6-49a0-aa8b-b9ff13f730bd",
     "aec28e93-d7ae-485c-b689-a0c01a8f9b00",
+    "02ea549c-975c-4d15-a38e-ddad46ba8a4d"
 	],
 	players: [
     'Alain Bachmann', 
@@ -14,6 +15,9 @@ const registered = {
     'Nikola Micic',
     "Lena Brunner",
     "Ronnie Krämer",
+    "Marine Fehlmann",
+    "Elena",
+    "Tasha"
   ],
 };
 

@@ -16,7 +16,7 @@ function and(...fns: ChainFn[]): ChainFn {
   };
 }
 
-function removePlayer(names: string[]): ChainFn {
+function removePlayers(names: string[]): ChainFn {
   return (entry) => {
     return {
       ...entry,
@@ -27,6 +27,38 @@ function removePlayer(names: string[]): ChainFn {
         ...entry.player, players: entry.player.players.filter(p => !names.includes(p))
       },
     };
+  };
+}
+
+function removePlayerOnce(name: string): ChainFn {
+  return (entry) => {
+    if (entry.gamemaster !== null) {
+      const index = entry.gamemaster.players.indexOf(name);
+      if (index === -1) {
+        return entry;
+      }
+      return {
+        ...entry,
+        gamemaster: {
+          ...entry.gamemaster,
+          players: entry.gamemaster.players.slice(0, index).concat(entry.gamemaster.players.slice(index + 1)),
+        }
+      };
+    }
+    if (entry.player !== null) {
+      const index = entry.player.players.indexOf(name);
+      if (index === -1) {
+        return entry;
+      }
+      return {
+        ...entry,
+        player: {
+          ...entry.player,
+          players: entry.player.players.slice(0, index).concat(entry.player.players.slice(index + 1)),
+        }
+      };
+    }
+    return entry;
   };
 }
 
@@ -101,6 +133,18 @@ function putRound(round: RoundData): ChainFn {
   };
 };
 
+function addPlayer(playerName: string): ChainFn {
+  return (entry) => {
+    if (entry.gamemaster !== null) {
+      return { ...entry, gamemaster: { ...entry.gamemaster, players: [...entry.gamemaster.players, playerName] } };
+    }
+    if (entry.player !== null) {
+      return { ...entry, player: { ...entry.player, players: [...entry.player.players, playerName] } };
+    }
+    return entry;
+  };
+}
+
 function joinBloodClocktower(): ChainFn {
   return (_) => {
     return {
@@ -129,6 +173,10 @@ function getPos(id: string, hour: number, day: Day): ({ ids, hours, days }: { id
   };
 }
 
+function getIsRound(entry: EntryData): (id: string) => boolean {
+  return (id) => entry.player?.id === id || entry.gamemaster?.id === id;
+}
+
 function chain(entry: EntryData): ChainObj {
   return {
     change: (predicate, fn) => chain((typeof predicate === "boolean" ? predicate : predicate()) ? fn(entry) : entry),
@@ -138,6 +186,7 @@ function chain(entry: EntryData): ChainObj {
 
 function transformEntry(entry: EntryData, day: Day, hour: number, id: string): EntryData {
   const pos = getPos(id, hour, day);
+  const isRound = getIsRound(entry);
   return chain(entry)
     .change(true, changeTitle("Fiasko", "Untold"))
     .change(pos({
@@ -218,7 +267,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       ids: [],
       hours: [15, 16],
       days: ["sa"]
-    }), removePlayer(["Alejandro Jimenez", "Marina Bühlmann"]))
+    }), removePlayers(["Alejandro Jimenez", "Marina Bühlmann"]))
     .change(pos({
       ids: ["f3f4286c-1fa9-4c0d-a118-e912d64ede0c"],
       hours: [15, 16],
@@ -238,14 +287,23 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       max_players: 4,
       name: "Cthulhu",
       players: [
-        "Marina Bühlmann", 
-        "Patrick Häusler", 
+        "Marina Bühlmann",
+        "Patrick Häusler",
         "Kevin Kurinjirappalli",
         "Lena Brunner",
         "Ronnie Krämer"
       ],
       system: null
     }))
+    .change(isRound("1"), and(addPlayer("Jonas"), changeJobs({ kiosk: false })))
+    .change(pos(
+      {
+        ids: ["5d7f05ad-c27b-4c55-953f-64b993cca203"],
+        days: ["so"],
+        hours: [13]
+      }
+    ), changeJobs({ kiosk: true }))
+    .change(isRound("19") || isRound("7") || isRound("21"), removePlayerOnce("Tasha"))
     .unpack();
 }
 

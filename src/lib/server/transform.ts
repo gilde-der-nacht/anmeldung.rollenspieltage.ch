@@ -304,17 +304,39 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       }
     ), changeJobs({ kiosk: true }))
     .change(isRound("19") || isRound("7") || isRound("21"), removePlayerOnce("Tasha"))
+    .change(true, removePlayers(["Michael Bayer", "Sophia Bayer"]))
+    .change(true, removePlayers(["Anna Salamashvili", "Nicolas Scheidegger", ""]))
+    .change(pos({
+      ids: ["c25077b3-fb6a-4202-8a43-efbc9f62578b"],
+      days: ["so"],
+      hours: [10,11,13,14]
+    }), putRound({
+      id: "5",
+      game_master: "Dimitri Dünki",
+      max_players: 0,
+      name: "Home is where the heart is",
+      system: "City of Mist",
+      players: ["Gawain (Christian Hauk)", "Jelica Sterjoska"]
+
+    }))
     .unpack();
 }
+
+const UNREGISTERED = [
+  "4a584d05-0a64-41c5-9c8d-427e99dd347f",
+  "e3478598-f8b4-474a-aebc-1922a37ec3b1"
+];
 
 export function transform(data: ServerData): ServerData {
   const anmeldungen: Record<string, PersonalData> = {};
 
   Object.entries(data.anmeldungen).forEach(([id, personalData]) => {
-    const timetable = personalData.timetable.map(({ ts }): TimetableData => {
-      return { ts: { ...ts, entry: transformEntry(ts.entry, ts.day, ts.hour, id) } };
-    });
-    anmeldungen[id] = { ...personalData, timetable };
+    if (!UNREGISTERED.includes(id)) {
+      const timetable = personalData.timetable.map(({ ts }): TimetableData => {
+        return { ts: { ...ts, entry: transformEntry(ts.entry, ts.day, ts.hour, id) } };
+      });
+      anmeldungen[id] = { ...personalData, timetable };
+    }
   });
   return { anmeldungen };
 }

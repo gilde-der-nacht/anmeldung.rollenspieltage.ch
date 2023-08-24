@@ -319,6 +319,9 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
       system: "City of Mist",
       players: ["Gawain (Christian Hauk)", "Jelica Sterjoska", "Nikola Micic"]
     }))
+    .change(pos({ days: ["sa"], hours: [], ids: [] }), removePlayerOnce("Lukas Adler"))
+    .change(pos({ ids: ["3f7bb128-fb3f-43fe-ae3c-0cf9307caf47"], days: ["sa"], hours: [] }), removeEverything())
+    .change(isRound("9"), removeEverything())
     .unpack();
 }
 

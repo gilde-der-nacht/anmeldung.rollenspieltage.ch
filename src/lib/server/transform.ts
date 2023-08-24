@@ -322,13 +322,15 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
     .change(pos({ days: ["sa"], hours: [], ids: [] }), removePlayerOnce("Lukas Adler"))
     .change(pos({ ids: ["3f7bb128-fb3f-43fe-ae3c-0cf9307caf47"], days: ["sa"], hours: [] }), removeEverything())
     .change(isRound("9"), removeEverything(false))
+    .change(true, removePlayerOnce("Renato Carlotti"))
     .unpack();
 }
 
 const UNREGISTERED = [
   "4a584d05-0a64-41c5-9c8d-427e99dd347f",
   "e3478598-f8b4-474a-aebc-1922a37ec3b1",
-  "e3788845-3001-48fe-b7f6-f7d1d4b849c7"
+  "e3788845-3001-48fe-b7f6-f7d1d4b849c7",
+  "1f3bb124-8513-4ae5-87cd-a2ac8a8b31fa"
 ];
 
 export function transform(data: ServerData): ServerData {

@@ -17,7 +17,8 @@ const registered = {
     "Ronnie Krämer",
     "Marine Fehlmann",
     "Elena",
-    "Tasha"
+    "Tasha",
+    "Herbert"
   ],
 };
 

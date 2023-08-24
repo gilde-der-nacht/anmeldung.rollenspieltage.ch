@@ -73,13 +73,13 @@ function changeJobs({ ok, kiosk, kueche }: { ok?: boolean, kiosk?: boolean, kuec
   };
 }
 
-function removeEverything(): ChainFn {
-  return (_) => {
+function removeEverything(includingJobs = true): ChainFn {
+  return (e) => {
     return {
-      ok: false,
+      ok: includingJobs ? false : e.ok,
       gamemaster: null,
-      kiosk: false,
-      kueche: false,
+      kiosk: includingJobs ? false : e.kiosk,
+      kueche: includingJobs ? false : e.kueche,
       player: null
     };
   };
@@ -321,7 +321,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
     }))
     .change(pos({ days: ["sa"], hours: [], ids: [] }), removePlayerOnce("Lukas Adler"))
     .change(pos({ ids: ["3f7bb128-fb3f-43fe-ae3c-0cf9307caf47"], days: ["sa"], hours: [] }), removeEverything())
-    .change(isRound("9"), removeEverything())
+    .change(isRound("9"), removeEverything(false))
     .unpack();
 }
 

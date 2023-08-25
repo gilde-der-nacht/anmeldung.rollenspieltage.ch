@@ -324,6 +324,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
     .change(isRound("9"), removeEverything(false))
     .change(true, removePlayerOnce("Renato Carlotti"))
     .change(true, removePlayerOnce("Clemens Hagen"))
+    .change(pos({ ids: ["edb358ec-eaed-4183-8352-b68fd1fde782"], days: ["sa"], hours: [14, 15] }), changeJobs({ kiosk: true }))
     .unpack();
 }
 

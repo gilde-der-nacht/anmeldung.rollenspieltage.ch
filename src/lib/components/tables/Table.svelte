@@ -12,7 +12,7 @@
 		<thead>
 			<tr>
 				<th style="min-inline-size: 3rem;" />
-				<th>Startzeit</th>
+				<th>Zeit</th>
 				<th colspan="2">Programm</th>
 				<th>Bemerkung</th>
 			</tr>
@@ -33,7 +33,15 @@
 							<InteractionSymbol type="CHECKED" />
 						{/if}
 					</td>
-					<td>{hour} Uhr</td>
+					{#if type !== 'NONE' && type !== 'NONE_AD'}
+						<td rowspan={entry.rowspan} class="hour-cell">
+							<div class="hour">
+								{hour}
+						
+								<span class="until">- {Number(hour) + entry.rowspan} </span>
+							</div>
+						</td>
+					{/if}
 
 					{#if type === 'EMPTY'}
 						<td colspan="2">
@@ -158,6 +166,9 @@
 		color: var(--clr-2);
 		--row-bg: var(--clr-11);
 	}
+	.food-time .until {
+		color: var(--clr-gray-8);
+	}
 
 	td.checked {
 		color: var(--clr-success-10);
@@ -188,5 +199,20 @@
 	}
 	.double {
 		border-left: 3px dotted var(--clr-6);
+	}
+	.until {
+		font-size: 0.75em;
+		color: var(--clr-gray-10);
+	}
+	.hour {
+		line-height: 1;
+		padding-inline-start: 0.75em;
+		white-space: nowrap;
+	}
+	td {
+		vertical-align: middle;
+	}
+	.hour-cell {
+		padding: 0;
 	}
 </style>

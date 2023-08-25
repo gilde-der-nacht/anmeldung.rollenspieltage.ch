@@ -285,7 +285,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
 				system: 'How to be a hero',
 				max_players: 0,
 				name: 'Der Countdown',
-				players: ['Carla Rauchenstein', 'Geneviève Hannes', 'Paul Schlauri', ' Renato Carlotti'],
+				players: ['Carla Rauchenstein', 'Geneviève Hannes', 'Paul Schlauri', 'Renato Carlotti'],
 			}),
 		)
 		.change(

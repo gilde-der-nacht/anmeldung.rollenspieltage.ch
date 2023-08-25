@@ -8,11 +8,10 @@ import type {
 } from '$lib/shared/schema/server.types';
 import { getBCIds, getBCPlayerNames } from './bloodClocktower';
 
-
 type ChainFn = (entry: EntryData) => EntryData;
 
 type ChainObj = {
-	change: (predicate: boolean | (() => boolean), fn: ChainFn) => ChainObj;
+	change: (predicate: boolean | ((entry: EntryData) => boolean), fn: ChainFn) => ChainObj;
 	unpack: () => EntryData;
 };
 
@@ -30,16 +29,16 @@ function removePlayers(names: string[]): ChainFn {
 				entry.gamemaster === null
 					? null
 					: {
-						...entry.gamemaster,
-						players: entry.gamemaster.players.filter((p) => !names.includes(p)),
-					},
+							...entry.gamemaster,
+							players: entry.gamemaster.players.filter((p) => !names.includes(p)),
+					  },
 			player:
 				entry.player === null
 					? null
 					: {
-						...entry.player,
-						players: entry.player.players.filter((p) => !names.includes(p)),
-					},
+							...entry.player,
+							players: entry.player.players.filter((p) => !names.includes(p)),
+					  },
 		};
 	};
 }
@@ -149,8 +148,6 @@ function changeMaster(masterOld: string, masterNew: string): ChainFn {
 
 function overwriteRound(newEntry: Partial<RoundData>): ChainFn {
 	return (entry) => {
-		console.log(entry);
-
 		const old = entry.gamemaster === null ? entry.player : entry.gamemaster;
 		if (old === null) {
 			return entry;
@@ -165,7 +162,7 @@ function overwriteRound(newEntry: Partial<RoundData>): ChainFn {
 				name: newEntry.name === undefined ? old.name : newEntry.name,
 				players: newEntry.players === undefined ? old.players : newEntry.players,
 				system: newEntry.system === undefined ? old.system : newEntry.system,
-			}
+			},
 		};
 	};
 }
@@ -223,7 +220,7 @@ function getPos(
 	id: string,
 	hour: number,
 	day: Day,
-): ({ ids, hours, days }: { ids: string[]; hours: number[]; days: Day[]; }) => boolean {
+): ({ ids, hours, days }: { ids: string[]; hours: number[]; days: Day[] }) => boolean {
 	return ({ ids, hours, days }) => {
 		if (ids.length > 0 && !ids.includes(id)) {
 			return false;
@@ -238,8 +235,8 @@ function getPos(
 	};
 }
 
-function getIsRound(entry: EntryData): (id: string) => boolean {
-	return (id) => {
+function isRound(id: string): (entry: EntryData) => boolean {
+	return (entry) => {
 		return entry.player?.id === id || entry.gamemaster?.id === id;
 	};
 }
@@ -247,14 +244,13 @@ function getIsRound(entry: EntryData): (id: string) => boolean {
 function chain(entry: EntryData): ChainObj {
 	return {
 		change: (predicate, fn) =>
-			chain((typeof predicate === 'boolean' ? predicate : predicate()) ? fn(entry) : entry),
+			chain((typeof predicate === 'boolean' ? predicate : predicate(entry)) ? fn(entry) : entry),
 		unpack: () => entry,
 	};
 }
 
 function transformEntry(entry: EntryData, day: Day, hour: number, id: string): EntryData {
 	const pos = getPos(id, hour, day);
-	const isRound = getIsRound(entry);
 	return chain(entry)
 		.change(true, changeTitle('Fiasko', 'Untold'))
 		.change(
@@ -302,10 +298,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
 		)
 		.change(
 			pos({
-				ids: [
-					'e3478598-f8b4-474a-aebc-1922a37ec3b1',
-					'0b89d834-389e-44bf-8e2d-531717d5ab2e',
-				],
+				ids: ['e3478598-f8b4-474a-aebc-1922a37ec3b1', '0b89d834-389e-44bf-8e2d-531717d5ab2e'],
 				hours: [15, 16],
 				days: ['sa'],
 			}),
@@ -449,6 +442,7 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
 			changeJobs({ kiosk: true }),
 		)
 		.change(pos({ ids: ['Andrea_Truetsch'], days: ['sa'], hours: [22, 23] }), removeEverything())
+		.change(isRound('N-1'), overwriteRound({ name: 'Ein Dämonisches Grinsen' }))
 		.unpack();
 }
 

@@ -147,6 +147,29 @@ function changeMaster(masterOld: string, masterNew: string): ChainFn {
 	};
 }
 
+function overwriteRound(newEntry: Partial<RoundData>): ChainFn {
+	return (entry) => {
+		console.log(entry);
+
+		const old = entry.gamemaster === null ? entry.player : entry.gamemaster;
+		if (old === null) {
+			return entry;
+		}
+		return {
+			...entry,
+			gamemaster: null,
+			player: {
+				game_master: newEntry.game_master === undefined ? old.game_master : newEntry.game_master,
+				id: newEntry.id === undefined ? old.id : newEntry.id,
+				max_players: newEntry.max_players === undefined ? old.max_players : newEntry.max_players,
+				name: newEntry.name === undefined ? old.name : newEntry.name,
+				players: newEntry.players === undefined ? old.players : newEntry.players,
+				system: newEntry.system === undefined ? old.system : newEntry.system,
+			}
+		};
+	};
+}
+
 function putRound(round: RoundData): ChainFn {
 	return (_) => {
 		return {
@@ -216,7 +239,9 @@ function getPos(
 }
 
 function getIsRound(entry: EntryData): (id: string) => boolean {
-	return (id) => entry.player?.id === id || entry.gamemaster?.id === id;
+	return (id) => {
+		return entry.player?.id === id || entry.gamemaster?.id === id;
+	};
 }
 
 function chain(entry: EntryData): ChainObj {
@@ -278,7 +303,6 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
 		.change(
 			pos({
 				ids: [
-					'Andrea_Truetsch',
 					'e3478598-f8b4-474a-aebc-1922a37ec3b1',
 					'0b89d834-389e-44bf-8e2d-531717d5ab2e',
 				],
@@ -287,8 +311,8 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
 			}),
 			putRound({
 				id: 'N-1',
-				name: 'Næandis',
-				game_master: 'Andrea',
+				name: 'TBA',
+				game_master: 'Andreas Wolf',
 				players: [
 					'Astrid Breitenmoser',
 					'Beatrice Breitenmoser',

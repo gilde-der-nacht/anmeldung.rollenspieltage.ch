@@ -27,14 +27,23 @@
 		<tbody>
 			{#each toRange(10, endHour).range as hour}
 				<tr class:food-time={hour === 12 || hour === 19}>
-					<td>{hour} Uhr</td>
+					<td>{hour}</td>
 					{#each tableData as col}
 						{@const cells = getCells(col, hour)}
 						{#each cells as cell}
 							{#if cell.kind === 'empty'}
 								<td rowspan={cell.rowspan} class="nothing double" />
 							{:else if cell.kind === 'filled'}
-								<td rowspan={cell.rowspan} id={cell.id} class="double">{cell.name}</td>
+								<td rowspan={cell.rowspan} id={cell.id} class="double"
+									>{cell.name}
+									{#if cell.small}
+										<br />
+										<small
+											style="color: var(--clr-gray-10);
+									 ">{cell.small}</small
+										>
+									{/if}
+								</td>
 							{/if}
 						{/each}
 					{/each}

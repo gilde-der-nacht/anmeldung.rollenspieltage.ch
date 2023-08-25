@@ -200,7 +200,7 @@
 	}
 	.until {
 		font-size: 0.75em;
-		color: var(--clr-gray-10);
+			color: var(--clr-gray-10);
 	}
 	.hour {
 		line-height: 1;

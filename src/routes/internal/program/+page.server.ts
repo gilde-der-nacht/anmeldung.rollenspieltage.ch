@@ -5,8 +5,10 @@ import type { PersonalData } from '$lib/shared/schema/server.types';
 import { error } from '@sveltejs/kit';
 import type { TableColumn, TableEntry } from '../view.types';
 
-type JobsEntry = {
+type ProgramEntry = {
   name: string;
+  master: string;
+  players: string[];
   id: string;
   day: Day;
   hour: number;
@@ -14,6 +16,8 @@ type JobsEntry = {
 
 type GroupEntry = {
   name: string;
+  master: string;
+  players: string[];
   id: string;
   day: Day;
   hours: number[];
@@ -21,49 +25,41 @@ type GroupEntry = {
 
 function filterEntries(data: {
   [K: string]: PersonalData;
-}): [JobsEntry[], JobsEntry[], JobsEntry[]] {
-  const kuecheEntries: JobsEntry[] = [];
-  const kioskEntries: JobsEntry[] = [];
-  const okEntries: JobsEntry[] = [];
+}): ProgramEntry[] {
+  const entries: ProgramEntry[] = [];
 
-  Object.entries(data).forEach(([id, { name, timetable }]) => {
+  Object.entries(data).forEach(([_, { timetable }]) => {
     timetable.forEach(({ ts: { day, hour, entry } }) => {
-      if (entry.kueche) {
-        kuecheEntries.push({
-          name,
-          id,
+      if (entry.gamemaster !== null) {
+        const master = entry.gamemaster.game_master.trim();
+        const players = entry.gamemaster.players.map(p => p.trim());
+        const id = entry.gamemaster.id;
+        let name = entry.gamemaster.name.trim();
+        if (entry.gamemaster.system) {
+          name += " (" + entry.gamemaster.system + ")";
+        }
+        entries.push({
           day,
           hour,
-        });
-      }
-      if (entry.kiosk) {
-        kioskEntries.push({
-          name,
           id,
-          day,
-          hour,
-        });
-      }
-      if (entry.ok) {
-        okEntries.push({
+          master,
           name,
-          id,
-          day,
-          hour,
+          players
         });
       }
+
     });
   });
 
-  return [kuecheEntries, kioskEntries, okEntries];
+  return entries;
 }
 
-function groupEntries(data: JobsEntry[]): GroupEntry[] {
+function groupEntries(data: ProgramEntry[]): GroupEntry[] {
   const byIds: { [id: string]: GroupEntry; } = {};
   data.forEach(entry => {
     const prev = byIds[entry.id];
     if (prev === undefined) {
-      byIds[entry.id] = { day: entry.day, id: entry.id, name: entry.name, hours: [entry.hour] };
+      byIds[entry.id] = { day: entry.day, id: entry.id, name: entry.name, master: entry.master, players: entry.players, hours: [entry.hour] };
     } else {
       byIds[entry.id] = { ...prev, hours: [...prev.hours, entry.hour] };
     }
@@ -99,7 +95,7 @@ function mapToCols(data: GroupEntry[]): GroupEntry[][] {
 
 
   const cols: { usedHours: number[], entries: GroupEntry[]; }[] = [];
-  data.forEach(entry => { 
+  data.forEach(entry => {
     let foundSpace = false;
     cols.forEach(col => {
       if (!entry.hours.some((hour) => col.usedHours.includes(hour)) && !foundSpace) {
@@ -135,6 +131,7 @@ function mapToTableView(hour: number, group: GroupEntry[]): TableEntry {
       rowspan: duration,
       id: entry.id,
       name: entry.name,
+      small: entry.master + " (" + entry.players.join(", ") + ")"
     };
   }
   return {
@@ -161,32 +158,19 @@ export const load = async () => {
   if (!response.success) {
     throw error(400, 'Problem while computing and loading the data.');
   }
-  const [kuecheEntries, kioskEntries, okEntries] = filterEntries(response.data);
+  const entries = filterEntries(response.data);
 
-  const kuecheSa = groupEntries(kuecheEntries.filter(e => e.day === "sa"));
-  const kuecheSo = groupEntries(kuecheEntries.filter(e => e.day === "so"));
-  const kioskSa = groupEntries(kioskEntries.filter(e => e.day === "sa"));
-  const kioskSo = groupEntries(kioskEntries.filter(e => e.day === "so"));
-  const okSa = groupEntries(okEntries.filter(e => e.day === "sa"));
-  const okSo = groupEntries(okEntries.filter(e => e.day === "so"));
+  const gamesSa = groupEntries(entries.filter(e => e.day === "sa"));
+  const gamesSo = groupEntries(entries.filter(e => e.day === "so"));
 
-  const kuecheSaView = mapToCols(kuecheSa);
-  const kuecheSoView = mapToCols(kuecheSo);
-  const kioskSaView = mapToCols(kioskSa);
-  const kioskSoView = mapToCols(kioskSo);
-  const okSaView = mapToCols(okSa);
-  const okSoView = mapToCols(okSo);
+  const gamesSaView = mapToCols(gamesSa);
+  const gamesSoView = mapToCols(gamesSo);
 
-  const kuecheSaCol = createTableView(kuecheSaView, "sa", "Küche");
-  const kuecheSoCol = createTableView(kuecheSoView, "so", "Küche");
-  const kioskSaCol = createTableView(kioskSaView, "sa", "Kiosk");
-  const kioskSoCol = createTableView(kioskSoView, "so", "Kiosk");
-  const okSaCol = createTableView(okSaView, "sa", "OK");
-  const okSoCol = createTableView(okSoView, "so", "OK");
+  const gamesSaCol = createTableView(gamesSaView, "sa", "Spielrunden");
+  const gamesSoCol = createTableView(gamesSoView, "so", "Spielrunden");
 
   return {
-    kuecheSaCol, kuecheSoCol,
-    kioskSaCol,
-    kioskSoCol, okSaCol, okSoCol
+    gamesSaCol,
+    gamesSoCol,
   };
 };

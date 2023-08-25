@@ -3,6 +3,7 @@ export type TableEntry = {
   hour: number,
   id: string,
   name: string,
+  small?: string,
   rowspan: number,
 } | {
   kind: "empty",

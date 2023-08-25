@@ -6,16 +6,7 @@
 </script>
 
 <h1>Samstag</h1>
-<InternalTable tableData={[
-	data.kuecheSaCol,
-	 data.kioskSaCol,
-	  data.okSaCol
-		]} day="sa" />
+<InternalTable tableData={[data.gamesSaCol]} day="sa" />
 
 <h1>Sonntag</h1>
-<InternalTable tableData={[
-	data.kuecheSoCol,
-	 data.kioskSoCol,
-	  data.okSoCol
-		]} day="so" />
-
+<InternalTable tableData={[data.gamesSoCol]} day="so" />

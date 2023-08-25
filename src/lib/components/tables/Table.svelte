@@ -169,19 +169,16 @@
 	.food-time .until {
 		color: var(--clr-gray-8);
 	}
-
 	td.checked {
 		color: var(--clr-success-10);
 	}
-
 	tr.checked {
 		background: linear-gradient(90deg, var(--clr-success-5), var(--row-bg, transparent) 10%);
 	}
 	.my-3 {
 		margin-block: 1rem;
 	}
-	.no-border td:first-child,
-	.no-border td:nth-child(2) {
+	.no-border td:first-child {
 		border-bottom: 0;
 	}
 	tr:last-child {
@@ -193,6 +190,7 @@
 	.fleemarket {
 		background-color: var(--clr-11);
 		color: var(--clr-2);
+		vertical-align: top;
 	}
 	.nothing:not(.food-time) {
 		background-color: var(--clr-2);

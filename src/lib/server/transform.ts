@@ -410,7 +410,10 @@ function transformEntry(entry: EntryData, day: Day, hour: number, id: string): E
 			}),
 			changeJobs({ kiosk: true }),
 		)
-		.change(isRound('19') || isRound('7') || isRound('21'), removePlayerOnce('Tasha'))
+		.change(isRound('21'), removePlayers(['Tasha']))
+		.change(isRound('7'), removePlayers(['Tasha']))
+		.change(isRound('19'), removePlayers(['Tasha']))
+		.change(isRound('21'), addPlayer('Tasha'))
 		.change(true, removePlayers(['Michael Bayer', 'Sophia Bayer']))
 		.change(true, removePlayers(['Anna Salamashvili', 'Nicolas Scheidegger', '']))
 		.change(isRound('5'), addPlayer('Nikola Micic'))

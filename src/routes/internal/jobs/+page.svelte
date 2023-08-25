@@ -5,17 +5,12 @@
 	export let data: PageData;
 </script>
 
-<h1>Samstag</h1>
-<InternalTable tableData={[
-	data.kuecheSaCol,
-	 data.kioskSaCol,
-	  data.okSaCol
-		]} day="sa" />
+{#if data.isSaturday}
+	<h1>Samstag</h1>
+	<InternalTable tableData={[data.kuecheSaCol, data.kioskSaCol, data.okSaCol]} day="sa" />
+{/if}
 
-<h1>Sonntag</h1>
-<InternalTable tableData={[
-	data.kuecheSoCol,
-	 data.kioskSoCol,
-	  data.okSoCol
-		]} day="so" />
-
+{#if data.isSunday}
+	<h1>Sonntag</h1>
+	<InternalTable tableData={[data.kuecheSoCol, data.kioskSoCol, data.okSoCol]} day="so" />
+{/if}

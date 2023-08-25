@@ -34,24 +34,61 @@ function filterEntries(data: {
         const master = entry.gamemaster.game_master.trim();
         const players = entry.gamemaster.players.map(p => p.trim());
         const id = entry.gamemaster.id;
-        let name = entry.gamemaster.name.trim();
+        let gameName = entry.gamemaster.name.trim();
         if (entry.gamemaster.system) {
-          name += " (" + entry.gamemaster.system + ")";
+          gameName += " (" + entry.gamemaster.system + ")";
         }
         entries.push({
           day,
           hour,
           id,
           master,
-          name,
+          name: gameName,
           players
         });
       }
-
     });
   });
 
   return entries;
+}
+
+function getMissingRounds(data: {
+  [K: string]: PersonalData;
+}, idsAlreadyFound: string[]): ProgramEntry[] {
+  const entries: ProgramEntry[] = [];
+  const additionalFound: string[] = [];
+
+  Object.entries(data).forEach(([_, { timetable }]) => {
+    timetable.forEach(({ ts: { day, hour, entry } }) => {
+      if (entry.player !== null && !idsAlreadyFound.includes(entry.player.id)) {
+        const idHourDay = entry.player.id + "-" + hour + "-" + day;
+        if (additionalFound.includes(idHourDay)) {
+          return;
+        }
+
+        const master = entry.player.game_master.trim();
+        const players = entry.player.players.map(p => p.trim());
+        const id = entry.player.id;
+        let gameName = entry.player.name.trim();
+        if (entry.player.system) {
+          gameName += " (" + entry.player.system + ")";
+        }
+        entries.push({
+          day,
+          hour,
+          id,
+          master,
+          name: gameName,
+          players
+        });
+
+        additionalFound.push(idHourDay);
+      }
+    });
+  });
+  return entries;
+
 }
 
 function groupEntries(data: ProgramEntry[]): GroupEntry[] {
@@ -158,10 +195,14 @@ export const load = async () => {
   if (!response.success) {
     throw error(400, 'Problem while computing and loading the data.');
   }
-  const entries = filterEntries(response.data);
 
-  const gamesSa = groupEntries(entries.filter(e => e.day === "sa"));
-  const gamesSo = groupEntries(entries.filter(e => e.day === "so"));
+  const entries = filterEntries(response.data);
+  const additionalEntries = getMissingRounds(response.data, entries.map(e => e.id));
+
+  const all = entries.concat(additionalEntries);  
+
+  const gamesSa = groupEntries(all.filter(e => e.day === "sa"));
+  const gamesSo = groupEntries(all.filter(e => e.day === "so"));
 
   const gamesSaView = mapToCols(gamesSa);
   const gamesSoView = mapToCols(gamesSo);

@@ -1,3 +1,4 @@
+import type { Day } from '$lib/shared/common';
 import type {
 	EntryData,
 	PersonalData,
@@ -7,7 +8,6 @@ import type {
 } from '$lib/shared/schema/server.types';
 import { getBCIds, getBCPlayerNames } from './bloodClocktower';
 
-type Day = 'sa' | 'so';
 
 type ChainFn = (entry: EntryData) => EntryData;
 
@@ -30,16 +30,16 @@ function removePlayers(names: string[]): ChainFn {
 				entry.gamemaster === null
 					? null
 					: {
-							...entry.gamemaster,
-							players: entry.gamemaster.players.filter((p) => !names.includes(p)),
-					  },
+						...entry.gamemaster,
+						players: entry.gamemaster.players.filter((p) => !names.includes(p)),
+					},
 			player:
 				entry.player === null
 					? null
 					: {
-							...entry.player,
-							players: entry.player.players.filter((p) => !names.includes(p)),
-					  },
+						...entry.player,
+						players: entry.player.players.filter((p) => !names.includes(p)),
+					},
 		};
 	};
 }
@@ -200,7 +200,7 @@ function getPos(
 	id: string,
 	hour: number,
 	day: Day,
-): ({ ids, hours, days }: { ids: string[]; hours: number[]; days: Day[] }) => boolean {
+): ({ ids, hours, days }: { ids: string[]; hours: number[]; days: Day[]; }) => boolean {
 	return ({ ids, hours, days }) => {
 		if (ids.length > 0 && !ids.includes(id)) {
 			return false;
